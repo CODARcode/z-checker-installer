@@ -1,11 +1,8 @@
-# z-checker-installer
-
+--------Z-checker installer --------
  (C) 2017 by Mathematics and Computer Science (MCS), Argonne National Laboratory.
        See COPYRIGHT in top-level directory.
 
 ***Authors: Sheng Di, Hanqi Guo ***
-
-one-key installation to install gnuplot, sz, zfp, and z-checker, and complete the configuration automatically for the testing.
 
 #########3rd party libraries/tools#########
 git
