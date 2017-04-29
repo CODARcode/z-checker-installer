@@ -2,6 +2,10 @@
 
 rootDir=`pwd`
 
+NODE_URL=https://nodejs.org/dist/v6.10.2/node-v6.10.2.tar.gz
+NODE_SRC_DIR=$rootDir/node-v6.10.2
+NODE_DIR=$rootDir/node-v6.10.2-install
+
 #---------- download gnuplot ----------------
 git clone https://github.com/gnuplot/gnuplot.git
 cd gnuplot
@@ -58,3 +62,18 @@ cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 
 
+# download and install node.js
+cd $rootDir
+curl -O $NODE_URL
+tar zxf node-v6.10.2.tar.gz
+cd $NODE_SRC_DIR
+./configure --prefix=$NODE_DIR
+make
+make install
+
+# download z-checker-web
+cd $rootDir
+git clone https://github.com/CODARcode/z-checker-web
+cd z-checker-web
+$NODE_DIR/bin/npm install
+cd $rootDir
