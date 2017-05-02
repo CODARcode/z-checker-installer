@@ -18,7 +18,7 @@ fileList=`cd "$dataDir";ls *.dat`
 for file in $fileList
 do
         echo testfloat_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
-        testfloat_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
+        ./testfloat_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
 done
 
 echo "complete"
