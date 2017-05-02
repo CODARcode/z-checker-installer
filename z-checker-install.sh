@@ -60,20 +60,3 @@ patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
-
-
-# download and install node.js
-cd $rootDir
-curl -O $NODE_URL
-tar zxf node-v6.10.2.tar.gz
-cd $NODE_SRC_DIR
-./configure --prefix=$NODE_DIR
-make
-make install
-
-# download z-checker-web
-cd $rootDir
-git clone https://github.com/CODARcode/z-checker-web
-cd z-checker-web
-$NODE_DIR/bin/npm install
-cd $rootDir
