@@ -8,7 +8,7 @@ cd Z-checker
 ./configure --prefix=$rootDir/Z-checker/zc-install
 make
 make install
-cp ../zc-patches/test-generateGNUPlot.sh ./examples/
+cp ../zc-patches/generateReport.sh ./examples/
 
 #---------- download ZFP and set the configuration -----------
 cd $rootDir

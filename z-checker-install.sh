@@ -2,10 +2,6 @@
 
 rootDir=`pwd`
 
-NODE_URL=https://nodejs.org/dist/v6.10.2/node-v6.10.2.tar.gz
-NODE_SRC_DIR=$rootDir/node-v6.10.2
-NODE_DIR=$rootDir/node-v6.10.2-install
-
 #---------- download gnuplot ----------------
 git clone https://github.com/gnuplot/gnuplot.git
 cd gnuplot
@@ -23,7 +19,7 @@ cd Z-checker
 ./configure --prefix=$rootDir/Z-checker/zc-install
 make
 make install
-cp ../zc-patches/test-generateGNUPlot.sh ./examples/
+cp ../zc-patches/generateReport.sh ./examples/
 
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
@@ -60,3 +56,5 @@ patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
+
+
