@@ -22,6 +22,8 @@ cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
+cd $sz_caseName
+patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
 
 echo "Create a new case (default mode) for SZ"
 cd ../SZ
@@ -32,6 +34,8 @@ cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config
+cd $sz_caseName
+patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
 
 echo Create a new case for ZFP
 cd ../zfp
