@@ -20,6 +20,7 @@ mkdir $sz_caseName
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
+cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
 
 echo "Create a new case (default mode) for SZ"
@@ -29,6 +30,7 @@ mkdir $sz_caseName
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
+cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config
 
 echo Create a new case for ZFP
