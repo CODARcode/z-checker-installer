@@ -38,5 +38,5 @@ mkdir $zfp_caseName
 cp utils/*.sh $zfp_caseName
 
 echo Modify Z-checker/$caseName/zc.config
-cd Z-checker/$caseName
+cd ../Z-checker/$caseName
 ./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}_fast sz_d:../../SZ/${caseName}_deft zfp:../../zfp/${zfp_caseName}"
