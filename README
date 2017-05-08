@@ -54,3 +54,7 @@ For another test case with another set of data or application, you can create a 
 
 ---------- z-checker-update.sh ----------
 z-checker-update.sh can be used to update the repository (pull the new update from the server), so that you don't have to perform the update manually.
+
+---------- web installation -------------
+Web installation allows to install a web server on the local machine, such that you can visualize the data through a local webpage and other people can view the data/results via that page if public ip is provided. 
+z-checker-web-install.sh
