@@ -6,9 +6,8 @@ Authors: Sheng Di, Hanqi Guo
 
 ---------3rd party libraries/tools---------
 git
-gnuplot
-latexmk (todo, not supported yet)
-
+latexmk
+gnuplot (z-checker-install.sh will install gnuplot)
 
 ---------Testing/Installation method--------
 
@@ -16,8 +15,27 @@ z-checker-install.sh will download gnuplot, Z-checker, ZFP, and SZ and install t
 z-checker-install2.sh will download Z-checker, ZFP, and SZ and install them, without installation of gnuplot (assuming you already installed gnuplot).
 
 After installation, please download the two testing data sets, CESM-ATM and MD-simulation (exaalt). The two data sets are available only for the purpose of research of compression. Please ask for the data by contacting sdi1@anl.gov if interested.
- 
-Then, you can generate compression results with SZ and ZFP using the following simple steps: 
+
+-------- Quick Start ----------------------
+
+Then, you are ready to conduct the compression checking.
+You can generate compression results with SZ and ZFP using the following simple steps: 
+(Note: you have to run z-checker-install.sh or z-checker-install2.sh to install the software before doing the following tests)
+
+1. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
+For example:
+[user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
+
+2. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [test-case-name] [data dir] [dimensions....].
+Example:
+[user@localhost z-checker-installer] ./runZCCase.sh CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
+
+Then, you can find the report generated in z-checker-installer/Z-checker/[test-case-name]/report.
+
+-------- Step-by-step Checking ------------
+
+Unlike the above one-command checking, the following steps present the generation of compression results step by step.
+
 1. Go to zfp/utils/, and then execute "zfp-zc-ratedistortion.sh [data directory] [dimension sizes....]". The compression results are stored in the compressionResults/ directory.
 	For example, suppose the directory of CESM-ATM data set is here: /home/shdi/CESM-testdata/1800x3600, then the command is "zfp-zc-ratedistortion.sh /home/shdi/CESM-testdata/1800x3600 3600 1800". Note: the data files stored in the directory are also ending with .dat and the dimension sizes are the same (1800x3600) in this test-case.
 
@@ -29,6 +47,7 @@ Then, you can generate compression results with SZ and ZFP using the following s
 4. Generate the figure files: run the command "./generateReport.sh" simply. The results of comparing different compressors (such as sz and zfp in this test-case) are stored in the directory called compareCompressors/.
 
 ----------Create a new case--------------
-The directory ./Z-checker/examples is one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
-For another test case with another set of data or application, you can create a new workspace directory by the script ./Z-checker/createNewCase.sh.
-For example, run createNewCase.sh case1; and then go to the newly generated directory case1 and perform the assessment steps as above four steps.
+"createNewZCCase.sh [test-case-name]" allows you to create a new test-case.  This command will create a new workspace directory in Z-checker, SZ, and zfp respectively. The compression results will be put in those workspace directories in case of mixing.
+
+For example, if you run the generateReport.sh in the directory ./Z-checker/examples, it is actually one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
+For another test case with another set of data or application, you can create a new workspace directory by the script createNewZCCase.sh (which calls ./Z-checker/createNewCase.sh).
