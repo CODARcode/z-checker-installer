@@ -9,6 +9,10 @@ make
 make install
 cp ../zc-patches/generateReport.sh ./examples/
 
+cd examples
+make clean
+make
+
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
 cd zfp
@@ -33,4 +37,5 @@ cp ../../Z-checker/examples/zc.config .
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 
-
+make clean
+make
