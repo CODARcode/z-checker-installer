@@ -51,3 +51,6 @@ Unlike the above one-command checking, the following steps present the generatio
 
 For example, if you run the generateReport.sh in the directory ./Z-checker/examples, it is actually one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
 For another test case with another set of data or application, you can create a new workspace directory by the script createNewZCCase.sh (which calls ./Z-checker/createNewCase.sh).
+
+---------- z-checker-update.sh ----------
+z-checker-update.sh can be used to update the repository (pull the new update from the server), so that you don't have to perform the update manually.
