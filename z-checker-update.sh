@@ -19,11 +19,9 @@ cd zfp
 git pull
 make
 
-cd -
-cp zfp-patches/zfp-zc.c zfp/utils
-cp zfp-patches/*.sh zfp/utils
-
-make
+#cd -
+#cp zfp-patches/zfp-zc.c zfp/utils
+#cp zfp-patches/*.sh zfp/utils
 
 #---------- download SZ and set the configuration -----------
 cd $rootDir
