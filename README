@@ -47,7 +47,7 @@ Unlike the above one-command checking, the following steps present the generatio
 4. Generate the figure files: run the command "./generateReport.sh" simply. The results of comparing different compressors (such as sz and zfp in this test-case) are stored in the directory called compareCompressors/.
 
 ----------Create a new case--------------
-"createNewZCCase.sh [test-case-name]" allows you to create a new test-case.  This command will create a new workspace directory in Z-checker, SZ, and zfp respectively. The compression results will be put in those workspace directories in case of mixing.
+"createNewZCCase.sh [test-case-name]" allows you to create a new test-case.  This command will create a new workspace directory in Z-checker, SZ, and zfp respectively. The compression results will be put in those workspace directories to avoid bing messed with other test-cases.
 
 For example, if you run the generateReport.sh in the directory ./Z-checker/examples, it is actually one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
 For another test case with another set of data or application, you can create a new workspace directory by the script createNewZCCase.sh (which calls ./Z-checker/createNewCase.sh).
