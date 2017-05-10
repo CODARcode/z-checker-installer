@@ -5,9 +5,10 @@
 Authors: Sheng Di, Hanqi Guo
 
 ---------3rd party libraries/tools---------
+perl
 git
-latexmk
-gnuplot (z-checker-install.sh will install gnuplot)
+latexmk (z-checker-install2.sh and z-checker-install.sh will install latexmk automatically)
+gnuplot (z-checker-install.sh will install gnuplot automatically)
 
 ---------Testing/Installation method--------
 

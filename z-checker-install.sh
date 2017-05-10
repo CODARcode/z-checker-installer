@@ -57,4 +57,24 @@ patch -p0 < ../../zc-patches/zc-probe.config.patch
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 
+#----------- download latexmk --------------------------------
+cd $rootDir
+latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip
+latexmk_dir=latexmk
+if [ ! -d "$latexmk_dir" ]; then
+	curl -O $latexmk_url
+	unzip latexmk.zip
+	cd $latexmk_dir
+	ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
+	if [ -f ~/.zshrc ]; then
+		echo "export PATH=$rootDir/$latexmk_dir:\$PATH" >> ~/.zshrc
+		source ~/.zshrc
+	elif [ -f ~/.bashrc ]; then
+		echo "export PATH=$rootDir/$latexmk_dir:\$PATH" >> ~/.bashrc
+		source ~/.bashrc
+	else
+		echo "Note: cannot find ~/.bashrc or ~/.zshrc"
+		echo "Please add \"export PATH=$rootDir/$latexmk_dir:\$PATH\" to your reboot-environment-variable list."
+	fi
+fi
 
