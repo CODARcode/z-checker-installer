@@ -2,6 +2,8 @@
 
 rootDir=`pwd`
 
+git pull
+
 #---------- download Z-checker --------------
 cd Z-checker
 git pull
