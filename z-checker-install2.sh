@@ -63,6 +63,6 @@ if [ ! -d "$latexmk_dir" ]; then
 		source ~/.bashrc
 	else
 		echo "Note: cannot find ~/.bashrc or ~/.zshrc"
-		echo "Please add \"export PATH=\$PATH:$rootDir/$latexmk_dir" to your reboot-environment-variable list."
+		echo "Please add \"export PATH=\$PATH:$rootDir/$latexmk_dir\" to your reboot-environment-variable list."
 	fi
 fi
