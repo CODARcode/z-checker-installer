@@ -56,13 +56,13 @@ if [ ! -d "$latexmk_dir" ]; then
 	cd $latexmk_dir
 	ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
 	if [ -f ~/.zshrc ]; then
-		echo "export PATH=$rootDir/$latexmk_dir:\$PATH" >> ~/.zshrc
+		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> ~/.zshrc
 		source ~/.zshrc
 	elif [ -f ~/.bashrc ]; then
-		echo "export PATH=$rootDir/$latexmk_dir:\$PATH" >> ~/.bashrc
+		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> ~/.bashrc
 		source ~/.bashrc
 	else
 		echo "Note: cannot find ~/.bashrc or ~/.zshrc"
-		echo "Please add \"export PATH=$rootDir/$latexmk_dir:\$PATH\" to your reboot-environment-variable list."
+		echo "Please add \"export PATH=\$PATH:$rootDir/$latexmk_dir" to your reboot-environment-variable list."
 	fi
 fi
