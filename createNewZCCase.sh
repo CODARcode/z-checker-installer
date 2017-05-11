@@ -37,7 +37,7 @@ cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config
 cd $sz_caseName
-ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecopm
+ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
 cd ..
 
