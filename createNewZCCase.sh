@@ -9,6 +9,8 @@ fi
 
 caseName=$1
 
+rootDir=`pwd`
+
 echo Create a new case $caseName for Z-checker
 cd Z-checker
 ./createNewCase.sh $caseName
@@ -18,11 +20,11 @@ cd ../SZ
 sz_caseName=${caseName}_fast
 mkdir $sz_caseName
 cp example/sz-zc-ratedistortion.sh $sz_caseName
-cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
 cd $sz_caseName
+ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
 cd ..
 
@@ -31,11 +33,11 @@ cd ../SZ
 sz_caseName=${caseName}_deft
 mkdir $sz_caseName
 cp example/sz-zc-ratedistortion.sh $sz_caseName
-cp example/testfloat_CompDecomp $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config
 cd $sz_caseName
+ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecopm
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
 cd ..
 
