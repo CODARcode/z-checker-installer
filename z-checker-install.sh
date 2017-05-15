@@ -3,14 +3,28 @@
 rootDir=`pwd`
 
 #---------- download gnuplot ----------------
-git clone https://github.com/gnuplot/gnuplot.git
-cd gnuplot
-./prepare
-./configure --prefix=$rootDir/gnuplot/gnuplot-install
-make
-make install
-echo "export PATH=$rootDir/gnuplot/gnuplot-install/bin:\$PATH" >> ~/.bashrc
-source ~/.bashrc
+GNUPLOT_URL="https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnuplot-5.0.6.tar.gz"
+GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
+GNUPLOT_DIR=$rootDir/gnuplot-5.0.6-install
+
+if [ ! -d "$GNUPLOT_DIR" ] ; then
+  # download gnuplot source
+  curl -L https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnuplot-5.0.6.tar.gz | tar zxf -
+  if [ ! -d "$GNUPLOT_SRC_DIR" ] ; then
+    echo "FATAL: cannot download and extract gnuplot source."
+    exit
+  fi
+
+  # compile gnuplot
+  cd $GNUPLOT_SRC_DIR
+  ./configure --prefix=$GNUPLOT_DIR
+  make && make install
+  cd $rootDir
+
+  echo "export PATH=$rootDir/gnuplot/gnuplot-install/bin:\$PATH" >> ~/.bashrc
+  source ~/.bashrc
+fi
+
 
 #---------- download Z-checker --------------
 cd $rootDir
