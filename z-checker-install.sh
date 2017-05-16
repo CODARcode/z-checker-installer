@@ -8,21 +8,20 @@ GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
 GNUPLOT_DIR=$rootDir/gnuplot-5.0.6-install
 
 if [ ! -d "$GNUPLOT_DIR" ] ; then
-  # download gnuplot source
-  curl -L https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnuplot-5.0.6.tar.gz | tar zxf -
-  if [ ! -d "$GNUPLOT_SRC_DIR" ] ; then
-    echo "FATAL: cannot download and extract gnuplot source."
-    exit
-  fi
+	# download gnuplot source
+	curl -L $GNUPLOT_URL | tar zxf -
+	if [ ! -d "$GNUPLOT_SRC_DIR" ] ; then
+		echo "FATAL: cannot download and extract gnuplot source."
+		exit
+	fi
 
-  # compile gnuplot
-  cd $GNUPLOT_SRC_DIR
-  ./configure --prefix=$GNUPLOT_DIR
-  make && make install
-  cd $rootDir
+	# compile gnuplot
+	cd $GNUPLOT_SRC_DIR
+	./configure --prefix=$GNUPLOT_DIR
+	make && make install
+	cd $rootDir
 
-  echo "export PATH=$rootDir/gnuplot/gnuplot-install/bin:\$PATH" >> ~/.bashrc
-  source ~/.bashrc
+	echo "export PATH=$rootDir/gnuplot/gnuplot-install/bin:\$PATH" >> env.config
 fi
 
 
@@ -81,11 +80,9 @@ if [ ! -d "$latexmk_dir" ]; then
 	cd $latexmk_dir
 	ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
 	if [ -f ~/.zshrc ]; then
-		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> ~/.zshrc
-		source ~/.zshrc
+		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env.config
 	elif [ -f ~/.bashrc ]; then
-		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> ~/.bashrc
-		source ~/.bashrc
+		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env.config
 	else
 		echo "Note: cannot find ~/.bashrc or ~/.zshrc"
 		echo "Please add \"export PATH=$rootDir/$latexmk_dir:\$PATH\" to your reboot-environment-variable list."
