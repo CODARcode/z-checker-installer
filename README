@@ -7,13 +7,12 @@ Authors: Sheng Di, Hanqi Guo
 ---------3rd party libraries/tools---------
 perl
 git
-latexmk (z-checker-install2.sh and z-checker-install.sh will install latexmk automatically)
-gnuplot (z-checker-install.sh will install gnuplot automatically)
+latexmk (z-checker-install.sh will install latexmk automatically is it's not installed)
+gnuplot (z-checker-install.sh will install gnuplot automatically is it's not installed)
 
 ---------Testing/Installation method--------
 
 z-checker-install.sh will download latexmk, gnuplot, Z-checker, ZFP, and SZ and install them one by one automatically, and then add the patches to let ZFP and SZ fit for Z-checker.
-z-checker-install2.sh will download latexmk, Z-checker, ZFP, and SZ and install them, without installation of gnuplot (assuming you already installed gnuplot).
 
 After installation, please download the two testing data sets, CESM-ATM and MD-simulation (exaalt). The two data sets are available only for the purpose of research of compression. Please ask for the data by contacting sdi1@anl.gov if interested.
 
