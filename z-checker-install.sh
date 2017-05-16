@@ -2,9 +2,16 @@
 
 rootDir=`pwd`
 
+#----------check git and perl---------------
+PERL_PATH=`which perl`
+if [ ! -x ${PERL_PATH} ]; then
+	echo "Error: missing perl command; Please install perl."
+	exit
+fi
+
 #---------- download gnuplot ----------------
 GNUPLOT_URL="https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnuplot-5.0.6.tar.gz"
-#GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
+GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
 GNUPLOT_DIR=$rootDir/gnuplot-5.0.6-install
 
 GNUPLOT_EXE_PATH=`which gnuplot`
@@ -91,5 +98,31 @@ fi
 if [ -f env_config.sh ]; then
 	echo "export PATH=\$PATH:\$GNUPLOT_HOME/bin:\$LATEXMK_HOME/bin" >> env_config.sh
 	mv env_config.sh Z-checker/examples/env_config.sh
+fi
+
+#----------- download ghost view (gsview) if necessary-----------
+cd $rootDir
+ghost_url=https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostpdl-9.21.tar.gz
+ghost_src_dir=$rootDir/ghostpdl-9.21
+ghost_dir=$rootDir/ghostpdl-9.21-install
+PS2PDF_EXE_PATH=`which ps2pdf`
+if [ ! -x "$PS2PDF_EXE_PATH" ]; then
+        if [ ! -d "$ghost_dir" ]; then
+                # download ghost source
+                curl -L $ghost_dir | tar zxf -
+                if [ ! -d "$ghost_drc_dir" ] ; then
+                        echo "FATAL: cannot download and extract ghost source."
+                        exit
+                fi
+
+                # compile ghost
+                cd $ghost_src_dir
+                ./configure --prefix=$ghost_dir
+                make && make install
+                cd $rootDir
+
+                echo "export PATH=$ghost_dir/bin:\$PATH" > env_config.sh
+        fi
+
 fi
 
