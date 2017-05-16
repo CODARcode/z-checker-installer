@@ -16,6 +16,29 @@ dim4=$6
 
 rootDir=`pwd`
 
+envConfigPath=Z-checker/examples/env_config.sh
+GNUPLOT_EXE_PATH=`which gnuplot`
+if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
+	if [ -f $envConfigPath ]; then
+		source $envConfigPath
+	else
+		echo "Error: gnuplot is not executable and cannot find Z-checker/examples/env_config.sh either."
+		exit
+	fi
+fi
+
+LATEXMK_EXE_PATH=`which latex`
+if [ ! -x "$LATEXMK_EXE_PATH" ]; then
+	if [ -z "$GNUPLOT_EXE_PATH" ]; then
+		if [ -f $envConfigPath ]; then
+			source $envConfigPath
+		else
+			echo "Error: latexmk is not executable and cannot find Z-checker/examples/env_config.sh either."
+			exit
+		fi
+	fi
+fi
+
 cd SZ/${testcase}_fast
 echo ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
 ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4

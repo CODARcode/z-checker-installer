@@ -4,26 +4,29 @@ rootDir=`pwd`
 
 #---------- download gnuplot ----------------
 GNUPLOT_URL="https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnuplot-5.0.6.tar.gz"
-GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
+#GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
 GNUPLOT_DIR=$rootDir/gnuplot-5.0.6-install
 
-if [ ! -d "$GNUPLOT_DIR" ] ; then
-	# download gnuplot source
-	curl -L $GNUPLOT_URL | tar zxf -
-	if [ ! -d "$GNUPLOT_SRC_DIR" ] ; then
-		echo "FATAL: cannot download and extract gnuplot source."
-		exit
+GNUPLOT_EXE_PATH=`which gnuplot`
+if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
+	if [ ! -d "$GNUPLOT_DIR" ]; then
+		# download gnuplot source
+		curl -L $GNUPLOT_URL | tar zxf -
+		if [ ! -d "$GNUPLOT_SRC_DIR" ] ; then
+			echo "FATAL: cannot download and extract gnuplot source."
+			exit
+		fi
+
+		# compile gnuplot
+		cd $GNUPLOT_SRC_DIR
+		./configure --prefix=$GNUPLOT_DIR
+		make && make install
+		cd $rootDir
+
+		echo "export PATH=$GNUPLOT_DIR/bin:\$PATH" > env_config.sh
 	fi
 
-	# compile gnuplot
-	cd $GNUPLOT_SRC_DIR
-	./configure --prefix=$GNUPLOT_DIR
-	make && make install
-	cd $rootDir
-
-	echo "export PATH=$rootDir/gnuplot/gnuplot-install/bin:\$PATH" >> env.config
 fi
-
 
 #---------- download Z-checker --------------
 cd $rootDir
@@ -74,18 +77,19 @@ cp ../../sz-patches/testfloat_CompDecomp.sh .
 cd $rootDir
 latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip
 latexmk_dir=latexmk
-if [ ! -d "$latexmk_dir" ]; then
-	curl -O $latexmk_url
-	unzip latexmk.zip
-	cd $latexmk_dir
-	ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
-	if [ -f ~/.zshrc ]; then
-		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env.config
-	elif [ -f ~/.bashrc ]; then
-		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env.config
-	else
-		echo "Note: cannot find ~/.bashrc or ~/.zshrc"
-		echo "Please add \"export PATH=$rootDir/$latexmk_dir:\$PATH\" to your reboot-environment-variable list."
+latexmk_exe_path=`which latexmk`
+if [ ! -x "$latexmk_exe_path" ]; then
+	if [ ! -d "$latexmk_dir" ]; then
+		curl -O $latexmk_url
+		unzip latexmk.zip
+		cd $latexmk_dir
+		ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
+		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env_config.sh
 	fi
+fi
+
+if [ -f env_config.sh ]; then
+	echo "export PATH=\$PATH:\$GNUPLOT_HOME/bin:\$LATEXMK_HOME/bin" >> env_config.sh
+	mv env_config.sh Z-checker/examples/env_config.sh
 fi
 
