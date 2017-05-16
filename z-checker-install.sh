@@ -29,8 +29,7 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 		./configure --prefix=$GNUPLOT_DIR
 		make && make install
 		cd $rootDir
-
-		echo "export PATH=$GNUPLOT_DIR/bin:\$PATH" > env_config.sh
+		echo "export GNUPLOT_HOME=$GNUPLOT_DIR" > env_config.sh
 	fi
 
 fi
@@ -91,13 +90,8 @@ if [ ! -x "$latexmk_exe_path" ]; then
 		unzip latexmk.zip
 		cd $latexmk_dir
 		ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
-		echo "export PATH=\$PATH:$rootDir/$latexmk_dir" >> env_config.sh
+		echo "export LATEX_HOME=$rootDir/$latexmk_dir" >> env_config.sh
 	fi
-fi
-
-if [ -f env_config.sh ]; then
-	echo "export PATH=\$PATH:\$GNUPLOT_HOME/bin:\$LATEXMK_HOME/bin" >> env_config.sh
-	mv env_config.sh Z-checker/examples/env_config.sh
 fi
 
 #----------- download ghost view (gsview) if necessary-----------
@@ -120,9 +114,12 @@ if [ ! -x "$PS2PDF_EXE_PATH" ]; then
                 ./configure --prefix=$ghost_dir
                 make && make install
                 cd $rootDir
-
-                echo "export PATH=$ghost_dir/bin:\$PATH" > env_config.sh
+		echo "export GHOST_HOME=$ghost_dir" >> env_config.sh
         fi
 
 fi
 
+if [ -f env_config.sh ]; then
+	echo "export PATH=\$PATH:\$GNUPLOT_HOME/bin:\$LATEXMK_HOME:\$GHOST_HOME/bin" >> env_config.sh
+	mv env_config.sh Z-checker/examples/env_config.sh
+fi
