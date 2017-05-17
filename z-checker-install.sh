@@ -2,6 +2,14 @@
 
 rootDir=`pwd`
 
+#----------check X11------------------------
+X_PATH=`which X`
+if [ ! -x ${X_PATH} ];then
+	echo "Error: missing X11!"
+	echo "Please install X11 first (requiring root previlege)."
+	exit
+fi
+
 #----------check git and perl---------------
 PERL_PATH=`which perl`
 if [ ! -x ${PERL_PATH} ]; then
