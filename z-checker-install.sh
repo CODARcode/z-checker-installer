@@ -92,7 +92,7 @@ if [ ! -x "$latexmk_exe_path" ]; then
 		cd $latexmk_dir
 		ln -s "$rootDir/$latexmk_dir/latexmk.pl" latexmk
 		echo "export LATEXMK_HOME=$rootDir/$latexmk_dir" >> $rootDir/env_config.sh
-		echo "export \$PATH:\$LATEXMK_HOME/bin" >> $rootDir/env_config.sh
+		echo "export \$PATH:\$LATEXMK_HOME" >> $rootDir/env_config.sh
 		cd $rootDir
 		rm -rf latexmk.zip
 	fi
