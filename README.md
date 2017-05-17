@@ -12,8 +12,10 @@ Authors: Sheng Di, Hanqi Guo
 - gcc
 - perl
 - git
-- latexmk (z-checker-install.sh will install latexmk automatically is it's not installed)
-- gnuplot (z-checker-install.sh will install gnuplot automatically is it's not installed)
+- texlive
+- ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
+- latexmk (z-checker-install.sh will install latexmk automatically if missing)
+- gnuplot (z-checker-install.sh will install gnuplot automatically if missing)
 
 ## Testing/Installation method
 
