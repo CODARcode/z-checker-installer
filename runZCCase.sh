@@ -8,7 +8,7 @@ then
 fi 
 
 testcase=$1
-dataDir=$2
+dataDir=`cd "$2"; pwd`
 dim1=$3
 dim2=$4
 dim3=$5
