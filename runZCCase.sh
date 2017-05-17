@@ -16,6 +16,16 @@ dim4=$6
 
 rootDir=`pwd`
 
+if [ ! -d "Z-checker/$testcase" ]; then
+	echo "Error: Testcase $testcase doesn't exist!"
+	exit
+fi
+
+if [ ! -d "$dataDir" ]; then
+	echo "Error: $dataDir doesn't exist!"
+	exit
+fi
+
 envConfigPath="$rootDir/Z-checker/examples/env_config.sh"
 GNUPLOT_EXE_PATH=`which gnuplot`
 if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
