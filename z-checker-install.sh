@@ -100,15 +100,15 @@ fi
 
 #----------- download ghost view (gsview) if necessary-----------
 cd $rootDir
-ghost_url=https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostpdl-9.21.tar.gz
+ghost_url="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostpdl-9.21.tar.gz"
 ghost_src_dir=$rootDir/ghostpdl-9.21
 ghost_dir=$rootDir/ghostpdl-9.21-install
 PS2PDF_EXE_PATH=`which ps2pdf`
 if [ ! -x "$PS2PDF_EXE_PATH" ]; then
         if [ ! -d "$ghost_dir" ]; then
                 # download ghost source
-                curl -L $ghost_dir | tar zxf -
-                if [ ! -d "$ghost_drc_dir" ] ; then
+                curl -L $ghost_url | tar zxf -
+                if [ ! -d "$ghost_src_dir" ] ; then
                         echo "FATAL: cannot download and extract ghost source."
                         exit
                 fi
@@ -123,6 +123,7 @@ if [ ! -x "$PS2PDF_EXE_PATH" ]; then
         fi
 
 fi
+
 
 if [ -f $rootDir/env_config.sh ]; then
 	mv $rootDir/env_config.sh $rootDir/Z-checker/examples/env_config.sh
