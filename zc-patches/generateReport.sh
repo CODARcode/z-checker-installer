@@ -39,7 +39,9 @@ echo ./generateReport zc.config $dataSetName
 ./generateReport zc.config $dataSetName
 
 cd report
-make clean
+if [ -f z-checker-report.pdf ]; then
+	make clean
+fi
 make
 cd ..
 
