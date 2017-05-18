@@ -11,6 +11,12 @@ caseName=$1
 
 rootDir=`pwd`
 
+if [ ! -d Z-checker ]; then
+	echo "Error: missing Z-checker directory. "
+	echo "Please run z-checker-install.sh first."
+	exit
+fi
+
 echo Create a new case $caseName for Z-checker
 cd Z-checker
 ./createNewCase.sh $caseName
