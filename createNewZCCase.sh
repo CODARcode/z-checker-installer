@@ -24,7 +24,9 @@ cd Z-checker
 echo "Create a new case (fast mode) for SZ"
 cd ../SZ
 sz_caseName=${caseName}_fast
-mkdir $sz_caseName
+if [ ! -d $sz_caseName ]; then
+	mkdir $sz_caseName
+fi
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
@@ -37,7 +39,9 @@ cd ..
 echo "Create a new case (default mode) for SZ"
 cd ../SZ
 sz_caseName=${caseName}_deft
-mkdir $sz_caseName
+if [ ! -d $sz_caseName ]; then
+	mkdir $sz_caseName
+fi
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
@@ -50,7 +54,9 @@ cd ..
 echo Create a new case for ZFP
 cd ../zfp
 zfp_caseName=${caseName}
-mkdir $zfp_caseName
+if [ ! -d $zfp_caseName ]; then
+	mkdir $zfp_caseName
+fi
 cp utils/*.sh $zfp_caseName
 
 echo Modify Z-checker/$caseName/zc.config

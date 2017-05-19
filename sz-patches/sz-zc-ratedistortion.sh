@@ -14,11 +14,19 @@ dim2=$3
 dim3=$4
 dim4=$5
 
-./testfloat_CompDecomp.sh 1E-8 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-7 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-6 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-5 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-4 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-3 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-2 "$dataDir" $dim1 $dim2 $dim3 $dim4
-./testfloat_CompDecomp.sh 1E-1 "$dataDir" $dim1 $dim2 $dim3 $dim4
+#Note: If you run this script by z-checker-installer, SZ_Err_Bounds will be overwritten by ../../errBounds.cfg as follows.
+SZ_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
+
+if [ -f ../../errBounds.cfg ]; then
+	sz_err_env="`cat ../../errBounds.cfg | grep SZ_ERR_BOUNDS`"
+	echo "export $sz_err_env" > env.tmp
+	source env.tmp
+	rm env.tmp
+	SZ_Err_Bounds="`echo $SZ_ERR_BOUNDS`"
+fi
+
+for errBound in $SZ_Err_Bounds
+do
+	./testfloat_CompDecomp.sh $errBound "$dataDir" $dim1 $dim2 $dim3 $dim4
+done
+

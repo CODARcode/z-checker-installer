@@ -69,4 +69,30 @@ echo ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 echo ./generateReport.sh ${testcase}
-./generateReport.sh ${testcase}
+sz_err_env="`cat ../../errBounds.cfg | grep COMPARISON_ERR_BOUNDS`"
+echo "export $sz_err_env" > env.tmp
+source env.tmp
+rm env.tmp
+Comparison_Err_Bounds="`echo $COMPARISON_ERR_BOUNDS`"
+
+compressors="sz_f sz_d zfp"
+comparisonStr="";
+for err in $Comparison_Err_Bounds
+do
+	i=1
+	for comp in $compressors
+	do
+		if [ $i = 1 ]
+		then
+			comparisonStr="${comparisonStr} ${comp}(${err})"
+		else
+			comparisonStr="${comparisonStr},${comp}(${err})"
+		fi
+		i=$[$i+1]
+	done
+done
+
+echo comparisonStr=$comparisonStr
+./modifyZCConfig zc.config comparisonCases "$comparisonStr"
+
+./generateReport.sh ${testcase} 
