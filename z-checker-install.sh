@@ -85,7 +85,8 @@ make -f Makefile.bk
 cp ../../Z-checker/examples/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
 
-cp ../../sz-patches/sz-zc-ratedistortion.sh .
+cp ../../sz-patches/sz_f-zc-ratedistortion.sh .
+cp ../../sz-patches/sz_d-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 
 #----------- download latexmk --------------------------------

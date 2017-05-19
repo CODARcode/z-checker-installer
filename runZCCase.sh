@@ -69,14 +69,16 @@ echo ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 echo ./generateReport.sh ${testcase}
-sz_err_env="`cat ../../errBounds.cfg | grep COMPARISON_ERR_BOUNDS`"
-echo "export $sz_err_env" > env.tmp
+sz_cmp_env="`cat ../../errBounds.cfg | grep SZ_COMPARE_BOUNDS`"
+echo "export $sz_cmp_env" > env.tmp
 source env.tmp
 rm env.tmp
-Comparison_Err_Bounds="`echo $COMPARISON_ERR_BOUNDS`"
+SZ_Compare_Bounds="`echo $SZ_COMPARE_BOUNDS`"
 
 compressors="sz_f sz_d zfp"
 comparisonStr="";
+for err in $Comparison_Err_Bounds
+
 for err in $Comparison_Err_Bounds
 do
 	i=1

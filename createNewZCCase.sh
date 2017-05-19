@@ -27,7 +27,7 @@ sz_caseName=${caseName}_fast
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
 fi
-cp example/sz-zc-ratedistortion.sh $sz_caseName
+cp example/sz_f-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
@@ -42,7 +42,7 @@ sz_caseName=${caseName}_deft
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
 fi
-cp example/sz-zc-ratedistortion.sh $sz_caseName
+cp example/sz_d-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config

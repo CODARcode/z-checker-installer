@@ -18,11 +18,11 @@ dim4=$5
 SZ_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
 
 if [ -f ../../errBounds.cfg ]; then
-	sz_err_env="`cat ../../errBounds.cfg | grep SZ_ERR_BOUNDS`"
+	sz_err_env="`cat ../../errBounds.cfg | grep sz_d_ERR_BOUNDS`"
 	echo "export $sz_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp
-	SZ_Err_Bounds="`echo $SZ_ERR_BOUNDS`"
+	SZ_Err_Bounds="`echo $sz_d_ERR_BOUNDS`"
 fi
 
 for errBound in $SZ_Err_Bounds
