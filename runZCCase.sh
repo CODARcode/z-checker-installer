@@ -50,13 +50,13 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 fi
 
 cd SZ/${testcase}_fast
-echo ./sz_f-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
-./sz_f-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd SZ/${testcase}_deft
-echo ./sz_d-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
-./sz_d-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd zfp/${testcase}
@@ -68,33 +68,14 @@ cd Z-checker/${testcase}
 echo ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
-echo ./generateReport.sh ${testcase}
-sz_cmp_env="`cat ../../errBounds.cfg | grep SZ_COMPARE_BOUNDS`"
-echo "export $sz_cmp_env" > env.tmp
+sz_err_env="`cat ../../errBounds.cfg | grep comparisonCases`"
+echo "export $sz_err_env" > env.tmp
 source env.tmp
 rm env.tmp
-SZ_Compare_Bounds="`echo $SZ_COMPARE_BOUNDS`"
+SZ_Err_Bounds="`echo $comparisonCases`"
 
-compressors="sz_f sz_d zfp"
-comparisonStr="";
-for err in $Comparison_Err_Bounds
+echo comparisonCases=$comparisonCases
+./modifyZCConfig zc.config comparisonCases "$comparisonCases"
 
-for err in $Comparison_Err_Bounds
-do
-	i=1
-	for comp in $compressors
-	do
-		if [ $i = 1 ]
-		then
-			comparisonStr="${comparisonStr} ${comp}(${err})"
-		else
-			comparisonStr="${comparisonStr},${comp}(${err})"
-		fi
-		i=$[$i+1]
-	done
-done
-
-echo comparisonStr=$comparisonStr
-./modifyZCConfig zc.config comparisonCases "$comparisonStr"
-
+echo ./generateReport.sh ${testcase}
 ./generateReport.sh ${testcase} 
