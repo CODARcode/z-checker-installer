@@ -50,13 +50,13 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 fi
 
 cd SZ/${testcase}_fast
-echo ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz_f-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+./sz_f-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd SZ/${testcase}_deft
-echo ./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz_d-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
+./sz_d-zc-ratedistortion.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd zfp/${testcase}

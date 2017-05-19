@@ -34,7 +34,8 @@ make install
 
 cd example
 cp ../../Z-checker/examples/zc.config .
-cp ../../sz-patches/sz-zc-ratedistortion.sh .
+cp ../../sz-patches/sz_f-zc-ratedistortion.sh .
+cp ../../sz-patches/sz_d-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 
 make clean
