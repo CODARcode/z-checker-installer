@@ -50,7 +50,7 @@ if [ -f ../../zc-patches/zc-compare.config.patch ]; then
 fi
 
 if [ ! -f report/z-checker-report.pdf ]; then
-	gzip -r report.zip report
+	zip -r report.zip report
 	echo "Notice: Your local latexmk cannot generate the report successfully."
 	echo "In this situation, you should install some dependencies such as latex to resolve the latexmk compilation issue. "
 	echo "Alternatively, you can also upload the source code (called report.zip) of the report we generated to Overleaf instead."
