@@ -68,7 +68,7 @@ cd Z-checker/${testcase}
 echo ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $dataDir $dim1 $dim2 $dim3 $dim4
 
-sz_err_env="`cat ../../errBounds.cfg | grep comparisonCases`"
+sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
 echo "export $sz_err_env" > env.tmp
 source env.tmp
 rm env.tmp

@@ -16,7 +16,7 @@ dim4=$5
 ZFP_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
 
 if [ -f ../../errBounds.cfg ]; then
-	zfp_err_env="`cat ../../errBounds.cfg | grep ZFP_ERR_BOUNDS`"
+	zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
 	echo "export $zfp_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp
