@@ -36,6 +36,7 @@ cd example
 cp ../../Z-checker/examples/zc.config .
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
+cp ../../sz-patches/testdouble_CompDecomp.sh .
 
 make clean
 make
