@@ -35,7 +35,7 @@ cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
 cd $sz_caseName
 ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
-ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testfloat_CompDecomp
+ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
 patch -p0 < ../../sz-patches/testdouble_CompDecomp_fast.sh.patch
 cd ..
 
