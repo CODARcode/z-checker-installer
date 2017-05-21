@@ -29,11 +29,14 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
+cp example/testdouble_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.fast_mode $sz_caseName/sz.config
 cd $sz_caseName
 ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
+ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testfloat_CompDecomp
+patch -p0 < ../../sz-patches/testdouble_CompDecomp_fast.sh.patch
 cd ..
 
 echo "Create a new case (default mode) for SZ"
@@ -44,11 +47,14 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp example/sz-zc-ratedistortion.sh $sz_caseName
 cp example/testfloat_CompDecomp.sh $sz_caseName
+cp example/testdouble_CompDecomp.sh $sz_caseName
 cp example/zc.config $sz_caseName
 cp ../sz-patches/sz.config.default_mode $sz_caseName/sz.config
 cd $sz_caseName
 ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
+ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
+patch -p0 < ../../sz-patches/testdouble_CompDecomp_deft.sh.patch
 cd ..
 
 echo Create a new case for ZFP
