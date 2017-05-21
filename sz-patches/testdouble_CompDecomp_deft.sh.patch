@@ -1,0 +1,13 @@
+--- testdouble_CompDecomp.sh	2017-05-20 15:43:39.020897510 -0500
++++ testdouble_CompDecomp_deft.sh	2017-05-20 16:02:23.189728298 -0500
+@@ -17,8 +17,8 @@
+ fileList=`cd "$dataDir";ls *.dat`
+ for file in $fileList
+ do
+-        echo testdouble_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
+-        ./testdouble_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
++        echo testdouble_CompDecomp sz.config zc.config "sz_d($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
++        ./testdouble_CompDecomp sz.config zc.config "sz_d($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
+ done
+ 
+ echo "complete"

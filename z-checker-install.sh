@@ -87,6 +87,7 @@ patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
+cp ../../sz-patches/testdouble_CompDecomp.sh .
 
 #----------- download latexmk --------------------------------
 cd $rootDir
