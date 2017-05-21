@@ -18,7 +18,7 @@
  
  ##   TARGETS
 -all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress
-+all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress testfloat_CompDecomp
++all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress testfloat_CompDecomp testdouble_CompDecomp
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testfloat_compress:	testfloat_compress.c
@@ -58,9 +58,11 @@
 +	$(CC) -lm -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
 +
 +testfloat_CompDecomp:	testfloat_CompDecomp.c
-+	$(CC) -lm -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG) $(ZCFLAG)
- 
++	$(CC) -lm -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG) $(ZCFLAG) 
++testdouble_CompDecomp:	testdouble_CompDecomp.c
++	$(CC) -lm -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(SZFLAG) $(ZCFLAG)
+
  clean:
 -	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f
-+	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f testfloat_CompDecomp
++	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f test*_CompDecomp
  
