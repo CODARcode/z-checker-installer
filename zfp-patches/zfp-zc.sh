@@ -17,14 +17,14 @@ let dim=$#-4
 
 if [[ $dim == 1 ]]
 then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 elif [[ $dim == 2 ]]
 then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 elif [[ $dim == 3 ]]
 then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $4 $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 fi

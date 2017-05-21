@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $# < 3  ]]; then
+if [[ $# < 3 ]]; then
 	echo "Usage: $0 [datatype (-f or -d)] [data directory] [dimension sizes....]"
 	echo Example: $0 -f /home/shdi/CESM-testdata/1800x3600 3600 1800
 	exit
