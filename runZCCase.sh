@@ -1,14 +1,13 @@
 #!/bin/bash
 
-datatype=$1
-echo "$datatype"
 if [[ $# < 4 || ( $datatype != "-f" && $datatype != "-d" ) ]]
 then
-	echo "Usage: $0 [datatype (-f or -d)] [testcase] [data dir] [dimensions....]"
-	echo "Example: $0 -f testcase1 CESM-testdata/1800x3600 3600 1800"
+	echo "Usage: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [data dir] [dimensions....]"
+	echo "Example: $0 -f ABS testcase1 CESM-testdata/1800x3600 3600 1800"
 	exit
 fi 
 
+datatype=$1
 errBoundMode=$2
 testcase=$3
 dataDir=`cd "$4"; pwd`
