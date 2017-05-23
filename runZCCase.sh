@@ -1,5 +1,6 @@
 #!/bin/bash
 
+datatype=$1
 if [[ $# < 4 || ( $datatype != "-f" && $datatype != "-d" ) ]]
 then
 	echo "Usage: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [data dir] [dimensions....]"
@@ -7,7 +8,6 @@ then
 	exit
 fi 
 
-datatype=$1
 errBoundMode=$2
 testcase=$3
 dataDir=`cd "$4"; pwd`
