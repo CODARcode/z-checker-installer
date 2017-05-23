@@ -70,6 +70,6 @@ if [ ! -d $zfp_caseName ]; then
 fi
 cp utils/*.sh $zfp_caseName
 
-echo Modify Z-checker/$caseName/zc.config
-cd ../Z-checker/$caseName
+echo Modify Z-checker/$caseName-pwr/zc.config
+cd ../Z-checker/$caseName-pwr
 ./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}-pwr_fast sz_d:../../SZ/${caseName}-pwr_deft zfp:../../zfp/${zfp_caseName}"

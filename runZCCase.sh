@@ -18,9 +18,16 @@ dim4=$8
 
 rootDir=`pwd`
 
-if [ ! -d "Z-checker/$testcase" ]; then
-	echo "Error: Testcase $testcase doesn't exist!"
-	exit
+if [[ $errBoundMode == "ABS" ]]; then
+	if [ ! -d "Z-checker/$testcase" ]; then
+		echo "Error: Testcase $testcase doesn't exist!"
+		exit
+	fi
+elif [[ $errBoundMode == "PW_REL" ]]; then
+	if [ ! -d "Z-checker/$testcase-pwr" ]; then
+		echo "Error: Testcase $testcase for PW_REL doesn't exist!"
+		exit
+	fi
 fi
 
 if [ ! -d "$dataDir" ]; then
@@ -51,22 +58,22 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
-cd SZ/${testcase}_fast
+cd SZ/${testcase}-pwr_fast
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd SZ/${testcase}_deft
+cd SZ/${testcase}-pwr_deft
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd zfp/${testcase}
+cd zfp/${testcase}-pwr
 echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd Z-checker/${testcase}
+cd Z-checker/${testcase}-pwr
 echo ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 
@@ -83,5 +90,5 @@ SZ_Err_Bounds="`echo $comparisonCases`"
 echo comparisonCases=$comparisonCases
 ./modifyZCConfig zc.config comparisonCases "$comparisonCases"
 
-echo ./generateReport.sh ${testcase}
-./generateReport.sh ${testcase} 
+echo ./generateReport.sh ${testcase}-pwr
+./generateReport.sh "${testcase} with PW_REL"
