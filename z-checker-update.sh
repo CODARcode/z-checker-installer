@@ -4,6 +4,12 @@ rootDir=`pwd`
 
 git pull
 
+if [ ! -d Z-checker ]; then
+	echo "Error: no Z-checker directory."
+	echo "Please use z-checker-installer.sh to perform the installation first."
+	exit
+fi
+
 #---------- download Z-checker --------------
 cd Z-checker
 git pull
@@ -19,11 +25,12 @@ make
 cd $rootDir
 cd zfp
 git pull
-make
 
-#cd -
-#cp zfp-patches/zfp-zc.c zfp/utils
-#cp zfp-patches/*.sh zfp/utils
+cd -
+cp zfp-patches/zfp-zc.c zfp/utils
+cp zfp-patches/*.sh zfp/utils
+
+make
 
 #---------- download SZ and set the configuration -----------
 cd $rootDir

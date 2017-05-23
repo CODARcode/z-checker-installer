@@ -14,7 +14,7 @@ errBoundMode=$2
 dataFilePath=$3
 varName=$4
 errBound=$5
-let dim=$#-4
+let dim=$#-5
 
 if [[ $errBoundMode == "ABS" ]]; then
 	if [[ $dim == 1 ]]
@@ -30,7 +30,7 @@ if [[ $errBoundMode == "ABS" ]]; then
 		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 	fi
-else if [[ $errBoundMode == "PW_REL" ]]; then
+elif [[ $errBoundMode == "PW_REL" ]]; then
 	if [[ $dim == 1 ]]
 	then
 		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"

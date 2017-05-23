@@ -53,12 +53,12 @@ fi
 
 cd SZ/${testcase}_fast
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+#./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd SZ/${testcase}_deft
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+#./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd zfp/${testcase}
