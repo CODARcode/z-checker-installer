@@ -2,8 +2,8 @@
 
 if [[ $# < 4 ]]
 then
-	echo "Usage: $0 [datatype (-f or -d)] [error bound] [data directory] [dimension sizes....]"
-	echo "Example: $0 -f 1E-4 /home/fti/SZ_C_version/CESM-testdata/1800x3600 3600 1800"
+	echo "Usage: $0 [datatype (-f or -d)] [errBoundMode] [error bound] [data directory] [dimension sizes....]"
+	echo "Example: $0 -f ABS 1E-4 /home/fti/SZ_C_version/CESM-testdata/1800x3600 3600 1800"
 	exit
 fi
 
