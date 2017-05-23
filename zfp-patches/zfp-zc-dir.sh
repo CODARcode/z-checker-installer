@@ -8,18 +8,19 @@ then
 fi
 
 datatype=$1
-absErrBound=$2
-dataDir="$3"
-dim1=$4
-dim2=$5
-dim3=$6
-dim4=$7
+errBoundMode=$2
+absErrBound=$3
+dataDir="$4"
+dim1=$5
+dim2=$6
+dim3=$7
+dim4=$8
 
 fileList=`cd "$dataDir";ls *.dat`
 for file in $fileList
 do
-	echo ./zfp-zc.sh $datatype ${dataDir}/${file} ${file} $absErrBound $dim1 $dim2 $dim3 $dim4
-	./zfp-zc.sh $datatype "${dataDir}/${file}" ${file} $absErrBound $dim1 $dim2 $dim3 $dim4
+	echo ./zfp-zc.sh $datatype $errBoundMode ${dataDir}/${file} ${file} $absErrBound $dim1 $dim2 $dim3 $dim4
+	./zfp-zc.sh $datatype $errBoundMode "${dataDir}/${file}" ${file} $absErrBound $dim1 $dim2 $dim3 $dim4
 done
 
 echo "complete"

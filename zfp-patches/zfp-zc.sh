@@ -10,21 +10,38 @@ fi
 cmdDir=../bin
 
 datatype=$1
-dataFilePath=$2
-varName=$3
-errBound=$4
+errBoundMode=$2
+dataFilePath=$3
+varName=$4
+errBound=$5
 let dim=$#-4
 
-if [[ $dim == 1 ]]
-then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-elif [[ $dim == 2 ]]
-then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-elif [[ $dim == 3 ]]
-then
-	echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
-	${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $5 $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+if [[ $errBoundMode == "ABS" ]]; then
+	if [[ $dim == 1 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 2 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 3 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	fi
+else if [[ $errBoundMode == "PW_REL" ]]; then
+	if [[ $dim == 1 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 2 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 3 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	fi
 fi

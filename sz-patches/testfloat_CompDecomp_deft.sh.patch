@@ -1,13 +1,11 @@
---- testfloat_CompDecomp.sh	2017-05-08 15:43:39.020897510 -0500
-+++ testfloat_CompDecomp_deft.sh	2017-05-08 16:02:23.189728298 -0500
-@@ -17,8 +17,8 @@
+--- testfloat_CompDecomp.sh	2017-05-23 12:42:44.310083801 -0500
++++ testfloat_CompDecomp.sh.deft	2017-05-23 12:43:20.234094471 -0500
+@@ -15,7 +15,7 @@
+ dim3=$6
+ dim4=$7
+ 
+-compressor=sz
++compressor=sz_d
+ 
  fileList=`cd "$dataDir";ls *.dat`
  for file in $fileList
- do
--        echo testfloat_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
--        ./testfloat_CompDecomp sz.config zc.config "sz($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
-+        echo testfloat_CompDecomp sz.config zc.config "sz_d($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
-+        ./testfloat_CompDecomp sz.config zc.config "sz_d($absErrBound)" "$file" $absErrBound "$dataDir/$file" $dim1 $dim2 $dim3 $dim4
- done
- 
- echo "complete"

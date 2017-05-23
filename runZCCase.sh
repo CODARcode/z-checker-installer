@@ -9,12 +9,13 @@ then
 	exit
 fi 
 
-testcase=$2
-dataDir=`cd "$3"; pwd`
-dim1=$4
-dim2=$5
-dim3=$6
-dim4=$7
+errBoundMode=$2
+testcase=$3
+dataDir=`cd "$4"; pwd`
+dim1=$5
+dim2=$6
+dim3=$7
+dim4=$8
 
 rootDir=`pwd`
 
@@ -52,25 +53,29 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 fi
 
 cd SZ/${testcase}_fast
-echo ./sz-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd SZ/${testcase}_deft
-echo ./sz-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd zfp/${testcase}
-echo ./zfp-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
-./zfp-zc-ratedistortion.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
+echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
 cd Z-checker/${testcase}
 echo ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 
-sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
+if [[ $errBoundMode=="PW_REL" ]]; then
+	sz_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep comparisonCases`"
+else
+	sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
+fi
 echo "export $sz_err_env" > env.tmp
 source env.tmp
 rm env.tmp

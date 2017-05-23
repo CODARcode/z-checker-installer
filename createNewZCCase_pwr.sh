@@ -18,17 +18,17 @@ if [ ! -d Z-checker ]; then
 fi
 
 echo Create a new case $caseName for Z-checker
-if [ -d Z-checker/$caseName ]; then
-	echo "Conflict: the case $caseName already exists."
-	echo "Please remove the existing case using removeZCCase.sh before creating the same one."
+if [ -d Z-checker/${caseName}-pwr ]; then
+	echo "Conflict: the case ${caseName}-pwr already exists."
+	echo "Please remove the existing case using removeZCCase.sh before creating another one with the same case name."
 	exit
 fi
 cd Z-checker
-./createNewCase.sh $caseName
+./createNewCase.sh ${caseName}-pwr
 
 echo "Create a new case (fast mode) for SZ"
 cd ../SZ
-sz_caseName=${caseName}_fast
+sz_caseName=${caseName}-pwr_fast
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
 fi
@@ -46,7 +46,7 @@ cd ..
 
 echo "Create a new case (default mode) for SZ"
 cd ../SZ
-sz_caseName=${caseName}_deft
+sz_caseName=${caseName}-pwr_deft
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
 fi
@@ -64,7 +64,7 @@ cd ..
 
 echo Create a new case for ZFP
 cd ../zfp
-zfp_caseName=${caseName}
+zfp_caseName=${caseName}-p
 if [ ! -d $zfp_caseName ]; then
 	mkdir $zfp_caseName
 fi
@@ -72,4 +72,4 @@ cp utils/*.sh $zfp_caseName
 
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
-./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}_fast sz_d:../../SZ/${caseName}_deft zfp:../../zfp/${zfp_caseName}"
+./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}-pwr_fast sz_d:../../SZ/${caseName}-pwr_deft zfp:../../zfp/${zfp_caseName}"

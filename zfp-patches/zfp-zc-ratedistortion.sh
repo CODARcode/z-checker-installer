@@ -7,17 +7,22 @@ if [[ $# < 3 ]]; then
 fi
 
 datatype=$1
-dataDir="$2"
-dim1=$3
-dim2=$4
-dim3=$5
-dim4=$6
+errBoundMode=$2
+dataDir="$3"
+dim1=$4
+dim2=$5
+dim3=$6
+dim4=$7
 
 #Note: If you run this script by z-checker-installer, ZFP_Err_Bounds will be overwritten by ../../errBounds.cfg as follows.
 ZFP_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
 
 if [ -f ../../errBounds.cfg ]; then
-	zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
+	if [[ $errBoundMode=="PW_REL" ]]; then
+		zfp_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
+	else
+		zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
+	fi
 	echo "export $zfp_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp
@@ -26,6 +31,6 @@ fi
 
 for errBound in $ZFP_Err_Bounds
 do
-	./zfp-zc-dir.sh $datatype $errBound "$dataDir" $dim1 $dim2 $dim3 $dim4
+	./zfp-zc-dir.sh $datatype $errBoundMode $errBound "$dataDir" $dim1 $dim2 $dim3 $dim4
 done
 
