@@ -85,7 +85,11 @@ echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $di
 ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd Z-checker/${testcase}-pwr
+if [[ $errBoundMode == "PW_REL" ]]; then
+	cd Z-checker/${testcase}-pwr
+else
+	cd Z-checker/${testcase}
+fi
 echo ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 
