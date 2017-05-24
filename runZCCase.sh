@@ -58,17 +58,29 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
-cd SZ/${testcase}-pwr_fast
+if [[ $errBoundMode == "PW_REL" ]]; then
+	cd SZ/${testcase}-pwr_fast
+else
+	cd SZ/${testcase}_fast
+fi
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd SZ/${testcase}-pwr_deft
+if [[ $errBoundMode == "PW_REL" ]]; then
+	cd SZ/${testcase}-pwr_deft
+else
+	cd SZ/${testcase}_deft
+fi
 echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd zfp/${testcase}-p
+if [[ $errBoundMode == "PW_REL" ]]; then
+	cd zfp/${testcase}-p
+else
+	cd zfp/${testcase}
+fi
 echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
@@ -77,7 +89,7 @@ cd Z-checker/${testcase}-pwr
 echo ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
 
-if [[ $errBoundMode=="PW_REL" ]]; then
+if [[ $errBoundMode == "PW_REL" ]]; then
 	sz_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep comparisonCases`"
 else
 	sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
