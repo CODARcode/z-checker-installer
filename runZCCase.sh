@@ -68,7 +68,7 @@ echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim
 ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 
 cd $rootDir
-cd zfp/${testcase}-pwr
+cd zfp/${testcase}-p
 echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
 

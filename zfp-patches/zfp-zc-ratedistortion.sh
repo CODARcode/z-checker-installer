@@ -24,7 +24,6 @@ if [ -f ../../errBounds.cfg ]; then
 	else
 		zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
 	fi
-	echo $zfp_err_env
 	echo "export $zfp_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp
