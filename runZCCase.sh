@@ -106,5 +106,10 @@ SZ_Err_Bounds="`echo $comparisonCases`"
 echo comparisonCases=$comparisonCases
 ./modifyZCConfig zc.config comparisonCases "$comparisonCases"
 
-echo ./generateReport.sh ${testcase}-pwr
-./generateReport.sh "${testcase} with PW_REL"
+if [[ $errBoundMode == "PW_REL" ]]; then
+	echo ./generateReport.sh ${testcase}-pwr
+	./generateReport.sh "${testcase} with PW_REL"
+else
+	echo ./generateReport.sh ${testcase}
+	./generateReport.sh "${testcase}"
+fi
