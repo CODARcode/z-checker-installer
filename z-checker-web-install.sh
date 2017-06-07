@@ -2,15 +2,14 @@
 
 rootDir=`pwd`
 
-NODE_URL=https://nodejs.org/dist/v6.10.2/node-v6.10.2.tar.gz
-NODE_SRC_DIR=$rootDir/node-v6.10.2
-NODE_DIR=$rootDir/node-v6.10.2-install
+NODE_URL=https://nodejs.org/dist/v6.11.0/node-v6.11.0.tar.gz
+NODE_SRC_DIR=$rootDir/node-v6.11.0
+NODE_DIR=$rootDir/node-v6.11.0-install
 
 # download and install node.js
 cd $rootDir
 if [ ! -d "$NODE_DIR" ] ; then
-  curl -O $NODE_URL
-  tar zxf node-v6.10.2.tar.gz
+  curl -L $NODE_URL | tar zxf -
   cd $NODE_SRC_DIR
   ./configure --prefix=$NODE_DIR
   make
