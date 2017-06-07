@@ -18,4 +18,4 @@ npm update
 node generate_report.js $rootDir/Z-checker/$testcase
 
 echo "Please use your web browser to open this webpage:"
-echo "file://"$rootDir/Z-checker/$testcase/report/web/index.htm
+echo "file://"$rootDir/Z-checker/$testcase/report/web/index.html
