@@ -23,6 +23,11 @@ if [[ $errBoundMode == "ABS" ]]; then
 		echo "Error: Testcase $testcase doesn't exist!"
 		exit
 	fi
+elif [[ $errBoundMode == "REL" ]]; then
+	if [ ! -d "Z-checker/$testcase" ]; then
+		echo "Error: Testcase $testcase doesn't exist!"
+		exit
+	fi
 elif [[ $errBoundMode == "PW_REL" ]]; then
 	if [ ! -d "Z-checker/$testcase-pwr" ]; then
 		echo "Error: Testcase $testcase for PW_REL doesn't exist!"

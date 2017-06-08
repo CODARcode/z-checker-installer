@@ -148,6 +148,7 @@ int main(int argc, char* argv[])
   char* zfppath = 0;
   char* outpath = 0;
   char mode = 0;
+  int relErrMode = 0; 
 
   char* cmpCaseKey = 0;
   char* varName = 0;
@@ -270,6 +271,9 @@ int main(int argc, char* argv[])
           usage();
         varName = argv[i];
         break;
+	  case 'l':
+	    relErrMode = 1;
+		break;
       default:
         usage();
         break;
@@ -389,158 +393,191 @@ int main(int argc, char* argv[])
     /* set (de)compression mode */
     switch (mode) {
       case 'a':
-        zfp_stream_set_accuracy(zfp, tolerance);
-        break;
-      case 'p':
-        zfp_stream_set_precision(zfp, precision);
-        break;
-      case 'r':
-        zfp_stream_set_rate(zfp, rate, type, dims, 0);
-        break;
-      case 'c':
-        if (!maxbits)
-          maxbits = ZFP_MAX_BITS;
-        if (!maxprec)
-          maxprec = zfp_field_precision(field);
-        if (!zfp_stream_set_params(zfp, minbits, maxbits, maxprec, minexp)) {
-          fprintf(stderr, "invalid compression parameters\n");
-          return EXIT_FAILURE;
-        }
-        break;
-    }
+		if(relErrMode==1)
+		{
+			double valRange = 0;
+
+			if (type == zfp_type_float)
+			{
+				float *data = (float*)fi;
+				float max = data[0];
+				float min = data[0];
+				
+				for (i = 0; i < nx*ny*nz; i++)
+				{
+					if (data[i] > max) max = data[i];
+					if (data[i] < min) min = data[i];
+				}
+				valRange = max - min;
+			}
+			else
+			{
+				double *data = (double*)fi;
+				double max = data[0];
+				double min = data[0];
+				
+				for (i = 0; i < nx*ny*nz; i++)
+				{
+					if (data[i] > max) max = data[i];
+					if (data[i] < min) min = data[i];
+				}
+				valRange = max - min;
+			}
+
+			tolerance = tolerance * valRange;
+		}  
+		zfp_stream_set_accuracy(zfp, tolerance);
+		break;
+	  case 'p':
+		zfp_stream_set_precision(zfp, precision);
+		break;
+	  case 'r':
+		zfp_stream_set_rate(zfp, rate, type, dims, 0);
+		break;
+	  case 'c':
+		if (!maxbits)
+		  maxbits = ZFP_MAX_BITS;
+		if (!maxprec)
+		  maxprec = zfp_field_precision(field);
+		if (!zfp_stream_set_params(zfp, minbits, maxbits, maxprec, minexp)) {
+			fprintf(stderr, "invalid compression parameters\n");
+			return EXIT_FAILURE;
+		}
+		break;
+	}
   }
 
-   ZC_DataProperty* dataProperty = NULL;
-   ZC_CompareData* compareResult = NULL;
+  ZC_DataProperty* dataProperty = NULL;
+  ZC_CompareData* compareResult = NULL;
   /* compress input file if provided */
   if (inpath) {
-    uint zz = nz, yy = ny, xx = nx;
-    if(nz==1) 
-        zz = 0;
-    if(ny==1&&nz==1)
-        yy = zz = 0;
-    if(type==zfp_type_double)
-   	 dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, 0, zz, yy, xx);
-    else
- 	 dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, 0, zz, yy, xx);
-    /* allocate buffer for compressed data */
-    bufsize = zfp_stream_maximum_size(zfp, field);
-    if (!bufsize) {
-      fprintf(stderr, "invalid compression parameters\n");
-      return EXIT_FAILURE;
-    }
-    buffer = malloc(bufsize);
-    if (!buffer) {
-      fprintf(stderr, "cannot allocate memory\n");
-      return EXIT_FAILURE;
-    }
+	  uint zz = nz, yy = ny, xx = nx;
+	  if(nz==1) 
+		zz = 0;
+	  if(ny==1&&nz==1)
+		yy = zz = 0;
+	  if(type==zfp_type_double)
+		dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, 0, zz, yy, xx);
+	  else
+		dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, 0, zz, yy, xx);
+	  /* allocate buffer for compressed data */
+	  bufsize = zfp_stream_maximum_size(zfp, field);
+	  if (!bufsize) {
+		  fprintf(stderr, "invalid compression parameters\n");
+		  return EXIT_FAILURE;
+	  }
+	  buffer = malloc(bufsize);
+	  if (!buffer) {
+		  fprintf(stderr, "cannot allocate memory\n");
+		  return EXIT_FAILURE;
+	  }
 
-    /* associate compressed bit stream with memory buffer */
-    stream = stream_open(buffer, bufsize);
-    if (!stream) {
-      fprintf(stderr, "cannot open compressed stream\n");
-      return EXIT_FAILURE;
-    }
-    zfp_stream_set_bit_stream(zfp, stream);
+	  /* associate compressed bit stream with memory buffer */
+	  stream = stream_open(buffer, bufsize);
+	  if (!stream) {
+		  fprintf(stderr, "cannot open compressed stream\n");
+		  return EXIT_FAILURE;
+	  }
+	  zfp_stream_set_bit_stream(zfp, stream);
 
-    /* optionally write header */
-    if (header && !zfp_write_header(zfp, field, ZFP_HEADER_FULL)) {
-      fprintf(stderr, "cannot write header\n");
-      return EXIT_FAILURE;
-    }
+	  /* optionally write header */
+	  if (header && !zfp_write_header(zfp, field, ZFP_HEADER_FULL)) {
+		  fprintf(stderr, "cannot write header\n");
+		  return EXIT_FAILURE;
+	  }
 
-    /* compress data */
-    zfpsize = zfp_compress(zfp, field);
-    compareResult = ZC_endCmpr(dataProperty, zfpsize);
-    if (zfpsize == 0) {
-      fprintf(stderr, "compression failed\n");
-      return EXIT_FAILURE;
-    }
+	  /* compress data */
+	  zfpsize = zfp_compress(zfp, field);
+	  compareResult = ZC_endCmpr(dataProperty, zfpsize);
+	  if (zfpsize == 0) {
+		  fprintf(stderr, "compression failed\n");
+		  return EXIT_FAILURE;
+	  }
 
-    /* optionally write compressed data */
-    if (zfppath) {
-      FILE* file = !strcmp(zfppath, "-") ? stdout : fopen(zfppath, "wb");
-      if (!file) {
-        fprintf(stderr, "cannot create compressed file\n");
-        return EXIT_FAILURE;
-      }
-      if (fwrite(buffer, 1, zfpsize, file) != zfpsize) {
-        fprintf(stderr, "cannot write compressed file\n");
-        return EXIT_FAILURE;
-      }
-      fclose(file);
-    }
+	  /* optionally write compressed data */
+	  if (zfppath) {
+		  FILE* file = !strcmp(zfppath, "-") ? stdout : fopen(zfppath, "wb");
+		  if (!file) {
+			  fprintf(stderr, "cannot create compressed file\n");
+			  return EXIT_FAILURE;
+		  }
+		  if (fwrite(buffer, 1, zfpsize, file) != zfpsize) {
+			  fprintf(stderr, "cannot write compressed file\n");
+			  return EXIT_FAILURE;
+		  }
+		  fclose(file);
+	  }
   }
 
   /* decompress data if necessary */
   if ((!inpath && zfppath) || outpath || stats) {
-    /* obtain metadata from header when present */
-    zfp_stream_rewind(zfp);
-    if (header) {
-      if (!zfp_read_header(zfp, field, ZFP_HEADER_FULL)) {
-        fprintf(stderr, "incorrect or missing header\n");
-        return EXIT_FAILURE;
-      }
-      type = field->type;
-      switch (type) {
-        case zfp_type_float:
-          typesize = sizeof(float);
-          break;
-        case zfp_type_double:
-          typesize = sizeof(double);
-          break;
-        default:
-          fprintf(stderr, "unsupported type\n");
-          return EXIT_FAILURE;
-      }
-      nx = MAX(field->nx, 1u);
-      ny = MAX(field->ny, 1u);
-      nz = MAX(field->nz, 1u);
-    }
+	  /* obtain metadata from header when present */
+	  zfp_stream_rewind(zfp);
+	  if (header) {
+		  if (!zfp_read_header(zfp, field, ZFP_HEADER_FULL)) {
+			  fprintf(stderr, "incorrect or missing header\n");
+			  return EXIT_FAILURE;
+		  }
+		  type = field->type;
+		  switch (type) {
+			  case zfp_type_float:
+				  typesize = sizeof(float);
+				  break;
+			  case zfp_type_double:
+				  typesize = sizeof(double);
+				  break;
+			  default:
+				  fprintf(stderr, "unsupported type\n");
+				  return EXIT_FAILURE;
+		  }
+		  nx = MAX(field->nx, 1u);
+		  ny = MAX(field->ny, 1u);
+		  nz = MAX(field->nz, 1u);
+	  }
 
-    /* allocate memory for decompressed data */
-    ZC_startDec();
-    rawsize = typesize * nx * ny * nz;
-    fo = malloc(rawsize);
-    if (!fo) {
-      fprintf(stderr, "cannot allocate memory\n");
-      return EXIT_FAILURE;
-    }
-    zfp_field_set_pointer(field, fo);
+	  /* allocate memory for decompressed data */
+	  ZC_startDec();
+	  rawsize = typesize * nx * ny * nz;
+	  fo = malloc(rawsize);
+	  if (!fo) {
+		  fprintf(stderr, "cannot allocate memory\n");
+		  return EXIT_FAILURE;
+	  }
+	  zfp_field_set_pointer(field, fo);
 
-    /* decompress data */
-    if (!zfp_decompress(zfp, field)) {
-      fprintf(stderr, "decompression failed\n");
-      return EXIT_FAILURE;
-    }
-    if(typesize==4)
-    	ZC_endDec(compareResult, cmpCaseKey, (float*)fo);
-    else
-	ZC_endDec(compareResult, cmpCaseKey, (double*)fo);
+	  /* decompress data */
+	  if (!zfp_decompress(zfp, field)) {
+		  fprintf(stderr, "decompression failed\n");
+		  return EXIT_FAILURE;
+	  }
+	  if(typesize==4)
+		ZC_endDec(compareResult, cmpCaseKey, (float*)fo);
+	  else
+		ZC_endDec(compareResult, cmpCaseKey, (double*)fo);
 
-    /* optionally write reconstructed data */
-    if (outpath) {
-      FILE* file = !strcmp(outpath, "-") ? stdout : fopen(outpath, "wb");
-      if (!file) {
-        fprintf(stderr, "cannot create output file\n");
-        return EXIT_FAILURE;
-      }
-      if (fwrite(fo, typesize, nx * ny * nz, file) != nx * ny * nz) {
-        fprintf(stderr, "cannot write output file\n");
-        return EXIT_FAILURE;
-      }
-      fclose(file);
-    }
+	  /* optionally write reconstructed data */
+	  if (outpath) {
+		  FILE* file = !strcmp(outpath, "-") ? stdout : fopen(outpath, "wb");
+		  if (!file) {
+			  fprintf(stderr, "cannot create output file\n");
+			  return EXIT_FAILURE;
+		  }
+		  if (fwrite(fo, typesize, nx * ny * nz, file) != nx * ny * nz) {
+			  fprintf(stderr, "cannot write output file\n");
+			  return EXIT_FAILURE;
+		  }
+		  fclose(file);
+	  }
   }
 
   /* print compression and error statistics */
   if (!quiet) {
-    const char* type_name[] = { "int32", "int64", "float", "double" };
-    fprintf(stderr, "type=%s nx=%u ny=%u nz=%u", type_name[type - zfp_type_int32], nx, ny, nz);
-    fprintf(stderr, " raw=%lu zfp=%lu ratio=%.3g rate=%.4g", (unsigned long)rawsize, (unsigned long)zfpsize, (double)rawsize / zfpsize, CHAR_BIT * (double)zfpsize / (nx * ny * nz));
-    if (stats)
-      print_error(fi, fo, type, nx * ny * nz);
-    fprintf(stderr, "\n");
+	  const char* type_name[] = { "int32", "int64", "float", "double" };
+	  fprintf(stderr, "type=%s nx=%u ny=%u nz=%u", type_name[type - zfp_type_int32], nx, ny, nz);
+	  fprintf(stderr, " raw=%lu zfp=%lu ratio=%.3g rate=%.4g", (unsigned long)rawsize, (unsigned long)zfpsize, (double)rawsize / zfpsize, CHAR_BIT * (double)zfpsize / (nx * ny * nz));
+	  if (stats)
+		print_error(fi, fo, type, nx * ny * nz);
+	  fprintf(stderr, "\n");
   }
 
   /* free allocated storage */
