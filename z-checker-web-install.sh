@@ -18,13 +18,11 @@ fi
 
 
 # download z-checker-web
-cd $rootDir
-if [ ! -d "$NODE_DIR" ] ; then
-  git clone https://github.com/CODARcode/z-checker-web
-fi
+git clone https://github.com/CODARcode/z-checker-web
 
 export PATH=$NODE_DIR/bin:$PATH
 cd z-checker-web
 npm install
+npm install -g http-server
 
 cd $rootDir
