@@ -18,7 +18,13 @@ fi
 
 
 # download z-checker-web
-git clone https://github.com/CODARcode/z-checker-web
+if [ ! -d z-checker-web ] ; then
+  git clone https://github.com/CODARcode/z-checker-web
+else
+  cd z-checker-web
+  git pull
+  cd ..
+fi
 
 export PATH=$NODE_DIR/bin:$PATH
 cd z-checker-web
