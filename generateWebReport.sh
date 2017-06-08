@@ -10,8 +10,8 @@ testcase=$1
 
 rootDir=`pwd`
 
-# export PATH=$rootDir/gnuplot-5.0.6-install/bin:$rootDir/node-v6.11.0-install/bin:$PATH
-export PATH=$rootDir/node-v6.11.0-install/bin:$PATH
+export PATH=$rootDir/gnuplot-5.0.6-install/bin:$rootDir/node-v6.11.0-install/bin:$PATH
+# export PATH=$rootDir/node-v6.11.0-install/bin:$PATH
 
 cd $rootDir/z-checker-web
 # npm update
