@@ -1,13 +1,20 @@
 #!/bin/bash
 
-if [[ $# < 2 ]]; then
-	echo Usage: $0 [errBoundMode] [testcase name]
+if [[ $# < 1 ]]; then
+	echo "Usage: $0 ([errBoundMode]) [testcase name]"
 	exit
 fi
 
-errBoundMode=$1
-testcase=$2
-if [ $errBoundMode == "ABS" ] || [ $errBoundMode == "REL" ] ; then
+if [[ $# == 1 ]]; then
+	testcase=$1
+fi
+
+if [[ $# == 2 ]]; then
+	errBoundMode=$1
+	testcase=$2
+fi
+
+if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 	if [ -d Z-checker/$testcase ]; then
 		rm -rf Z-checker/$testcase
 		rm -rf SZ/${testcase}_fast
