@@ -7,7 +7,7 @@ fi
 
 errBoundMode=$1
 testcase=$2
-if [[ $errBoundMode == "ABS" ]]; then
+if [ $errBoundMode == "ABS" ] || [ $errBoundMode == "REL" ] ; then
 	if [ -d Z-checker/$testcase ]; then
 		rm -rf Z-checker/$testcase
 		rm -rf SZ/${testcase}_fast
