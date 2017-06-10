@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <title>Z-checker</title>
+    
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="crossfilter.js"></script>
+    <script>
+
+$(document).ready(function() {
+  $.getJSON("dataProperties.json", function(data) {
+    var cf = crossfilter(data);
+    var byKey = cf.dimension(function(d) {return d.key;});
+    var byVarname = cf.dimension(function(d) {return d.varname;});
+    var byProperty = cf.dimension(function(d) {return d.property;});
+  
+    data.forEach(function(d) {
+      $('<div class="dp_img" id="' + d.key + '"></div>')
+        .appendTo(".dataProperties-contents")
+        .append("<h2>" + d.key  + "</h2>")
+        .append('<img src="' + d.filename + '"/>');
+    });
+
+    byVarname.group().all().forEach(function(d) {
+      // $(".dp_varnames").append('<input type="checkbox" checked class="dp_check" id="dp_check_varname_' + d.key + '"/>' + d.key + '<br>');
+      $(".dp_varnames").append('<div class="checkbox"><label><input type="checkbox" checked class="dp_check" id="dp_check_varname_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    byProperty.group().all().forEach(function(d) {
+      $(".dp_properties").append('<div class="checkbox"><label><input type="checkbox" checked class="dp_check" id="dp_check_property_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    $(".dp_check").click(function() {
+      byVarname.filter(function(d) {
+        return $("#dp_check_varname_" + d).is(":checked");
+      });
+
+      byProperty.filter(function(d) {
+        return $("#dp_check_property_" + d).is(":checked");
+      });
+
+      $(".dp_img").css("display", "none");
+      byKey.top(Infinity).forEach(function(d) {
+        $("#"+d.key).css("display", "block");
+      });
+      // console.log(byKey.top(Infinity));
+    });
+  });
+ 
+
+  $.getJSON("compressionResults.json", function(data) {
+    var cf = crossfilter(data);
+    var byKey = cf.dimension(function(d) {return d.key;});
+    var byCompressor = cf.dimension(function(d) {return d.compressor;});
+    var byBound = cf.dimension(function(d) {return d.bound;});
+    var byVarname = cf.dimension(function(d) {return d.varname;});
+    var byProperty = cf.dimension(function(d) {return d.property;});
+  
+    data.forEach(function(d) {
+      $('<div class="cr_img" id="' + d.key + '"></div>')
+        .appendTo(".compressionResults-contents")
+        .append("<h2>" + d.key  + "</h2>")
+        .append('<img src="' + d.filename + '"/>');
+    });
+
+    byCompressor.group().all().forEach(function(d) {
+      $(".cr_compressors").append('<div class="checkbox"><label><input type="checkbox" checked class="cr_check" id="cr_check_compressor_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    byBound.group().all().forEach(function(d) {
+      $(".cr_bounds").append('<div class="checkbox"><label><input type="checkbox" checked class="cr_check" id="cr_check_bound_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    byVarname.group().all().forEach(function(d) {
+      $(".cr_varnames").append('<div class="checkbox"><label><input type="checkbox" checked class="cr_check" id="cr_check_varname_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    byProperty.group().all().forEach(function(d) {
+      $(".cr_properties").append('<div class="checkbox"><label><input type="checkbox" checked class="cr_check" id="cr_check_property_' + d.key + '"/>' + d.key + '</label>');
+    });
+
+    $(".cr_check").click(function() {
+      byCompressor.filter(function(d) {
+        return $("#cr_check_compressor_" + d).is(":checked");
+      });
+      
+      byBound.filter(function(d) {
+        return $("#cr_check_bound_" + d).is(":checked");
+      });
+      
+      byVarname.filter(function(d) {
+        return $("#cr_check_varname_" + d).is(":checked");
+      });
+
+      byProperty.filter(function(d) {
+        return $("#cr_check_property_" + d).is(":checked");
+      });
+
+      $(".cr_img").css("display", "none");
+      byKey.top(Infinity).forEach(function(d) {
+        $("#"+d.key).css("display", "block");
+      });
+      // console.log(byKey.top(Infinity));
+    });
+  });
+
+  $.getJSON("compareCompressors.json", function(data) {
+    console.log(data);
+    var cf = crossfilter(data);
+    var byKey = cf.dimension(function(d) {return d.key;});
+  
+    data.forEach(function(d) {
+      $('<div class="cr_img" id="' + d.key + '"></div>')
+        .appendTo(".comparisonResults-contents")
+        .append("<h2>" + d.key  + "</h2>")
+        .append('<img src="' + d.filename + '"/>');
+    });
+  });
+});
+    
+    </script>
+  </head>
+  <body>
+    <ul class="navbar navbar-inverse navbar-static-top" role="tablist">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Z-checker</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link active" data-toggle="tab" href="#dataProperties" role="tab">Data Properties</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#compressionResults" role="tab">Compression Results</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#comparisonResults" role="tab">Comparison Results</a>
+        </li>
+      </ul>
+    </ul>
+
+    <div class="container">
+      <div class="tab-content">
+        <div class="tab-pane active" id="dataProperties" role="tabpanel">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="bs-sidebar">
+                <div class="dp_varnames">
+                  <label>Variables:</label><br>
+                </div>
+                <div class="dp_properties">
+                  <label>Properties:</label><br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9 dataProperties-contents">
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="compressionResults" role="tabpanel">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="bs-sidebar">
+                <div class="cr_compressors">
+                  <label>Compressors:</label><br>
+                </div>
+                <div class="cr_bounds">
+                  <label>Error Bounds:</label><br>
+                </div>
+                <div class="cr_varnames">
+                  <label>Variables:</label><br>
+                </div>
+                <div class="cr_properties">
+                  <label>Properties:</label><br>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9 compressionResults-contents">
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="comparisonResults" role="tabpanel">
+          <div class="row">
+            <div class="col-md-3">
+              <!--
+              <div class="bs-sidebar">
+                <div class="cp_type">
+                  <label>Type:</label><br>
+                </div>
+                <div class="cp_variables">
+                  <label>Variables:</label><br>
+                </div>
+              </div>
+              -->
+            </div>
+            <div class="col-md-9 comparisonResults-contents">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
