@@ -514,8 +514,7 @@ int main(int argc, char* argv[])
 		free(h_data);
 		free(decomp_data);
 	}
-	else
-	  if (argv[1][0] == '-' && argv[1][1] == 'd')
+	else if (argv[1][0] == '-' && argv[1][1] == 'd')
 	  {
 		  double *data = (double*)malloc(dataLength*sizeof(double));
 		  UINT16_TYPE *h_data = (UINT16_TYPE*)malloc(dataLength*sizeof(UINT16_TYPE));
