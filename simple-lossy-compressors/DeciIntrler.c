@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
         free(decomp_data);
     }
     else
-        if (argv[1][0] == '-' && argv[1][1] == 'd')
+	  if (argv[2][0] == '-' && argv[2][1] == 'd')
         {
             double *data = (double*)malloc(dataLength*sizeof(double));
             double *decomp_data = (double*)malloc(dataLength*sizeof(double));
