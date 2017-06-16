@@ -112,6 +112,19 @@ echo comparisonCases=$comparisonCases
 ./modifyZCConfig zc.config comparisonCases "$comparisonCases"
 
 if [[ $errBoundMode == "PW_REL" ]]; then
+	zc_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep numOfErrorBoundCases`"
+else
+	zc_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep numOfErrorBoundCases`"
+fi
+echo "export $zc_err_env" > env.tmp
+source env.tmp
+rm env.tmp
+ZC_Err_Bounds="`echo $numOfErrorBoundCases`"
+
+echo numOfErrorBoundCasess=$numOfErrorBoundCases
+./modifyZCConfig zc.config numOfErrorBoundCases "$numOfErrorBoundCases"
+
+if [[ $errBoundMode == "PW_REL" ]]; then
 	echo ./generateReport.sh ${testcase}-pwr
 	./generateReport.sh "${testcase} with PW_REL"
 else
