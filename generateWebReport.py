@@ -185,8 +185,10 @@ for f in glob.glob("./public/*"):
     shutil.copy(f, dest_path)
 
 os.chdir(dest_path)
-httpd = SocketServer.TCPServer(("", 8087), SimpleHTTPServer.SimpleHTTPRequestHandler)
-print "Please visit http://localhost:8087"
+httpd = SocketServer.TCPServer(("", 0), SimpleHTTPServer.SimpleHTTPRequestHandler)
+port = httpd.server_address[1]
+
+print "Please visit http://localhost:" + str(port)
 print "Press Ctrl+C to exit the server"
 httpd.serve_forever()
 
