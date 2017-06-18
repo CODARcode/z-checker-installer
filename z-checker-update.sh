@@ -13,6 +13,7 @@ fi
 #---------- download Z-checker --------------
 cd Z-checker
 git pull
+make clean
 make
 make install
 cp ../zc-patches/generateReport.sh ./examples/
@@ -36,6 +37,7 @@ make
 cd $rootDir
 cd SZ
 git pull
+make clean
 make
 make install
 
