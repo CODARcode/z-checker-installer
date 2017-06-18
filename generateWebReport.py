@@ -17,7 +17,33 @@ test_case = sys.argv[1]
 case_path = current_path + "/Z-checker/" + test_case
 dest_path = case_path + "/report/web"
 
-gnuplot_executable = current_path + "/gnuplot-5.0.6-install/bin/gnuplot"
+def which(program):
+    import os
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+
+gnuplot_executable = which("gnuplot")
+if gnuplot_executable == None:
+    gnuplot_executable = current_path + "/gnuplot-5.0.6-install/bin/gnuplot"
+
+if not (os.path.isfile(gnuplot_executable) and os.access(gnuplot_executable, os.X_OK)):
+    print "FATAL: GNUPlot not found."
+    exit()
+
+print "Using GNUPlot executable: " + gnuplot_executable
 
 rpath_dp = "/dataProperties"
 rpath_cp = "/compressionResults"
