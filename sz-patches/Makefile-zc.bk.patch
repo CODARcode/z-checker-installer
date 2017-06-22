@@ -61,10 +61,10 @@
  	$(CC) -lm -O3 -o sz sz.c $(SZFLAG)
  
 +testfloat_CompDecomp:  testfloat_CompDecomp.c
-+	$(CC) -lm -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG) $(ZCFLAG)
++	$(CC) -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG) $(ZCFLAG) -lm
 +
 +testdouble_CompDecomp: testdouble_CompDecomp.c
-+	$(CC) -lm -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(SZFLAG) $(ZCFLAG)
++	$(CC) -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(SZFLAG) $(ZCFLAG) -lm
 +
  clean:
 -	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f
