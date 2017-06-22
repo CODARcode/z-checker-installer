@@ -22,40 +22,40 @@
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testfloat_compress:	testfloat_compress.c
--	$(CC) -lm -g -o testfloat_compress testfloat_compress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testfloat_compress testfloat_compress.c $(SZFLAG)
+-	$(CC) -g -o testfloat_compress testfloat_compress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testfloat_compress testfloat_compress.c $(SZFLAG) -lm
  
  testfloat_decompress:	testfloat_decompress.c
--	$(CC) -lm -g -o testfloat_decompress testfloat_decompress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testfloat_decompress testfloat_decompress.c $(SZFLAG)
+-	$(CC) -g -o testfloat_decompress testfloat_decompress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testfloat_decompress testfloat_decompress.c $(SZFLAG) -lm
  
  testdouble_compress:	testdouble_compress.c
--	$(CC) -lm -g -o testdouble_compress testdouble_compress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testdouble_compress testdouble_compress.c $(SZFLAG)
+-	$(CC) -g -o testdouble_compress testdouble_compress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testdouble_compress testdouble_compress.c $(SZFLAG) -lm
  
  testdouble_decompress:	testdouble_decompress.c
--	$(CC) -lm -g -o testdouble_decompress testdouble_decompress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testdouble_decompress testdouble_decompress.c $(SZFLAG)
+-	$(CC) -g -o testdouble_decompress testdouble_decompress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testdouble_decompress testdouble_decompress.c $(SZFLAG) -lm
  
  testdouble_compress_f:      testdouble_compress_f.f90
--	$(FT) -lm -g -o testdouble_compress_f testdouble_compress_f.f90 $(SZFLAG)
-+	$(FT) -lm -O3 -o testdouble_compress_f testdouble_compress_f.f90 $(SZFLAG)
+-	$(FT) -g -o testdouble_compress_f testdouble_compress_f.f90 $(SZFLAG) -lm
++	$(FT) -O3 -o testdouble_compress_f testdouble_compress_f.f90 $(SZFLAG) -lm
  
  testdouble_decompress_f:      testdouble_decompress_f.f90
--	$(FT) -lm -g -o testdouble_decompress_f testdouble_decompress_f.f90 $(SZFLAG)
-+	$(FT) -lm -O3 -o testdouble_decompress_f testdouble_decompress_f.f90 $(SZFLAG)
+-	$(FT) -g -o testdouble_decompress_f testdouble_decompress_f.f90 $(SZFLAG) -lm
++	$(FT) -O3 -o testdouble_decompress_f testdouble_decompress_f.f90 $(SZFLAG) -lm
  
  testdouble_batch_f:      testdouble_batch_f.f90
--	$(FT) -lm -g -o testdouble_batch_f testdouble_batch_f.f90 $(SZFLAG)
-+	$(FT) -lm -O3 -o testdouble_batch_f testdouble_batch_f.f90 $(SZFLAG)
+-	$(FT) -g -o testdouble_batch_f testdouble_batch_f.f90 $(SZFLAG) -lm
++	$(FT) -O3 -o testdouble_batch_f testdouble_batch_f.f90 $(SZFLAG) -lm
  
  testfloat_batch_compress:      testfloat_batch_compress.c
--	$(CC) -lm -g -o testfloat_batch_compress testfloat_batch_compress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testfloat_batch_compress testfloat_batch_compress.c $(SZFLAG)
+-	$(CC) -g -o testfloat_batch_compress testfloat_batch_compress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testfloat_batch_compress testfloat_batch_compress.c $(SZFLAG) -lm
  
  testdouble_batch_compress:      testdouble_batch_compress.c
--	$(CC) -lm -g -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
-+	$(CC) -lm -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
+-	$(CC) -g -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG) -lm
++	$(CC) -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG) -lm
  
  sz:	sz.c
  	$(CC) -lm -O3 -o sz sz.c $(SZFLAG)
