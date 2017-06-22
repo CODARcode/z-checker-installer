@@ -1,5 +1,5 @@
---- Makefile.bk	2017-06-22 17:32:13.000000000 -0400
-+++ Makefile.bk.zc	2017-06-22 17:32:50.000000000 -0400
+--- Makefile.bk	2017-06-22 17:43:37.000000000 -0400
++++ Makefile.bk.zc	2017-06-22 17:44:14.000000000 -0400
 @@ -2,7 +2,8 @@
  ##   Makefile to test SZ library.
  
@@ -61,7 +61,7 @@
  	$(CC) -O3 -o sz sz.c $(SZFLAG) -lm
  
 -clean:
--	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f
+-	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f sz
 +testfloat_CompDecomp:  testfloat_CompDecomp.c
 +	$(CC) -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG) $(ZCFLAG) -lm
 +
@@ -69,4 +69,4 @@
 +	$(CC) -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(SZFLAG) $(ZCFLAG) -lm
  
 +clean:
-+	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f testfloat_CompDecomp testdouble_CompDecomp
++	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f sz testfloat_CompDecomp testdouble_CompDecomp
