@@ -27,15 +27,17 @@ After installation, please download the two testing data sets, CESM-ATM and MD-s
 
 Then, you are ready to conduct the compression checking.
 You can generate compression results with SZ and ZFP using the following simple steps: 
-(Note: you have to run z-checker-install.sh or z-checker-install2.sh to install the software before doing the following tests)
+(Note: you have to run z-checker-install.sh to install the software before doing the following tests)
 
-1. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
+1. Configure the error bound setting and comparison cases in errBounds.cfg.
+
+2. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
    For example:
    [user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
 
-2. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [test-case-name] [data dir] [dimensions....].
+3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [dimensions....].
    Example:
-   [user@localhost z-checker-installer] ./runZCCase.sh CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
+   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
 
 Then, you can find the report generated in z-checker-installer/Z-checker/[test-case-name]/report.
 
