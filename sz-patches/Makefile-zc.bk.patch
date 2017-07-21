@@ -1,5 +1,5 @@
---- Makefile.bk	2017-07-21 13:39:17.973709734 -0500
-+++ Makefile-patch.bk	2017-07-21 13:38:46.845020128 -0500
+--- Makefile.bk	2017-07-21 13:44:15.217745804 -0500
++++ Makefile-patch.bk	2017-07-21 13:44:05.678840920 -0500
 @@ -2,7 +2,7 @@
  ##   Makefile to test SZ library.
  
@@ -14,11 +14,11 @@
  
  ##   TARGETS
 -all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress
-+all: 		testfloat_compress testfloat_compress_subblock testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress testfloat_CompDecomp testdouble_CompDecomp
++all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress testfloat_CompDecomp testdouble_CompDecomp
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testfloat_compress:	testfloat_compress.c
-@@ -49,6 +49,12 @@
+@@ -46,6 +46,12 @@
  testdouble_batch_compress:      testdouble_batch_compress.c
  	$(CC)  -g -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
  
