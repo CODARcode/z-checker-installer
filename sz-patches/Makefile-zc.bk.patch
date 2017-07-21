@@ -1,16 +1,20 @@
 --- Makefile.bk	2017-07-21 13:44:15.217745804 -0500
-+++ Makefile-patch.bk	2017-07-21 13:44:05.678840920 -0500
-@@ -2,7 +2,7 @@
++++ Makefile-patch.bk	2017-07-21 13:51:21.729486241 -0500
+@@ -2,7 +2,8 @@
  ##   Makefile to test SZ library.
  
  ##   PLEASE SET THIS VARIABLE BEFORE COMPILING
 -SZPATH		= /home/sdi/Install/sz-1.4.10-beta-install
 +SZPATH		= ../../SZ/sz-install
++ZCPATH		= ../../Z-checker/zc-install
  ##   COMPILERS
  CC		= gcc
  FT		= gfortran
-@@ -16,7 +16,7 @@
+@@ -14,9 +15,10 @@
+ #SZFLAG 	= -I$(SZPATH)/include -L$(SZPATH)/lib -lsz
+ # Compiling using static library
  SZFLAG 	= -I$(SZPATH)/include $(SZPATH)/lib/libsz.a $(SZPATH)/lib/libzlib.a -lm
++ZCFLAG  = -I$(ZCPATH)/include $(ZCPATH)/lib/libzc.a
  
  ##   TARGETS
 -all: 		testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress
@@ -18,15 +22,15 @@
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testfloat_compress:	testfloat_compress.c
-@@ -46,6 +46,12 @@
+@@ -46,6 +48,12 @@
  testdouble_batch_compress:      testdouble_batch_compress.c
  	$(CC)  -g -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
  
 +testfloat_CompDecomp:	testfloat_CompDecomp.c
-+	$(CC)  -g -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(SZFLAG)
++	$(CC)  -g -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(ZCFLAG) $(SZFLAG)
 +
 +testdouble_CompDecomp:	testdouble_CompDecomp..c
-+	$(CC)  -g -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(SZFLAG)
++	$(CC)  -g -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(ZCFLAG) $(SZFLAG)
 +
  clean:
 -	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f
