@@ -36,7 +36,17 @@ make
 #---------- download SZ and set the configuration -----------
 cd $rootDir
 cd SZ
+cd sz
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
 git pull
+cd ../example
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
+git pull
+cd ..
 make clean
 make
 make install
@@ -49,3 +59,4 @@ cp ../../sz-patches/testdouble_CompDecomp.sh .
 
 make clean
 make
+make -f Makefile.bk
