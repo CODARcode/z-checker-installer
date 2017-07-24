@@ -76,3 +76,12 @@ pw_relBoundRatio = 1E-5
 #point-wise relative-error-bound segment size
 #The larger this value, the lower overhead of maitaining error bound information for each segment/block, while the stricter absolute bound used to control the point-wise relative-error-bound. The block size will be M^K, where K is the # dimensions of the data and M is an integer such that (M-1)^K < segment_size <= M^K. For instance, for a 2D data, segment_size=32 means the whole data set will be split into multiple small blocks each being 6x6. For a 3D data, segment_size=32 means the whole data set is split into a lot of 4x4x4 blocks, each of which has an individual compression precision/error.
 segment_size = 32
+
+#point-wise relative-error-bound type
+#This parameter is valid only when error bound mode is set to PW_REL
+#Three optional types: MAX, AVG, MIN
+#MAX means that the max relative error bound will be adopted in each block (i.e., the error bound is determined by the maximum absolute data value in that block).
+#MIN indicates that the min relative error bound will be adopted in each block. 
+#AVG indicates that the avg error bound will be adopted. 
+pwr_type = MAX
+
