@@ -41,22 +41,27 @@ git fetch origin master
 git reset --hard FETCH_HEAD
 git clean -df
 git pull
-cd ../example
+
+cd src
+patch -p1 < ../../../sz-patches/sz-src-hacc.patch
+
+cd ../../example
 git fetch origin master
 git reset --hard FETCH_HEAD
 git clean -df
 git pull
+patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
+make -f Makefile.bk
+
 cd ..
-make clean
+./configure --prefix=$rootDir/SZ/sz-install
 make
 make install
 
 cd example
 cp ../../Z-checker/examples/zc.config .
+patch -p0 < ../../zc-patches/zc-probe.config.patch
 cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
-make clean
-make
-make -f Makefile.bk
