@@ -62,6 +62,7 @@ except:
 
 def generateFigureForZChecker(filename, cwd):
     key = re.sub("\.", '_', os.path.basename(filename)[:-2]);
+    dataDir = os.path.dirname(filename)
 
     script = ""
     script1 = ""
@@ -76,6 +77,9 @@ def generateFigureForZChecker(filename, cwd):
         elif line.startswith("set output"):
             script1 += 'set output "' + key + '.svg' + '"\n';
         else:
+            if line.startswith("plot"):
+                dataFilename = re.findall(r"\'(.+?)\'", line)[0] # extrat quoted string
+                shutil.copy(cwd + "/" + dataFilename, dest_path + "/" + key + ".dat") 
             script1 += line + "\n";
 
     try: 
@@ -89,7 +93,6 @@ def generateFigureForZChecker(filename, cwd):
         pass
 
     return key
-
 
 def generateDataPropertiesTab():
     print "generating image files for dataProperties..."
