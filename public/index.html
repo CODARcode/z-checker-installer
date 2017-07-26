@@ -12,13 +12,49 @@
     <script src="highcharts.js"></script>
     <script>
 
-function generateAutoCorrPlot(d)
+function generateFFTAmpPlot(className, tab, d) 
 {
-  $.get(d.key + ".dat", function(text) {
-    console.log("generating autocorr plot");
-
+  $.get(d.dataFilename, function(text) {
     var data = [];
+    var allLines = text.split(/\r\n|\n/);
+    allLines.shift(); // remove the first line
+    allLines.forEach(function(l) {
+      var strs = l.split(" ");
+      if (strs.length == 2) {
+        data.push([+(strs[0].split("/")[0]), +strs[1]]);
+      }
+    });
 
+    var json = {
+      title: {text: d.key},
+      xAxis: {
+        tickInterval: 1
+      },
+      yAxis: {
+        title: { text: "amplitude" },
+        min: 0.0001, // avoid zero
+        type: "logarithmic",
+      },
+      series: [{
+        name: "FFTAmp",
+        data: data
+      }],
+      credits: {enabled: false}
+    }
+
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
+      .append("<h2>" + d.key  + "</h2>");
+      // .append('<img src="' + d.filename + '"/>');
+
+    $("#" + d.key).highcharts(json);
+  });
+}
+
+function generateAutoCorrPlot(className, tab, d)
+{
+  $.get(d.dataFilename, function(text) {
+    var data = [];
     var allLines = text.split(/\r\n|\n/);
     allLines.shift();
     allLines.forEach(function(l) {
@@ -29,7 +65,7 @@ function generateAutoCorrPlot(d)
     });
 
     var json = {
-      title: {text: "Autocorrelation"},
+      title: {text: d.key},
       xAxis: { 
       },
       yAxis: {
@@ -42,8 +78,8 @@ function generateAutoCorrPlot(d)
       credits: {enabled: false}
     }
 
-    $('<div class="dp_img" id="' + d.key + '"></div>')
-      .appendTo(".dataProperties-contents")
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
       .append("<h2>" + d.key  + "</h2>");
       // .append('<img src="' + d.filename + '"/>');
 
@@ -60,7 +96,9 @@ $(document).ready(function() {
   
     data.forEach(function(d) {
       if (d.property === "autocorr") 
-        generateAutoCorrPlot(d);
+        generateAutoCorrPlot("dp_img", ".dataProperties-contents", d);
+      else if (d.property === "fft-amp")
+        generateFFTAmpPlot("dp_img", ".dataProperties-contents", d);
       else {
         $('<div class="dp_img" id="' + d.key + '"></div>')
           .appendTo(".dataProperties-contents")
@@ -105,10 +143,15 @@ $(document).ready(function() {
     var byProperty = cf.dimension(function(d) {return d.property;});
   
     data.forEach(function(d) {
-      $('<div class="cr_img" id="' + d.key + '"></div>')
-        .appendTo(".compressionResults-contents")
-        .append("<h2>" + d.key  + "</h2>")
-        .append('<img src="' + d.filename + '"/>');
+      if (d.property === "autocorr") 
+        generateAutoCorrPlot("cr_img", ".compressionResults-contents", d);
+      else if (d.property === "fft-amp")
+        generateFFTAmpPlot("cr_img", ".compressionResults-contents", d);
+      else 
+        $('<div class="cr_img" id="' + d.key + '"></div>')
+          .appendTo(".compressionResults-contents")
+          .append("<h2>" + d.key  + "</h2>")
+          .append('<img src="' + d.filename + '"/>');
     });
 
     byCompressor.group().all().forEach(function(d) {
