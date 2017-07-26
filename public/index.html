@@ -12,6 +12,43 @@
     <script src="highcharts.js"></script>
     <script>
 
+function generateDistributionPlot(className, tab, d)
+{
+  $.get(d.dataFilename, function(text) {
+    var d0 = [], d1 = [];
+    var allLines = text.split(/\r\n|\n/);
+    allLines.shift(); // remove the first line
+    allLines.forEach(function(l) {
+      var strs = l.split(" ");
+      if (strs.length == 2) {
+        d0.push(+strs[0]);
+        d1.push(+strs[1]);
+      }
+    });
+
+    var json = {
+      title: {text: "Distribution"},
+      xAxis: { 
+      },
+      yAxis: {
+        title: { text: "Distribution" }
+      },
+      series: [
+        {name: "d0", data: d0}, 
+        {name: "d1", data: d1}
+      ],
+      credits: {enabled: false}
+    };
+
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
+      .append("<h2>" + d.key  + "</h2>");
+      // .append('<img src="' + d.filename + '"/>');
+
+    $("#" + d.key).highcharts(json);
+  });
+}
+
 function generateFFTAmpPlot(className, tab, d) 
 {
   $.get(d.dataFilename, function(text) {
@@ -147,6 +184,8 @@ $(document).ready(function() {
         generateAutoCorrPlot("cr_img", ".compressionResults-contents", d);
       else if (d.property === "fft-amp")
         generateFFTAmpPlot("cr_img", ".compressionResults-contents", d);
+      else if (d.property === "dis")
+        generateDistributionPlot("cr_img", ".compressionResults-contents", d);
       else 
         $('<div class="cr_img" id="' + d.key + '"></div>')
           .appendTo(".compressionResults-contents")
