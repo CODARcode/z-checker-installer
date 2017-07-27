@@ -18,6 +18,7 @@ git reset --hard FETCH_HEAD
 git clean -df
 git pull
 cd ..
+./configure --prefix=$rootDir/Z-checker/zc-install
 make clean
 make
 make install
