@@ -12,7 +12,12 @@ fi
 
 #---------- download Z-checker --------------
 cd Z-checker
+cd examples
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
 git pull
+cd ..
 make clean
 make
 make install
