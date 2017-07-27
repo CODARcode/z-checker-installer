@@ -114,6 +114,7 @@ def generateDataPropertiesTab():
         outputs.append(dict({
             "key": key, 
             "filename": key + ".svg",
+            "dataFilename": key + ".dat",
             "varname": varname,
             "property": property
         }))
@@ -151,6 +152,7 @@ def generateCompressionResultsTab():
         outputs.append(dict({
             "key": key1,
             "filename": key + ".svg",
+            "dataFilename": key + ".dat",
             "compressor": compressor,
             "bound": bound,
             "varname": varname,
@@ -170,7 +172,8 @@ def generateComparisonResultsTab():
         
         outputs.append(dict({
             "key": key,
-            "filename": key + ".svg"
+            "filename": key + ".svg",
+            "dataFilename": key + ".dat"
         }))
 
     return outputs

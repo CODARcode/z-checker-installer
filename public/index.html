@@ -9,7 +9,120 @@
     <script src="jquery-3.1.1.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="crossfilter.js"></script>
+    <script src="highcharts.js"></script>
     <script>
+
+function generateDistributionPlot(className, tab, d)
+{
+  $.get(d.dataFilename, function(text) {
+    var d0 = [], d1 = [];
+    var allLines = text.split(/\r\n|\n/);
+    allLines.shift(); // remove the first line
+    allLines.forEach(function(l) {
+      var strs = l.split(" ");
+      if (strs.length == 2) {
+        d0.push(+strs[0]);
+        d1.push(+strs[1]);
+      }
+    });
+
+    var json = {
+      title: {text: "Distribution"},
+      xAxis: { 
+      },
+      yAxis: {
+        title: { text: "Distribution" }
+      },
+      series: [
+        {name: "d0", data: d0}, 
+        {name: "d1", data: d1}
+      ],
+      credits: {enabled: false}
+    };
+
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
+      .append("<h2>" + d.key  + "</h2>");
+      // .append('<img src="' + d.filename + '"/>');
+
+    $("#" + d.key).highcharts(json);
+  });
+}
+
+function generateFFTAmpPlot(className, tab, d) 
+{
+  $.get(d.dataFilename, function(text) {
+    var data = [];
+    var allLines = text.split(/\r\n|\n/);
+    allLines.shift(); // remove the first line
+    allLines.forEach(function(l) {
+      var strs = l.split(" ");
+      if (strs.length == 2) {
+        data.push([+(strs[0].split("/")[0]), +strs[1]]);
+      }
+    });
+
+    var json = {
+      title: {text: d.key},
+      xAxis: {
+        tickInterval: 1
+      },
+      yAxis: {
+        title: { text: "amplitude" },
+        min: 0.0001, // avoid zero
+        type: "logarithmic",
+      },
+      series: [{
+        name: "FFTAmp",
+        data: data
+      }],
+      credits: {enabled: false}
+    }
+
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
+      .append("<h2>" + d.key  + "</h2>");
+      // .append('<img src="' + d.filename + '"/>');
+
+    $("#" + d.key).highcharts(json);
+  });
+}
+
+function generateAutoCorrPlot(className, tab, d)
+{
+  $.get(d.dataFilename, function(text) {
+    var data = [];
+    var allLines = text.split(/\r\n|\n/);
+    allLines.shift();
+    allLines.forEach(function(l) {
+      var strs = l.split(" ");
+      if (strs.length == 2) {
+        data.push([+strs[0], +strs[1]]);
+      }
+    });
+
+    var json = {
+      title: {text: d.key},
+      xAxis: { 
+      },
+      yAxis: {
+        title: { text: "amplitude" }
+      },
+      series: [{
+        name: "autocorr",
+        data: data
+      }],
+      credits: {enabled: false}
+    }
+
+    $('<div class="' + className + '" id="' + d.key + '"></div>')
+      .appendTo(tab)
+      .append("<h2>" + d.key  + "</h2>");
+      // .append('<img src="' + d.filename + '"/>');
+
+    $("#" + d.key).highcharts(json);
+  });
+}
 
 $(document).ready(function() {
   $.getJSON("dataProperties.json", function(data) {
@@ -19,10 +132,16 @@ $(document).ready(function() {
     var byProperty = cf.dimension(function(d) {return d.property;});
   
     data.forEach(function(d) {
-      $('<div class="dp_img" id="' + d.key + '"></div>')
-        .appendTo(".dataProperties-contents")
-        .append("<h2>" + d.key  + "</h2>")
-        .append('<img src="' + d.filename + '"/>');
+      if (d.property === "autocorr") 
+        generateAutoCorrPlot("dp_img", ".dataProperties-contents", d);
+      else if (d.property === "fft-amp")
+        generateFFTAmpPlot("dp_img", ".dataProperties-contents", d);
+      else {
+        $('<div class="dp_img" id="' + d.key + '"></div>')
+          .appendTo(".dataProperties-contents")
+          .append("<h2>" + d.key  + "</h2>")
+          .append('<img src="' + d.filename + '"/>');
+      }
     });
 
     byVarname.group().all().forEach(function(d) {
@@ -61,10 +180,17 @@ $(document).ready(function() {
     var byProperty = cf.dimension(function(d) {return d.property;});
   
     data.forEach(function(d) {
-      $('<div class="cr_img" id="' + d.key + '"></div>')
-        .appendTo(".compressionResults-contents")
-        .append("<h2>" + d.key  + "</h2>")
-        .append('<img src="' + d.filename + '"/>');
+      if (d.property === "autocorr") 
+        generateAutoCorrPlot("cr_img", ".compressionResults-contents", d);
+      else if (d.property === "fft-amp")
+        generateFFTAmpPlot("cr_img", ".compressionResults-contents", d);
+      else if (d.property === "dis")
+        generateDistributionPlot("cr_img", ".compressionResults-contents", d);
+      else 
+        $('<div class="cr_img" id="' + d.key + '"></div>')
+          .appendTo(".compressionResults-contents")
+          .append("<h2>" + d.key  + "</h2>")
+          .append('<img src="' + d.filename + '"/>');
     });
 
     byCompressor.group().all().forEach(function(d) {
@@ -109,7 +235,6 @@ $(document).ready(function() {
   });
 
   $.getJSON("compareCompressors.json", function(data) {
-    console.log(data);
     var cf = crossfilter(data);
     var byKey = cf.dimension(function(d) {return d.key;});
   
