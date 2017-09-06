@@ -64,10 +64,6 @@ make
 make install
 
 cd example
-git fetch origin master
-git reset --hard FETCH_HEAD
-git clean -df
-git pull
 patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
 make -f Makefile.bk
 
