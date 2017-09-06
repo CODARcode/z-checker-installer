@@ -1,6 +1,2590 @@
+diff -uNr src/.deps/libsz_la-ByteToolkit.Plo src-hacc/.deps/libsz_la-ByteToolkit.Plo
+--- src/.deps/libsz_la-ByteToolkit.Plo	2017-09-02 01:14:32.433634743 -0500
++++ src-hacc/.deps/libsz_la-ByteToolkit.Plo	2017-09-06 15:14:39.078773585 -0500
+@@ -28,12 +28,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -163,6 +164,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-callZlib.Plo src-hacc/.deps/libsz_la-callZlib.Plo
+--- src/.deps/libsz_la-callZlib.Plo	2017-09-02 01:14:36.223595562 -0500
++++ src-hacc/.deps/libsz_la-callZlib.Plo	2017-09-06 15:14:39.078773585 -0500
+@@ -33,12 +33,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -190,6 +191,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-CompressElement.Plo src-hacc/.deps/libsz_la-CompressElement.Plo
+--- src/.deps/libsz_la-CompressElement.Plo	2017-09-02 01:14:33.387624881 -0500
++++ src-hacc/.deps/libsz_la-CompressElement.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -28,13 +28,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -164,6 +164,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-conf.Plo src-hacc/.deps/libsz_la-conf.Plo
+--- src/.deps/libsz_la-conf.Plo	2017-09-02 01:14:35.221605921 -0500
++++ src-hacc/.deps/libsz_la-conf.Plo	2017-09-06 15:14:39.078773585 -0500
+@@ -34,13 +34,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/iniparser.h include/Huffman.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/iniparser.h include/Huffman.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -192,6 +192,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-dataCompression.Plo src-hacc/.deps/libsz_la-dataCompression.Plo
+--- src/.deps/libsz_la-dataCompression.Plo	2017-09-02 01:14:32.739631580 -0500
++++ src-hacc/.deps/libsz_la-dataCompression.Plo	2017-09-06 15:14:39.078773585 -0500
+@@ -27,13 +27,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/DynamicByteArray.h include/DynamicIntArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/DynamicByteArray.h include/DynamicIntArray.h \
+  include/TightDataPointStorageD.h include/CompressElement.h \
+  include/dataCompression.h
+ 
+@@ -165,6 +165,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-Huffman.Plo src-hacc/.deps/libsz_la-Huffman.Plo
+--- src/.deps/libsz_la-Huffman.Plo	2017-09-02 01:14:36.713590497 -0500
++++ src-hacc/.deps/libsz_la-Huffman.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -28,7 +28,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -165,6 +165,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-rwf.Plo src-hacc/.deps/libsz_la-rwf.Plo
+--- src/.deps/libsz_la-rwf.Plo	2017-09-01 16:14:26.002924304 -0500
++++ src-hacc/.deps/libsz_la-rwf.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -1 +1,108 @@
+-# dummy
++src/libsz_la-rwf.lo: src/rwf.c /usr/include/stdc-predef.h \
++ /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
++ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/stdlib.h \
++ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
++ /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
++ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
++ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h \
++ /usr/include/bits/select.h /usr/include/bits/sigset.h \
++ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
++ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
++ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
++ /usr/include/string.h /usr/include/xlocale.h /usr/include/bits/string.h \
++ /usr/include/bits/string2.h include/rw.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h \
++ /usr/include/stdint.h /usr/include/bits/wchar.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/stdio.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++/usr/include/string.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++include/rw.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h:
++
++/usr/include/stdint.h:
++
++/usr/include/bits/wchar.h:
+diff -uNr src/.deps/libSZ_la-rwf.Plo src-hacc/.deps/libSZ_la-rwf.Plo
+--- src/.deps/libSZ_la-rwf.Plo	2017-09-05 14:41:31.691949070 -0500
++++ src-hacc/.deps/libSZ_la-rwf.Plo	2017-09-06 15:14:39.068773693 -0500
+@@ -1 +1,108 @@
+-# dummy
++src/libSZ_la-rwf.lo: src/rwf.c /usr/include/stdc-predef.h \
++ /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
++ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/stdlib.h \
++ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
++ /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
++ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
++ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h \
++ /usr/include/bits/select.h /usr/include/bits/sigset.h \
++ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
++ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
++ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
++ /usr/include/string.h /usr/include/xlocale.h /usr/include/bits/string.h \
++ /usr/include/bits/string2.h include/rw.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h \
++ /usr/include/stdint.h /usr/include/bits/wchar.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/stdio.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++/usr/include/string.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++include/rw.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h:
++
++/usr/include/stdint.h:
++
++/usr/include/bits/wchar.h:
+diff -uNr src/.deps/libsz_la-rw.Plo src-hacc/.deps/libsz_la-rw.Plo
+--- src/.deps/libsz_la-rw.Plo	2017-09-02 01:14:33.911619464 -0500
++++ src-hacc/.deps/libsz_la-rw.Plo	2017-09-06 15:14:39.077773595 -0500
+@@ -28,12 +28,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -165,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_double.Plo src-hacc/.deps/libsz_la-szd_double.Plo
+--- src/.deps/libsz_la-szd_double.Plo	2017-09-02 01:14:44.930505551 -0500
++++ src-hacc/.deps/libsz_la-szd_double.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -29,13 +29,13 @@
+  include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/Huffman.h include/szd_double_pwr.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/Huffman.h include/szd_double_pwr.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -169,6 +169,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_double_pwr.Plo src-hacc/.deps/libsz_la-szd_double_pwr.Plo
+--- src/.deps/libsz_la-szd_double_pwr.Plo	2017-09-02 01:14:50.592447018 -0500
++++ src-hacc/.deps/libsz_la-szd_double_pwr.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -29,7 +29,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -166,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_float.Plo src-hacc/.deps/libsz_la-szd_float.Plo
+--- src/.deps/libsz_la-szd_float.Plo	2017-09-02 01:14:43.685518422 -0500
++++ src-hacc/.deps/libsz_la-szd_float.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -29,13 +29,13 @@
+  include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
+  include/TightDataPointStorageD.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/Huffman.h include/szd_float_pwr.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/Huffman.h include/szd_float_pwr.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -169,6 +169,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_float_pwr.Plo src-hacc/.deps/libsz_la-szd_float_pwr.Plo
+--- src/.deps/libsz_la-szd_float_pwr.Plo	2017-09-02 01:14:49.771455506 -0500
++++ src-hacc/.deps/libsz_la-szd_float_pwr.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -29,7 +29,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -166,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_int16.Plo src-hacc/.deps/libsz_la-szd_int16.Plo
+--- src/.deps/libsz_la-szd_int16.Plo	2017-09-02 01:14:45.989494603 -0500
++++ src-hacc/.deps/libsz_la-szd_int16.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -34,7 +34,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -193,6 +193,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_int32.Plo src-hacc/.deps/libsz_la-szd_int32.Plo
+--- src/.deps/libsz_la-szd_int32.Plo	2017-09-02 01:14:46.478489548 -0500
++++ src-hacc/.deps/libsz_la-szd_int32.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -34,7 +34,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -193,6 +193,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_int64.Plo src-hacc/.deps/libsz_la-szd_int64.Plo
+--- src/.deps/libsz_la-szd_int64.Plo	2017-09-02 01:14:46.966484503 -0500
++++ src-hacc/.deps/libsz_la-szd_int64.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -34,7 +34,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -193,6 +193,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szd_int8.Plo src-hacc/.deps/libsz_la-szd_int8.Plo
+--- src/.deps/libsz_la-szd_int8.Plo	2017-09-02 01:14:45.418500506 -0500
++++ src-hacc/.deps/libsz_la-szd_int8.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -34,7 +34,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -193,6 +193,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_double.Plo src-hacc/.deps/libsz_la-sz_double.Plo
+--- src/.deps/libsz_la-sz_double.Plo	2017-09-02 01:14:39.645560187 -0500
++++ src-hacc/.deps/libsz_la-sz_double.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h include/TightDataPointStorageD.h \
+  include/sz_double.h include/sz_double_pwr.h include/szd_double.h \
+  include/szd_double_pwr.h ../zlib/zlib.h ../zlib/zconf.h \
+@@ -198,6 +198,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_double_pwr.Plo src-hacc/.deps/libsz_la-sz_double_pwr.Plo
+--- src/.deps/libsz_la-sz_double_pwr.Plo	2017-09-02 01:14:49.012463352 -0500
++++ src-hacc/.deps/libsz_la-sz_double_pwr.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h include/TightDataPointStorageD.h \
+  ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_float.Plo src-hacc/.deps/libsz_la-sz_float.Plo
+--- src/.deps/libsz_la-sz_float.Plo	2017-09-02 01:14:38.174575393 -0500
++++ src-hacc/.deps/libsz_la-sz_float.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h include/TightDataPointStorageF.h \
+  include/sz_float.h include/sz_float_pwr.h include/szd_float.h \
+  include/szd_float_pwr.h ../zlib/zlib.h ../zlib/zconf.h \
+@@ -198,6 +198,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_float_pwr.Plo src-hacc/.deps/libsz_la-sz_float_pwr.Plo
+--- src/.deps/libsz_la-sz_float_pwr.Plo	2017-09-02 01:14:48.197471777 -0500
++++ src-hacc/.deps/libsz_la-sz_float_pwr.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h include/TightDataPointStorageF.h \
+  include/sz_float.h include/sz_float_pwr.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-szf.Plo src-hacc/.deps/libsz_la-szf.Plo
+--- src/.deps/libsz_la-szf.Plo	2017-09-01 16:14:26.024924066 -0500
++++ src-hacc/.deps/libsz_la-szf.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -1 +1,198 @@
+-# dummy
++src/libsz_la-szf.lo: src/szf.c /usr/include/stdc-predef.h \
++ /usr/include/string.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/xlocale.h /usr/include/bits/string.h \
++ /usr/include/bits/string2.h /usr/include/stdlib.h /usr/include/stdio.h \
++ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
++ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/bits/waitflags.h \
++ /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
++ /usr/include/time.h /usr/include/endian.h /usr/include/bits/endian.h \
++ /usr/include/bits/byteswap.h /usr/include/bits/byteswap-16.h \
++ /usr/include/sys/select.h /usr/include/bits/select.h \
++ /usr/include/bits/sigset.h /usr/include/bits/time.h \
++ /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
++ /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
++ /usr/include/bits/stdlib-float.h include/sz.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h \
++ /usr/include/stdint.h /usr/include/bits/wchar.h /usr/include/sys/time.h \
++ include/iniparser.h include/dictionary.h /usr/include/unistd.h \
++ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
++ /usr/include/bits/confname.h /usr/include/getopt.h \
++ include/CompressElement.h include/DynamicByteArray.h \
++ include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
++ include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
++ include/TightDataPointStorageI.h include/conf.h \
++ include/dataCompression.h include/sz.h include/ByteToolkit.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
++ include/sz_int32.h include/sz_int64.h include/sz_float.h \
++ include/sz_double.h include/szd_int8.h include/szd_int16.h \
++ include/szd_int32.h include/szd_int64.h include/szd_float.h \
++ include/szd_double.h include/sz_float_pwr.h include/sz_double_pwr.h \
++ include/callZlib.h include/rw.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/string.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/stdio.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++include/sz.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h:
++
++/usr/include/stdint.h:
++
++/usr/include/bits/wchar.h:
++
++/usr/include/sys/time.h:
++
++include/iniparser.h:
++
++include/dictionary.h:
++
++/usr/include/unistd.h:
++
++/usr/include/bits/posix_opt.h:
++
++/usr/include/bits/environments.h:
++
++/usr/include/bits/confname.h:
++
++/usr/include/getopt.h:
++
++include/CompressElement.h:
++
++include/DynamicByteArray.h:
++
++include/DynamicIntArray.h:
++
++include/VarSet.h:
++
++include/Huffman.h:
++
++include/TightDataPointStorageD.h:
++
++include/TightDataPointStorageF.h:
++
++include/TightDataPointStorageI.h:
++
++include/conf.h:
++
++include/dataCompression.h:
++
++include/sz.h:
++
++include/ByteToolkit.h:
++
++include/TypeManager.h:
++
++include/szf.h:
++
++include/sz_int8.h:
++
++include/sz_int16.h:
++
++include/sz_int32.h:
++
++include/sz_int64.h:
++
++include/sz_float.h:
++
++include/sz_double.h:
++
++include/szd_int8.h:
++
++include/szd_int16.h:
++
++include/szd_int32.h:
++
++include/szd_int64.h:
++
++include/szd_float.h:
++
++include/szd_double.h:
++
++include/sz_float_pwr.h:
++
++include/sz_double_pwr.h:
++
++include/callZlib.h:
++
++include/rw.h:
+diff -uNr src/.deps/libSZ_la-szf.Plo src-hacc/.deps/libSZ_la-szf.Plo
+--- src/.deps/libSZ_la-szf.Plo	2017-09-05 14:41:31.710948868 -0500
++++ src-hacc/.deps/libSZ_la-szf.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -1 +1,198 @@
+-# dummy
++src/libSZ_la-szf.lo: src/szf.c /usr/include/stdc-predef.h \
++ /usr/include/string.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/xlocale.h /usr/include/bits/string.h \
++ /usr/include/bits/string2.h /usr/include/stdlib.h /usr/include/stdio.h \
++ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
++ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/bits/waitflags.h \
++ /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
++ /usr/include/time.h /usr/include/endian.h /usr/include/bits/endian.h \
++ /usr/include/bits/byteswap.h /usr/include/bits/byteswap-16.h \
++ /usr/include/sys/select.h /usr/include/bits/select.h \
++ /usr/include/bits/sigset.h /usr/include/bits/time.h \
++ /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
++ /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
++ /usr/include/bits/stdlib-float.h include/sz.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h \
++ /usr/include/stdint.h /usr/include/bits/wchar.h /usr/include/sys/time.h \
++ include/iniparser.h include/dictionary.h /usr/include/unistd.h \
++ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
++ /usr/include/bits/confname.h /usr/include/getopt.h \
++ include/CompressElement.h include/DynamicByteArray.h \
++ include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
++ include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
++ include/TightDataPointStorageI.h include/conf.h \
++ include/dataCompression.h include/sz.h include/ByteToolkit.h \
++ include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/sz_int32.h include/sz_int64.h include/sz_float.h \
++ include/sz_double.h include/szd_int8.h include/szd_int16.h \
++ include/szd_int32.h include/szd_int64.h include/szd_float.h \
++ include/szd_double.h include/sz_float_pwr.h include/sz_double_pwr.h \
++ include/callZlib.h include/rw.h include/szf.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/string.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/stdio.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++include/sz.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdint.h:
++
++/usr/include/stdint.h:
++
++/usr/include/bits/wchar.h:
++
++/usr/include/sys/time.h:
++
++include/iniparser.h:
++
++include/dictionary.h:
++
++/usr/include/unistd.h:
++
++/usr/include/bits/posix_opt.h:
++
++/usr/include/bits/environments.h:
++
++/usr/include/bits/confname.h:
++
++/usr/include/getopt.h:
++
++include/CompressElement.h:
++
++include/DynamicByteArray.h:
++
++include/DynamicIntArray.h:
++
++include/VarSet.h:
++
++include/Huffman.h:
++
++include/TightDataPointStorageD.h:
++
++include/TightDataPointStorageF.h:
++
++include/TightDataPointStorageI.h:
++
++include/conf.h:
++
++include/dataCompression.h:
++
++include/sz.h:
++
++include/ByteToolkit.h:
++
++include/TypeManager.h:
++
++include/sz_int8.h:
++
++include/sz_int16.h:
++
++include/sz_int32.h:
++
++include/sz_int64.h:
++
++include/sz_float.h:
++
++include/sz_double.h:
++
++include/szd_int8.h:
++
++include/szd_int16.h:
++
++include/szd_int32.h:
++
++include/szd_int64.h:
++
++include/szd_float.h:
++
++include/szd_double.h:
++
++include/sz_float_pwr.h:
++
++include/sz_double_pwr.h:
++
++include/callZlib.h:
++
++include/rw.h:
++
++include/szf.h:
+diff -uNr src/.deps/libsz_la-sz_int16.Plo src-hacc/.deps/libsz_la-sz_int16.Plo
+--- src/.deps/libsz_la-sz_int16.Plo	2017-09-02 01:14:41.183544287 -0500
++++ src-hacc/.deps/libsz_la-sz_int16.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/syslimits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_int32.Plo src-hacc/.deps/libsz_la-sz_int32.Plo
+--- src/.deps/libsz_la-sz_int32.Plo	2017-09-02 01:14:41.879537092 -0500
++++ src-hacc/.deps/libsz_la-sz_int32.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/syslimits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_int64.Plo src-hacc/.deps/libsz_la-sz_int64.Plo
+--- src/.deps/libsz_la-sz_int64.Plo	2017-09-02 01:14:42.566529990 -0500
++++ src-hacc/.deps/libsz_la-sz_int64.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/syslimits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz_int8.Plo src-hacc/.deps/libsz_la-sz_int8.Plo
+--- src/.deps/libsz_la-sz_int8.Plo	2017-09-02 01:14:40.422552154 -0500
++++ src-hacc/.deps/libsz_la-sz_int8.Plo	2017-09-06 15:14:39.069773682 -0500
+@@ -32,13 +32,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/syslimits.h \
+@@ -197,6 +197,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-sz.Plo src-hacc/.deps/libsz_la-sz.Plo
+--- src/.deps/libsz_la-sz.Plo	2017-09-02 01:14:47.384480182 -0500
++++ src-hacc/.deps/libsz_la-sz.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -27,13 +27,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h \
+- include/CompressElement.h include/DynamicByteArray.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h include/CompressElement.h include/DynamicByteArray.h \
+  include/DynamicIntArray.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h ../zlib/zlib.h ../zlib/zconf.h \
+  /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/limits.h \
+@@ -170,6 +170,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-TightDataPointStorageD.Plo src-hacc/.deps/libsz_la-TightDataPointStorageD.Plo
+--- src/.deps/libsz_la-TightDataPointStorageD.Plo	2017-09-02 01:14:34.591612434 -0500
++++ src-hacc/.deps/libsz_la-TightDataPointStorageD.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -29,7 +29,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -166,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-TightDataPointStorageD_pwr.Plo src-hacc/.deps/libsz_la-TightDataPointStorageD_pwr.Plo
+--- src/.deps/libsz_la-TightDataPointStorageD_pwr.Plo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/.deps/libsz_la-TightDataPointStorageD_pwr.Plo	2017-09-06 15:14:39.077773595 -0500
+@@ -0,0 +1,166 @@
++src/libsz_la-TightDataPointStorageD_pwr.lo: \
++ src/TightDataPointStorageD_pwr.c /usr/include/stdc-predef.h \
++ /usr/include/stdlib.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
++ /usr/include/sys/types.h /usr/include/bits/types.h \
++ /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
++ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
++ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h \
++ /usr/include/bits/select.h /usr/include/bits/sigset.h \
++ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
++ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
++ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
++ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
++ /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/string.h /usr/include/xlocale.h \
++ /usr/include/bits/string.h /usr/include/bits/string2.h \
++ include/TightDataPointStorageD.h include/sz.h /usr/include/sys/time.h \
++ include/iniparser.h include/dictionary.h /usr/include/unistd.h \
++ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
++ /usr/include/bits/confname.h /usr/include/getopt.h \
++ include/CompressElement.h include/DynamicByteArray.h \
++ include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
++ include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
++ include/conf.h include/dataCompression.h include/sz.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_float.h include/sz_double.h include/callZlib.h include/rw.h \
++ include/Huffman.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++/usr/include/stdio.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/string.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++include/TightDataPointStorageD.h:
++
++include/sz.h:
++
++/usr/include/sys/time.h:
++
++include/iniparser.h:
++
++include/dictionary.h:
++
++/usr/include/unistd.h:
++
++/usr/include/bits/posix_opt.h:
++
++/usr/include/bits/environments.h:
++
++/usr/include/bits/confname.h:
++
++/usr/include/getopt.h:
++
++include/CompressElement.h:
++
++include/DynamicByteArray.h:
++
++include/DynamicIntArray.h:
++
++include/VarSet.h:
++
++include/Huffman.h:
++
++include/TightDataPointStorageD.h:
++
++include/TightDataPointStorageF.h:
++
++include/conf.h:
++
++include/dataCompression.h:
++
++include/sz.h:
++
++include/ByteToolkit.h:
++
++include/TypeManager.h:
++
++include/szf.h:
++
++include/sz_float.h:
++
++include/sz_double.h:
++
++include/callZlib.h:
++
++include/rw.h:
++
++include/Huffman.h:
+diff -uNr src/.deps/libsz_la-TightDataPointStorageF.Plo src-hacc/.deps/libsz_la-TightDataPointStorageF.Plo
+--- src/.deps/libsz_la-TightDataPointStorageF.Plo	2017-09-02 01:14:34.993608278 -0500
++++ src-hacc/.deps/libsz_la-TightDataPointStorageF.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -29,7 +29,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -166,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-TightDataPointStorageF_pwr.Plo src-hacc/.deps/libsz_la-TightDataPointStorageF_pwr.Plo
+--- src/.deps/libsz_la-TightDataPointStorageF_pwr.Plo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/.deps/libsz_la-TightDataPointStorageF_pwr.Plo	2017-09-06 15:14:39.077773595 -0500
+@@ -0,0 +1,166 @@
++src/libsz_la-TightDataPointStorageF_pwr.lo: \
++ src/TightDataPointStorageF_pwr.c /usr/include/stdc-predef.h \
++ /usr/include/stdlib.h /usr/include/features.h /usr/include/sys/cdefs.h \
++ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
++ /usr/include/gnu/stubs-64.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h \
++ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
++ /usr/include/sys/types.h /usr/include/bits/types.h \
++ /usr/include/bits/typesizes.h /usr/include/time.h /usr/include/endian.h \
++ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
++ /usr/include/bits/byteswap-16.h /usr/include/sys/select.h \
++ /usr/include/bits/select.h /usr/include/bits/sigset.h \
++ /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
++ /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
++ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
++ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
++ /usr/include/wchar.h \
++ /usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h \
++ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
++ /usr/include/bits/stdio.h /usr/include/string.h /usr/include/xlocale.h \
++ /usr/include/bits/string.h /usr/include/bits/string2.h \
++ include/TightDataPointStorageF.h include/sz.h /usr/include/sys/time.h \
++ include/iniparser.h include/dictionary.h /usr/include/unistd.h \
++ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
++ /usr/include/bits/confname.h /usr/include/getopt.h \
++ include/CompressElement.h include/DynamicByteArray.h \
++ include/DynamicIntArray.h include/VarSet.h include/Huffman.h \
++ include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
++ include/conf.h include/dataCompression.h include/sz.h \
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_float.h include/sz_double.h include/callZlib.h include/rw.h \
++ include/Huffman.h
++
++/usr/include/stdc-predef.h:
++
++/usr/include/stdlib.h:
++
++/usr/include/features.h:
++
++/usr/include/sys/cdefs.h:
++
++/usr/include/bits/wordsize.h:
++
++/usr/include/gnu/stubs.h:
++
++/usr/include/gnu/stubs-64.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stddef.h:
++
++/usr/include/bits/waitflags.h:
++
++/usr/include/bits/waitstatus.h:
++
++/usr/include/sys/types.h:
++
++/usr/include/bits/types.h:
++
++/usr/include/bits/typesizes.h:
++
++/usr/include/time.h:
++
++/usr/include/endian.h:
++
++/usr/include/bits/endian.h:
++
++/usr/include/bits/byteswap.h:
++
++/usr/include/bits/byteswap-16.h:
++
++/usr/include/sys/select.h:
++
++/usr/include/bits/select.h:
++
++/usr/include/bits/sigset.h:
++
++/usr/include/bits/time.h:
++
++/usr/include/sys/sysmacros.h:
++
++/usr/include/bits/pthreadtypes.h:
++
++/usr/include/alloca.h:
++
++/usr/include/bits/stdlib-bsearch.h:
++
++/usr/include/bits/stdlib-float.h:
++
++/usr/include/stdio.h:
++
++/usr/include/libio.h:
++
++/usr/include/_G_config.h:
++
++/usr/include/wchar.h:
++
++/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include/stdarg.h:
++
++/usr/include/bits/stdio_lim.h:
++
++/usr/include/bits/sys_errlist.h:
++
++/usr/include/bits/stdio.h:
++
++/usr/include/string.h:
++
++/usr/include/xlocale.h:
++
++/usr/include/bits/string.h:
++
++/usr/include/bits/string2.h:
++
++include/TightDataPointStorageF.h:
++
++include/sz.h:
++
++/usr/include/sys/time.h:
++
++include/iniparser.h:
++
++include/dictionary.h:
++
++/usr/include/unistd.h:
++
++/usr/include/bits/posix_opt.h:
++
++/usr/include/bits/environments.h:
++
++/usr/include/bits/confname.h:
++
++/usr/include/getopt.h:
++
++include/CompressElement.h:
++
++include/DynamicByteArray.h:
++
++include/DynamicIntArray.h:
++
++include/VarSet.h:
++
++include/Huffman.h:
++
++include/TightDataPointStorageD.h:
++
++include/TightDataPointStorageF.h:
++
++include/conf.h:
++
++include/dataCompression.h:
++
++include/sz.h:
++
++include/ByteToolkit.h:
++
++include/TypeManager.h:
++
++include/szf.h:
++
++include/sz_float.h:
++
++include/sz_double.h:
++
++include/callZlib.h:
++
++include/rw.h:
++
++include/Huffman.h:
+diff -uNr src/.deps/libsz_la-TightDataPointStorageI.Plo src-hacc/.deps/libsz_la-TightDataPointStorageI.Plo
+--- src/.deps/libsz_la-TightDataPointStorageI.Plo	2017-09-02 01:14:34.193616548 -0500
++++ src-hacc/.deps/libsz_la-TightDataPointStorageI.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -34,7 +34,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -193,6 +193,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-TypeManager.Plo src-hacc/.deps/libsz_la-TypeManager.Plo
+--- src/.deps/libsz_la-TypeManager.Plo	2017-09-02 01:14:35.593602075 -0500
++++ src-hacc/.deps/libsz_la-TypeManager.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -28,12 +28,13 @@
+  include/Huffman.h include/TightDataPointStorageD.h \
+  include/TightDataPointStorageF.h include/TightDataPointStorageI.h \
+  include/conf.h include/dataCompression.h include/sz.h \
+- include/ByteToolkit.h include/TypeManager.h include/sz_int8.h \
+- include/sz_int16.h include/sz_int32.h include/sz_int64.h \
+- include/sz_float.h include/sz_double.h include/szd_int8.h \
+- include/szd_int16.h include/szd_int32.h include/szd_int64.h \
+- include/szd_float.h include/szd_double.h include/sz_float_pwr.h \
+- include/sz_double_pwr.h include/callZlib.h include/rw.h
++ include/ByteToolkit.h include/TypeManager.h include/szf.h \
++ include/sz_int8.h include/sz_int16.h include/sz_int32.h \
++ include/sz_int64.h include/sz_float.h include/sz_double.h \
++ include/szd_int8.h include/szd_int16.h include/szd_int32.h \
++ include/szd_int64.h include/szd_float.h include/szd_double.h \
++ include/sz_float_pwr.h include/sz_double_pwr.h include/callZlib.h \
++ include/rw.h
+ 
+ /usr/include/stdc-predef.h:
+ 
+@@ -165,6 +166,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+diff -uNr src/.deps/libsz_la-VarSet.Plo src-hacc/.deps/libsz_la-VarSet.Plo
+--- src/.deps/libsz_la-VarSet.Plo	2017-09-02 01:14:36.048597372 -0500
++++ src-hacc/.deps/libsz_la-VarSet.Plo	2017-09-06 15:14:39.070773671 -0500
+@@ -28,7 +28,7 @@
+  include/TightDataPointStorageD.h include/TightDataPointStorageF.h \
+  include/TightDataPointStorageI.h include/conf.h \
+  include/dataCompression.h include/sz.h include/ByteToolkit.h \
+- include/TypeManager.h include/sz_int8.h include/sz_int16.h \
++ include/TypeManager.h include/szf.h include/sz_int8.h include/sz_int16.h \
+  include/sz_int32.h include/sz_int64.h include/sz_float.h \
+  include/sz_double.h include/szd_int8.h include/szd_int16.h \
+  include/szd_int32.h include/szd_int64.h include/szd_float.h \
+@@ -165,6 +165,8 @@
+ 
+ include/TypeManager.h:
+ 
++include/szf.h:
++
+ include/sz_int8.h:
+ 
+ include/sz_int16.h:
+Binary files src/.libs/libsz_la-ByteToolkit.o and src-hacc/.libs/libsz_la-ByteToolkit.o differ
+Binary files src/.libs/libSZ_la-ByteToolkit.o and src-hacc/.libs/libSZ_la-ByteToolkit.o differ
+Binary files src/.libs/libsz_la-callZlib.o and src-hacc/.libs/libsz_la-callZlib.o differ
+Binary files src/.libs/libSZ_la-callZlib.o and src-hacc/.libs/libSZ_la-callZlib.o differ
+Binary files src/.libs/libsz_la-CompressElement.o and src-hacc/.libs/libsz_la-CompressElement.o differ
+Binary files src/.libs/libSZ_la-CompressElement.o and src-hacc/.libs/libSZ_la-CompressElement.o differ
+Binary files src/.libs/libsz_la-conf.o and src-hacc/.libs/libsz_la-conf.o differ
+Binary files src/.libs/libSZ_la-conf.o and src-hacc/.libs/libSZ_la-conf.o differ
+Binary files src/.libs/libsz_la-dataCompression.o and src-hacc/.libs/libsz_la-dataCompression.o differ
+Binary files src/.libs/libSZ_la-dataCompression.o and src-hacc/.libs/libSZ_la-dataCompression.o differ
+Binary files src/.libs/libsz_la-dictionary.o and src-hacc/.libs/libsz_la-dictionary.o differ
+Binary files src/.libs/libSZ_la-dictionary.o and src-hacc/.libs/libSZ_la-dictionary.o differ
+Binary files src/.libs/libsz_la-DynamicByteArray.o and src-hacc/.libs/libsz_la-DynamicByteArray.o differ
+Binary files src/.libs/libSZ_la-DynamicByteArray.o and src-hacc/.libs/libSZ_la-DynamicByteArray.o differ
+Binary files src/.libs/libsz_la-DynamicDoubleArray.o and src-hacc/.libs/libsz_la-DynamicDoubleArray.o differ
+Binary files src/.libs/libSZ_la-DynamicDoubleArray.o and src-hacc/.libs/libSZ_la-DynamicDoubleArray.o differ
+Binary files src/.libs/libsz_la-DynamicFloatArray.o and src-hacc/.libs/libsz_la-DynamicFloatArray.o differ
+Binary files src/.libs/libSZ_la-DynamicFloatArray.o and src-hacc/.libs/libSZ_la-DynamicFloatArray.o differ
+Binary files src/.libs/libsz_la-DynamicIntArray.o and src-hacc/.libs/libsz_la-DynamicIntArray.o differ
+Binary files src/.libs/libSZ_la-DynamicIntArray.o and src-hacc/.libs/libSZ_la-DynamicIntArray.o differ
+Binary files src/.libs/libsz_la-Huffman.o and src-hacc/.libs/libsz_la-Huffman.o differ
+Binary files src/.libs/libSZ_la-Huffman.o and src-hacc/.libs/libSZ_la-Huffman.o differ
+Binary files src/.libs/libsz_la-iniparser.o and src-hacc/.libs/libsz_la-iniparser.o differ
+Binary files src/.libs/libSZ_la-iniparser.o and src-hacc/.libs/libSZ_la-iniparser.o differ
+Binary files src/.libs/libsz_la-rwf.o and src-hacc/.libs/libsz_la-rwf.o differ
+Binary files src/.libs/libSZ_la-rwf.o and src-hacc/.libs/libSZ_la-rwf.o differ
+Binary files src/.libs/libsz_la-rw.o and src-hacc/.libs/libsz_la-rw.o differ
+Binary files src/.libs/libSZ_la-rw.o and src-hacc/.libs/libSZ_la-rw.o differ
+Binary files src/.libs/libsz_la-szd_double.o and src-hacc/.libs/libsz_la-szd_double.o differ
+Binary files src/.libs/libSZ_la-szd_double.o and src-hacc/.libs/libSZ_la-szd_double.o differ
+Binary files src/.libs/libsz_la-szd_double_pwr.o and src-hacc/.libs/libsz_la-szd_double_pwr.o differ
+Binary files src/.libs/libSZ_la-szd_double_pwr.o and src-hacc/.libs/libSZ_la-szd_double_pwr.o differ
+Binary files src/.libs/libsz_la-szd_float.o and src-hacc/.libs/libsz_la-szd_float.o differ
+Binary files src/.libs/libSZ_la-szd_float.o and src-hacc/.libs/libSZ_la-szd_float.o differ
+Binary files src/.libs/libsz_la-szd_float_pwr.o and src-hacc/.libs/libsz_la-szd_float_pwr.o differ
+Binary files src/.libs/libSZ_la-szd_float_pwr.o and src-hacc/.libs/libSZ_la-szd_float_pwr.o differ
+Binary files src/.libs/libsz_la-szd_int16.o and src-hacc/.libs/libsz_la-szd_int16.o differ
+Binary files src/.libs/libSZ_la-szd_int16.o and src-hacc/.libs/libSZ_la-szd_int16.o differ
+Binary files src/.libs/libsz_la-szd_int32.o and src-hacc/.libs/libsz_la-szd_int32.o differ
+Binary files src/.libs/libSZ_la-szd_int32.o and src-hacc/.libs/libSZ_la-szd_int32.o differ
+Binary files src/.libs/libsz_la-szd_int64.o and src-hacc/.libs/libsz_la-szd_int64.o differ
+Binary files src/.libs/libSZ_la-szd_int64.o and src-hacc/.libs/libSZ_la-szd_int64.o differ
+Binary files src/.libs/libsz_la-szd_int8.o and src-hacc/.libs/libsz_la-szd_int8.o differ
+Binary files src/.libs/libSZ_la-szd_int8.o and src-hacc/.libs/libSZ_la-szd_int8.o differ
+Binary files src/.libs/libsz_la-sz_double.o and src-hacc/.libs/libsz_la-sz_double.o differ
+Binary files src/.libs/libSZ_la-sz_double.o and src-hacc/.libs/libSZ_la-sz_double.o differ
+Binary files src/.libs/libsz_la-sz_double_pwr.o and src-hacc/.libs/libsz_la-sz_double_pwr.o differ
+Binary files src/.libs/libSZ_la-sz_double_pwr.o and src-hacc/.libs/libSZ_la-sz_double_pwr.o differ
+Binary files src/.libs/libsz_la-sz_float.o and src-hacc/.libs/libsz_la-sz_float.o differ
+Binary files src/.libs/libSZ_la-sz_float.o and src-hacc/.libs/libSZ_la-sz_float.o differ
+Binary files src/.libs/libsz_la-sz_float_pwr.o and src-hacc/.libs/libsz_la-sz_float_pwr.o differ
+Binary files src/.libs/libSZ_la-sz_float_pwr.o and src-hacc/.libs/libSZ_la-sz_float_pwr.o differ
+Binary files src/.libs/libsz_la-szf.o and src-hacc/.libs/libsz_la-szf.o differ
+Binary files src/.libs/libSZ_la-szf.o and src-hacc/.libs/libSZ_la-szf.o differ
+Binary files src/.libs/libsz_la-sz_int16.o and src-hacc/.libs/libsz_la-sz_int16.o differ
+Binary files src/.libs/libSZ_la-sz_int16.o and src-hacc/.libs/libSZ_la-sz_int16.o differ
+Binary files src/.libs/libsz_la-sz_int32.o and src-hacc/.libs/libsz_la-sz_int32.o differ
+Binary files src/.libs/libSZ_la-sz_int32.o and src-hacc/.libs/libSZ_la-sz_int32.o differ
+Binary files src/.libs/libsz_la-sz_int64.o and src-hacc/.libs/libsz_la-sz_int64.o differ
+Binary files src/.libs/libSZ_la-sz_int64.o and src-hacc/.libs/libSZ_la-sz_int64.o differ
+Binary files src/.libs/libsz_la-sz_int8.o and src-hacc/.libs/libsz_la-sz_int8.o differ
+Binary files src/.libs/libSZ_la-sz_int8.o and src-hacc/.libs/libSZ_la-sz_int8.o differ
+Binary files src/.libs/libsz_la-sz.o and src-hacc/.libs/libsz_la-sz.o differ
+Binary files src/.libs/libSZ_la-sz.o and src-hacc/.libs/libSZ_la-sz.o differ
+Binary files src/.libs/libsz_la-TightDataPointStorageD.o and src-hacc/.libs/libsz_la-TightDataPointStorageD.o differ
+Binary files src/.libs/libSZ_la-TightDataPointStorageD.o and src-hacc/.libs/libSZ_la-TightDataPointStorageD.o differ
+Binary files src/.libs/libsz_la-TightDataPointStorageF.o and src-hacc/.libs/libsz_la-TightDataPointStorageF.o differ
+Binary files src/.libs/libSZ_la-TightDataPointStorageF.o and src-hacc/.libs/libSZ_la-TightDataPointStorageF.o differ
+Binary files src/.libs/libsz_la-TightDataPointStorageI.o and src-hacc/.libs/libsz_la-TightDataPointStorageI.o differ
+Binary files src/.libs/libSZ_la-TightDataPointStorageI.o and src-hacc/.libs/libSZ_la-TightDataPointStorageI.o differ
+Binary files src/.libs/libsz_la-TypeManager.o and src-hacc/.libs/libsz_la-TypeManager.o differ
+Binary files src/.libs/libSZ_la-TypeManager.o and src-hacc/.libs/libSZ_la-TypeManager.o differ
+Binary files src/.libs/libsz_la-VarSet.o and src-hacc/.libs/libsz_la-VarSet.o differ
+Binary files src/.libs/libSZ_la-VarSet.o and src-hacc/.libs/libSZ_la-VarSet.o differ
+Binary files src/.libs/rw_interface.o and src-hacc/.libs/rw_interface.o differ
+Binary files src/.libs/sz_interface.o and src-hacc/.libs/sz_interface.o differ
+diff -uNr src/libsz_la-ByteToolkit.lo src-hacc/libsz_la-ByteToolkit.lo
+--- src/libsz_la-ByteToolkit.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-ByteToolkit.lo	2017-09-06 15:14:39.094773411 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-ByteToolkit.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-ByteToolkit.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-ByteToolkit.o'
++
+Binary files src/libsz_la-ByteToolkit.o and src-hacc/libsz_la-ByteToolkit.o differ
+Binary files src/libSZ_la-ByteToolkit.o and src-hacc/libSZ_la-ByteToolkit.o differ
+diff -uNr src/libsz_la-callZlib.lo src-hacc/libsz_la-callZlib.lo
+--- src/libsz_la-callZlib.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-callZlib.lo	2017-09-06 15:14:39.102773325 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-callZlib.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-callZlib.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-callZlib.o'
++
+Binary files src/libsz_la-callZlib.o and src-hacc/libsz_la-callZlib.o differ
+Binary files src/libSZ_la-callZlib.o and src-hacc/libSZ_la-callZlib.o differ
+diff -uNr src/libsz_la-CompressElement.lo src-hacc/libsz_la-CompressElement.lo
+--- src/libsz_la-CompressElement.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-CompressElement.lo	2017-09-06 15:14:39.097773379 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-CompressElement.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-CompressElement.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-CompressElement.o'
++
+Binary files src/libsz_la-CompressElement.o and src-hacc/libsz_la-CompressElement.o differ
+Binary files src/libSZ_la-CompressElement.o and src-hacc/libSZ_la-CompressElement.o differ
+diff -uNr src/libsz_la-conf.lo src-hacc/libsz_la-conf.lo
+--- src/libsz_la-conf.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-conf.lo	2017-09-06 15:14:39.100773347 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-conf.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-conf.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-conf.o'
++
+Binary files src/libsz_la-conf.o and src-hacc/libsz_la-conf.o differ
+Binary files src/libSZ_la-conf.o and src-hacc/libSZ_la-conf.o differ
+diff -uNr src/libsz_la-dataCompression.lo src-hacc/libsz_la-dataCompression.lo
+--- src/libsz_la-dataCompression.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-dataCompression.lo	2017-09-06 15:14:39.095773401 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-dataCompression.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-dataCompression.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-dataCompression.o'
++
+Binary files src/libsz_la-dataCompression.o and src-hacc/libsz_la-dataCompression.o differ
+Binary files src/libSZ_la-dataCompression.o and src-hacc/libSZ_la-dataCompression.o differ
+diff -uNr src/libsz_la-dictionary.lo src-hacc/libsz_la-dictionary.lo
+--- src/libsz_la-dictionary.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-dictionary.lo	2017-09-06 15:14:39.102773325 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-dictionary.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-dictionary.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-dictionary.o'
++
+Binary files src/libsz_la-dictionary.o and src-hacc/libsz_la-dictionary.o differ
+Binary files src/libSZ_la-dictionary.o and src-hacc/libSZ_la-dictionary.o differ
+diff -uNr src/libsz_la-DynamicByteArray.lo src-hacc/libsz_la-DynamicByteArray.lo
+--- src/libsz_la-DynamicByteArray.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-DynamicByteArray.lo	2017-09-06 15:14:39.097773379 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-DynamicByteArray.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-DynamicByteArray.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-DynamicByteArray.o'
++
+Binary files src/libsz_la-DynamicByteArray.o and src-hacc/libsz_la-DynamicByteArray.o differ
+Binary files src/libSZ_la-DynamicByteArray.o and src-hacc/libSZ_la-DynamicByteArray.o differ
+diff -uNr src/libsz_la-DynamicDoubleArray.lo src-hacc/libsz_la-DynamicDoubleArray.lo
+--- src/libsz_la-DynamicDoubleArray.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-DynamicDoubleArray.lo	2017-09-06 15:14:39.100773347 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-DynamicDoubleArray.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-DynamicDoubleArray.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-DynamicDoubleArray.o'
++
+Binary files src/libsz_la-DynamicDoubleArray.o and src-hacc/libsz_la-DynamicDoubleArray.o differ
+Binary files src/libSZ_la-DynamicDoubleArray.o and src-hacc/libSZ_la-DynamicDoubleArray.o differ
+diff -uNr src/libsz_la-DynamicFloatArray.lo src-hacc/libsz_la-DynamicFloatArray.lo
+--- src/libsz_la-DynamicFloatArray.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-DynamicFloatArray.lo	2017-09-06 15:14:39.102773325 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-DynamicFloatArray.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-DynamicFloatArray.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-DynamicFloatArray.o'
++
+Binary files src/libsz_la-DynamicFloatArray.o and src-hacc/libsz_la-DynamicFloatArray.o differ
+Binary files src/libSZ_la-DynamicFloatArray.o and src-hacc/libSZ_la-DynamicFloatArray.o differ
+diff -uNr src/libsz_la-DynamicIntArray.lo src-hacc/libsz_la-DynamicIntArray.lo
+--- src/libsz_la-DynamicIntArray.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-DynamicIntArray.lo	2017-09-06 15:14:39.095773401 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-DynamicIntArray.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-DynamicIntArray.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-DynamicIntArray.o'
++
+Binary files src/libsz_la-DynamicIntArray.o and src-hacc/libsz_la-DynamicIntArray.o differ
+Binary files src/libSZ_la-DynamicIntArray.o and src-hacc/libSZ_la-DynamicIntArray.o differ
+diff -uNr src/libsz_la-Huffman.lo src-hacc/libsz_la-Huffman.lo
+--- src/libsz_la-Huffman.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-Huffman.lo	2017-09-06 15:14:39.103773314 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-Huffman.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-Huffman.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-Huffman.o'
++
+Binary files src/libsz_la-Huffman.o and src-hacc/libsz_la-Huffman.o differ
+Binary files src/libSZ_la-Huffman.o and src-hacc/libSZ_la-Huffman.o differ
+diff -uNr src/libsz_la-iniparser.lo src-hacc/libsz_la-iniparser.lo
+--- src/libsz_la-iniparser.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-iniparser.lo	2017-09-06 15:14:39.096773390 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-iniparser.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-iniparser.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-iniparser.o'
++
+Binary files src/libsz_la-iniparser.o and src-hacc/libsz_la-iniparser.o differ
+Binary files src/libSZ_la-iniparser.o and src-hacc/libSZ_la-iniparser.o differ
+diff -uNr src/libsz_la-rwf.lo src-hacc/libsz_la-rwf.lo
+--- src/libsz_la-rwf.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-rwf.lo	2017-09-06 15:14:39.100773347 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-rwf.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-rwf.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-rwf.o'
++
+diff -uNr src/libSZ_la-rwf.lo src-hacc/libSZ_la-rwf.lo
+--- src/libSZ_la-rwf.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libSZ_la-rwf.lo	2017-09-06 15:14:39.067773704 -0500
+@@ -0,0 +1,12 @@
++# src/libSZ_la-rwf.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libSZ_la-rwf.o'
++
++# Name of the non-PIC object
++non_pic_object='libSZ_la-rwf.o'
++
+Binary files src/libsz_la-rwf.o and src-hacc/libsz_la-rwf.o differ
+Binary files src/libSZ_la-rwf.o and src-hacc/libSZ_la-rwf.o differ
+diff -uNr src/libsz_la-rw.lo src-hacc/libsz_la-rw.lo
+--- src/libsz_la-rw.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-rw.lo	2017-09-06 15:14:39.098773368 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-rw.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-rw.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-rw.o'
++
+Binary files src/libsz_la-rw.o and src-hacc/libsz_la-rw.o differ
+Binary files src/libSZ_la-rw.o and src-hacc/libSZ_la-rw.o differ
+diff -uNr src/libsz_la-szd_double.lo src-hacc/libsz_la-szd_double.lo
+--- src/libsz_la-szd_double.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_double.lo	2017-09-06 15:14:39.107773271 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_double.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_double.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_double.o'
++
+Binary files src/libsz_la-szd_double.o and src-hacc/libsz_la-szd_double.o differ
+Binary files src/libSZ_la-szd_double.o and src-hacc/libSZ_la-szd_double.o differ
+diff -uNr src/libsz_la-szd_double_pwr.lo src-hacc/libsz_la-szd_double_pwr.lo
+--- src/libsz_la-szd_double_pwr.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_double_pwr.lo	2017-09-06 15:14:39.112773217 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_double_pwr.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_double_pwr.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_double_pwr.o'
++
+Binary files src/libsz_la-szd_double_pwr.o and src-hacc/libsz_la-szd_double_pwr.o differ
+Binary files src/libSZ_la-szd_double_pwr.o and src-hacc/libSZ_la-szd_double_pwr.o differ
+diff -uNr src/libsz_la-szd_float.lo src-hacc/libsz_la-szd_float.lo
+--- src/libsz_la-szd_float.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_float.lo	2017-09-06 15:14:39.107773271 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_float.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_float.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_float.o'
++
+Binary files src/libsz_la-szd_float.o and src-hacc/libsz_la-szd_float.o differ
+Binary files src/libSZ_la-szd_float.o and src-hacc/libSZ_la-szd_float.o differ
+diff -uNr src/libsz_la-szd_float_pwr.lo src-hacc/libsz_la-szd_float_pwr.lo
+--- src/libsz_la-szd_float_pwr.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_float_pwr.lo	2017-09-06 15:14:39.112773217 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_float_pwr.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_float_pwr.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_float_pwr.o'
++
+Binary files src/libsz_la-szd_float_pwr.o and src-hacc/libsz_la-szd_float_pwr.o differ
+Binary files src/libSZ_la-szd_float_pwr.o and src-hacc/libSZ_la-szd_float_pwr.o differ
+diff -uNr src/libsz_la-szd_int16.lo src-hacc/libsz_la-szd_int16.lo
+--- src/libsz_la-szd_int16.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_int16.lo	2017-09-06 15:14:39.108773260 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_int16.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_int16.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_int16.o'
++
+Binary files src/libsz_la-szd_int16.o and src-hacc/libsz_la-szd_int16.o differ
+Binary files src/libSZ_la-szd_int16.o and src-hacc/libSZ_la-szd_int16.o differ
+diff -uNr src/libsz_la-szd_int32.lo src-hacc/libsz_la-szd_int32.lo
+--- src/libsz_la-szd_int32.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_int32.lo	2017-09-06 15:14:39.109773249 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_int32.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_int32.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_int32.o'
++
+Binary files src/libsz_la-szd_int32.o and src-hacc/libsz_la-szd_int32.o differ
+Binary files src/libSZ_la-szd_int32.o and src-hacc/libSZ_la-szd_int32.o differ
+diff -uNr src/libsz_la-szd_int64.lo src-hacc/libsz_la-szd_int64.lo
+--- src/libsz_la-szd_int64.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_int64.lo	2017-09-06 15:14:39.109773249 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_int64.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_int64.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_int64.o'
++
+Binary files src/libsz_la-szd_int64.o and src-hacc/libsz_la-szd_int64.o differ
+Binary files src/libSZ_la-szd_int64.o and src-hacc/libSZ_la-szd_int64.o differ
+diff -uNr src/libsz_la-szd_int8.lo src-hacc/libsz_la-szd_int8.lo
+--- src/libsz_la-szd_int8.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szd_int8.lo	2017-09-06 15:14:39.108773260 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szd_int8.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szd_int8.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szd_int8.o'
++
+Binary files src/libsz_la-szd_int8.o and src-hacc/libsz_la-szd_int8.o differ
+Binary files src/libSZ_la-szd_int8.o and src-hacc/libSZ_la-szd_int8.o differ
+diff -uNr src/libsz_la-sz_double.lo src-hacc/libsz_la-sz_double.lo
+--- src/libsz_la-sz_double.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_double.lo	2017-09-06 15:14:39.104773303 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_double.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_double.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_double.o'
++
+Binary files src/libsz_la-sz_double.o and src-hacc/libsz_la-sz_double.o differ
+Binary files src/libSZ_la-sz_double.o and src-hacc/libSZ_la-sz_double.o differ
+diff -uNr src/libsz_la-sz_double_pwr.lo src-hacc/libsz_la-sz_double_pwr.lo
+--- src/libsz_la-sz_double_pwr.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_double_pwr.lo	2017-09-06 15:14:39.111773227 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_double_pwr.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_double_pwr.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_double_pwr.o'
++
+Binary files src/libsz_la-sz_double_pwr.o and src-hacc/libsz_la-sz_double_pwr.o differ
+Binary files src/libSZ_la-sz_double_pwr.o and src-hacc/libSZ_la-sz_double_pwr.o differ
+diff -uNr src/libsz_la-szf.lo src-hacc/libsz_la-szf.lo
+--- src/libsz_la-szf.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-szf.lo	2017-09-06 15:14:39.096773390 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-szf.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-szf.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-szf.o'
++
+diff -uNr src/libSZ_la-szf.lo src-hacc/libSZ_la-szf.lo
+--- src/libSZ_la-szf.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libSZ_la-szf.lo	2017-09-06 15:14:39.066773714 -0500
+@@ -0,0 +1,12 @@
++# src/libSZ_la-szf.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libSZ_la-szf.o'
++
++# Name of the non-PIC object
++non_pic_object='libSZ_la-szf.o'
++
+diff -uNr src/libsz_la-sz_float.lo src-hacc/libsz_la-sz_float.lo
+--- src/libsz_la-sz_float.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_float.lo	2017-09-06 15:14:39.103773314 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_float.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_float.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_float.o'
++
+Binary files src/libsz_la-sz_float.o and src-hacc/libsz_la-sz_float.o differ
+Binary files src/libSZ_la-sz_float.o and src-hacc/libSZ_la-sz_float.o differ
+diff -uNr src/libsz_la-sz_float_pwr.lo src-hacc/libsz_la-sz_float_pwr.lo
+--- src/libsz_la-sz_float_pwr.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_float_pwr.lo	2017-09-06 15:14:39.110773238 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_float_pwr.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_float_pwr.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_float_pwr.o'
++
+Binary files src/libsz_la-sz_float_pwr.o and src-hacc/libsz_la-sz_float_pwr.o differ
+Binary files src/libSZ_la-sz_float_pwr.o and src-hacc/libSZ_la-sz_float_pwr.o differ
+Binary files src/libsz_la-szf.o and src-hacc/libsz_la-szf.o differ
+Binary files src/libSZ_la-szf.o and src-hacc/libSZ_la-szf.o differ
+diff -uNr src/libsz_la-sz_int16.lo src-hacc/libsz_la-sz_int16.lo
+--- src/libsz_la-sz_int16.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_int16.lo	2017-09-06 15:14:39.105773293 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_int16.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_int16.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_int16.o'
++
+Binary files src/libsz_la-sz_int16.o and src-hacc/libsz_la-sz_int16.o differ
+Binary files src/libSZ_la-sz_int16.o and src-hacc/libSZ_la-sz_int16.o differ
+diff -uNr src/libsz_la-sz_int32.lo src-hacc/libsz_la-sz_int32.lo
+--- src/libsz_la-sz_int32.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_int32.lo	2017-09-06 15:14:39.106773282 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_int32.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_int32.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_int32.o'
++
+Binary files src/libsz_la-sz_int32.o and src-hacc/libsz_la-sz_int32.o differ
+Binary files src/libSZ_la-sz_int32.o and src-hacc/libSZ_la-sz_int32.o differ
+diff -uNr src/libsz_la-sz_int64.lo src-hacc/libsz_la-sz_int64.lo
+--- src/libsz_la-sz_int64.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_int64.lo	2017-09-06 15:14:39.106773282 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_int64.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_int64.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_int64.o'
++
+Binary files src/libsz_la-sz_int64.o and src-hacc/libsz_la-sz_int64.o differ
+Binary files src/libSZ_la-sz_int64.o and src-hacc/libSZ_la-sz_int64.o differ
+diff -uNr src/libsz_la-sz_int8.lo src-hacc/libsz_la-sz_int8.lo
+--- src/libsz_la-sz_int8.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz_int8.lo	2017-09-06 15:14:39.105773293 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz_int8.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz_int8.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz_int8.o'
++
+Binary files src/libsz_la-sz_int8.o and src-hacc/libsz_la-sz_int8.o differ
+Binary files src/libSZ_la-sz_int8.o and src-hacc/libSZ_la-sz_int8.o differ
+diff -uNr src/libsz_la-sz.lo src-hacc/libsz_la-sz.lo
+--- src/libsz_la-sz.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-sz.lo	2017-09-06 15:14:39.110773238 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-sz.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-sz.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-sz.o'
++
+Binary files src/libsz_la-sz.o and src-hacc/libsz_la-sz.o differ
+Binary files src/libSZ_la-sz.o and src-hacc/libSZ_la-sz.o differ
+diff -uNr src/libsz_la-TightDataPointStorageD.lo src-hacc/libsz_la-TightDataPointStorageD.lo
+--- src/libsz_la-TightDataPointStorageD.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-TightDataPointStorageD.lo	2017-09-06 15:14:39.099773357 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-TightDataPointStorageD.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-TightDataPointStorageD.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-TightDataPointStorageD.o'
++
+Binary files src/libsz_la-TightDataPointStorageD.o and src-hacc/libsz_la-TightDataPointStorageD.o differ
+Binary files src/libSZ_la-TightDataPointStorageD.o and src-hacc/libSZ_la-TightDataPointStorageD.o differ
+diff -uNr src/libsz_la-TightDataPointStorageF.lo src-hacc/libsz_la-TightDataPointStorageF.lo
+--- src/libsz_la-TightDataPointStorageF.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-TightDataPointStorageF.lo	2017-09-06 15:14:39.099773357 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-TightDataPointStorageF.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-TightDataPointStorageF.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-TightDataPointStorageF.o'
++
+Binary files src/libsz_la-TightDataPointStorageF.o and src-hacc/libsz_la-TightDataPointStorageF.o differ
+Binary files src/libSZ_la-TightDataPointStorageF.o and src-hacc/libSZ_la-TightDataPointStorageF.o differ
+diff -uNr src/libsz_la-TightDataPointStorageI.lo src-hacc/libsz_la-TightDataPointStorageI.lo
+--- src/libsz_la-TightDataPointStorageI.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-TightDataPointStorageI.lo	2017-09-06 15:14:39.098773368 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-TightDataPointStorageI.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-TightDataPointStorageI.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-TightDataPointStorageI.o'
++
+Binary files src/libsz_la-TightDataPointStorageI.o and src-hacc/libsz_la-TightDataPointStorageI.o differ
+Binary files src/libSZ_la-TightDataPointStorageI.o and src-hacc/libSZ_la-TightDataPointStorageI.o differ
+diff -uNr src/libsz_la-TypeManager.lo src-hacc/libsz_la-TypeManager.lo
+--- src/libsz_la-TypeManager.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-TypeManager.lo	2017-09-06 15:14:39.101773336 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-TypeManager.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-TypeManager.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-TypeManager.o'
++
+Binary files src/libsz_la-TypeManager.o and src-hacc/libsz_la-TypeManager.o differ
+Binary files src/libSZ_la-TypeManager.o and src-hacc/libSZ_la-TypeManager.o differ
+diff -uNr src/libsz_la-VarSet.lo src-hacc/libsz_la-VarSet.lo
+--- src/libsz_la-VarSet.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/libsz_la-VarSet.lo	2017-09-06 15:14:39.102773325 -0500
+@@ -0,0 +1,12 @@
++# src/libsz_la-VarSet.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/libsz_la-VarSet.o'
++
++# Name of the non-PIC object
++non_pic_object='libsz_la-VarSet.o'
++
+Binary files src/libsz_la-VarSet.o and src-hacc/libsz_la-VarSet.o differ
+Binary files src/libSZ_la-VarSet.o and src-hacc/libSZ_la-VarSet.o differ
+diff -uNr src/rw_interface.lo src-hacc/rw_interface.lo
+--- src/rw_interface.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/rw_interface.lo	2017-09-06 15:14:39.113773206 -0500
+@@ -0,0 +1,12 @@
++# src/rw_interface.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/rw_interface.o'
++
++# Name of the non-PIC object
++non_pic_object='rw_interface.o'
++
+Binary files src/rw_interface.o and src-hacc/rw_interface.o differ
 diff -uNr src/szd_double.c src-hacc/szd_double.c
---- src/szd_double.c	2017-09-01 09:33:17.645889550 -0500
-+++ src-hacc/szd_double.c	2017-09-01 14:05:53.959562493 -0500
+--- src/szd_double.c	2017-09-06 14:20:10.114588226 -0500
++++ src-hacc/szd_double.c	2017-09-06 15:14:39.065773725 -0500
 @@ -181,8 +181,8 @@
  			memcpy(preBytes,curBytes,8);
  			break;
@@ -13,8 +2597,8 @@ diff -uNr src/szd_double.c src-hacc/szd_double.c
  			break;
  		}
 diff -uNr src/szd_double_pwr.c src-hacc/szd_double_pwr.c
---- src/szd_double_pwr.c	2017-09-01 09:33:17.645889550 -0500
-+++ src-hacc/szd_double_pwr.c	2017-09-01 14:05:53.959562493 -0500
+--- src/szd_double_pwr.c	2017-09-06 14:20:10.115588216 -0500
++++ src-hacc/szd_double_pwr.c	2017-09-06 15:14:39.066773714 -0500
 @@ -115,8 +115,8 @@
  			memcpy(preBytes,curBytes,8);
  			break;
@@ -27,8 +2611,8 @@ diff -uNr src/szd_double_pwr.c src-hacc/szd_double_pwr.c
  			break;
  		}
 diff -uNr src/szd_float.c src-hacc/szd_float.c
---- src/szd_float.c	2017-09-01 09:33:17.645889550 -0500
-+++ src-hacc/szd_float.c	2017-09-01 14:05:53.958562504 -0500
+--- src/szd_float.c	2017-09-06 14:20:10.115588216 -0500
++++ src-hacc/szd_float.c	2017-09-06 15:14:39.065773725 -0500
 @@ -192,8 +192,8 @@
  			memcpy(preBytes,curBytes,4);
  			break;
@@ -41,8 +2625,8 @@ diff -uNr src/szd_float.c src-hacc/szd_float.c
  			break;
  		}
 diff -uNr src/szd_float_pwr.c src-hacc/szd_float_pwr.c
---- src/szd_float_pwr.c	2017-09-01 09:33:17.645889550 -0500
-+++ src-hacc/szd_float_pwr.c	2017-09-01 14:05:53.959562493 -0500
+--- src/szd_float_pwr.c	2017-09-06 14:20:10.116588206 -0500
++++ src-hacc/szd_float_pwr.c	2017-09-06 15:14:39.066773714 -0500
 @@ -121,8 +121,8 @@
  			memcpy(preBytes,curBytes,4);
  			break;
@@ -54,9 +2638,65 @@ diff -uNr src/szd_float_pwr.c src-hacc/szd_float_pwr.c
  			(*data)[i] = predValue + (type_-intvRadius)*interval;
  			break;
  		}
+diff -uNr src/szd_int16.c src-hacc/szd_int16.c
+--- src/szd_int16.c	2017-09-06 14:20:10.118588186 -0500
++++ src-hacc/szd_int16.c	2017-09-06 15:14:39.067773704 -0500
+@@ -150,8 +150,8 @@
+ 			(*data)[i] = exactData + minValue;
+ 			break;
+ 		default:
+-			predValue = 2 * (*data)[i-1] - (*data)[i-2];
+-			//predValue = (*data)[i-1];
++			//predValue = 2 * (*data)[i-1] - (*data)[i-2];
++			predValue = (*data)[i-1];
+ 			tmp = predValue + (type_-intvRadius)*interval;
+ 			if(tmp >= SZ_INT16_MIN&&tmp<SZ_INT16_MAX)
+ 				(*data)[i] = tmp;
+diff -uNr src/szd_int32.c src-hacc/szd_int32.c
+--- src/szd_int32.c	2017-09-06 14:20:10.118588186 -0500
++++ src-hacc/szd_int32.c	2017-09-06 15:14:39.067773704 -0500
+@@ -149,8 +149,8 @@
+ 			(*data)[i] = exactData + minValue;
+ 			break;
+ 		default:
+-			predValue = 2 * (*data)[i-1] - (*data)[i-2];
+-			//predValue = (*data)[i-1];
++			//predValue = 2 * (*data)[i-1] - (*data)[i-2];
++			predValue = (*data)[i-1];
+ 			(*data)[i] = predValue + (type_-intvRadius)*interval;
+ 			break;
+ 		}
+diff -uNr src/szd_int64.c src-hacc/szd_int64.c
+--- src/szd_int64.c	2017-09-06 14:20:10.119588175 -0500
++++ src-hacc/szd_int64.c	2017-09-06 15:14:39.067773704 -0500
+@@ -149,8 +149,8 @@
+ 			(*data)[i] = exactData + minValue;
+ 			break;
+ 		default:
+-			predValue = 2 * (*data)[i-1] - (*data)[i-2];
+-			//predValue = (*data)[i-1];
++			//predValue = 2 * (*data)[i-1] - (*data)[i-2];
++			predValue = (*data)[i-1];
+ 			(*data)[i] = predValue + (type_-intvRadius)*interval;
+ 			break;
+ 		}
+diff -uNr src/szd_int8.c src-hacc/szd_int8.c
+--- src/szd_int8.c	2017-09-06 14:20:10.120588165 -0500
++++ src-hacc/szd_int8.c	2017-09-06 15:14:39.067773704 -0500
+@@ -150,8 +150,8 @@
+ 			(*data)[i] = exactData + minValue;
+ 			break;
+ 		default:
+-			predValue = 2 * (*data)[i-1] - (*data)[i-2];
+-			//predValue = (*data)[i-1];
++			//predValue = 2 * (*data)[i-1] - (*data)[i-2];
++			predValue = (*data)[i-1];
+ 			tmp = predValue + (type_-intvRadius)*interval;
+ 			if(tmp >= SZ_INT8_MIN&&tmp<SZ_INT8_MAX)
+ 				(*data)[i] = tmp;
 diff -uNr src/sz_double.c src-hacc/sz_double.c
---- src/sz_double.c	2017-09-01 09:33:17.643889573 -0500
-+++ src-hacc/sz_double.c	2017-09-01 14:05:53.959562493 -0500
+--- src/sz_double.c	2017-09-06 14:20:10.121588155 -0500
++++ src-hacc/sz_double.c	2017-09-06 15:14:39.065773725 -0500
 @@ -49,8 +49,8 @@
  	{
  		if(i%sampleDistance==0)
@@ -80,8 +2720,8 @@ diff -uNr src/sz_double.c src-hacc/sz_double.c
  		if(predAbsErr<=checkRadius)
  		{
 diff -uNr src/sz_double_pwr.c src-hacc/sz_double_pwr.c
---- src/sz_double_pwr.c	2017-09-01 09:33:17.643889573 -0500
-+++ src-hacc/sz_double_pwr.c	2017-09-01 14:05:53.960562482 -0500
+--- src/sz_double_pwr.c	2017-09-06 14:20:10.122588145 -0500
++++ src-hacc/sz_double_pwr.c	2017-09-06 15:14:39.066773714 -0500
 @@ -111,8 +111,8 @@
  			realPrecision = pwrErrBound[j++];
  		if(i%sampleDistance==0)
@@ -105,8 +2745,8 @@ diff -uNr src/sz_double_pwr.c src-hacc/sz_double_pwr.c
  		if(predAbsErr<checkRadius)
  		{
 diff -uNr src/sz_float.c src-hacc/sz_float.c
---- src/sz_float.c	2017-09-01 09:33:17.645889550 -0500
-+++ src-hacc/sz_float.c	2017-09-01 14:05:53.959562493 -0500
+--- src/sz_float.c	2017-09-06 14:20:10.124588125 -0500
++++ src-hacc/sz_float.c	2017-09-06 15:14:39.065773725 -0500
 @@ -36,8 +36,8 @@
  	{
  		if(i%sampleDistance==0)
@@ -130,8 +2770,8 @@ diff -uNr src/sz_float.c src-hacc/sz_float.c
  		if(predAbsErr<=checkRadius)
  		{
 diff -uNr src/sz_float_pwr.c src-hacc/sz_float_pwr.c
---- src/sz_float_pwr.c	2017-09-01 09:33:17.643889573 -0500
-+++ src-hacc/sz_float_pwr.c	2017-09-01 14:05:53.960562482 -0500
+--- src/sz_float_pwr.c	2017-09-06 14:20:10.125588114 -0500
++++ src-hacc/sz_float_pwr.c	2017-09-06 15:14:39.066773714 -0500
 @@ -114,8 +114,8 @@
  			realPrecision = pwrErrBound[j++];
  		if(i%sampleDistance==0)
@@ -154,3 +2794,120 @@ diff -uNr src/sz_float_pwr.c src-hacc/sz_float_pwr.c
  		predAbsErr = fabs(curData - pred);	
  		if(predAbsErr<checkRadius)
  		{
+diff -uNr src/sz_int16.c src-hacc/sz_int16.c
+--- src/sz_int16.c	2017-09-06 14:20:10.126588104 -0500
++++ src-hacc/sz_int16.c	2017-09-06 15:14:39.067773704 -0500
+@@ -33,8 +33,8 @@
+ 	{
+ 		if(i%sampleDistance==0)
+ 		{
+-			pred_value = 2*oriData[i-1] - oriData[i-2];
+-			//pred_value = oriData[i-1];
++			//pred_value = 2*oriData[i-1] - oriData[i-2];
++			pred_value = oriData[i-1];
+ 			pred_err = llabs(pred_value - oriData[i]);
+ 			radiusIndex = (uint64_t)((pred_err/realPrecision+1)/2);
+ 			if(radiusIndex>=maxRangeRadius)
+@@ -264,8 +264,8 @@
+ 	for(i=2;i<dataLength;i++)
+ 	{
+ 		curData = spaceFillingValue[i];
+-		pred = 2*last3CmprsData[0] - last3CmprsData[1];
+-		//pred = last3CmprsData[0];
++		//pred = 2*last3CmprsData[0] - last3CmprsData[1];
++		pred = last3CmprsData[0];
+ 		predAbsErr = llabs(curData - pred);	
+ 		if(predAbsErr<=checkRadius)
+ 		{
+diff -uNr src/sz_int32.c src-hacc/sz_int32.c
+--- src/sz_int32.c	2017-09-06 14:20:10.126588104 -0500
++++ src-hacc/sz_int32.c	2017-09-06 15:14:39.067773704 -0500
+@@ -33,8 +33,8 @@
+ 	{
+ 		if(i%sampleDistance==0)
+ 		{
+-			pred_value = 2*oriData[i-1] - oriData[i-2];
+-			//pred_value = oriData[i-1];
++			//pred_value = 2*oriData[i-1] - oriData[i-2];
++			pred_value = oriData[i-1];
+ 			pred_err = llabs(pred_value - oriData[i]);
+ 			radiusIndex = (uint64_t)((pred_err/realPrecision+1)/2);
+ 			if(radiusIndex>=maxRangeRadius)
+@@ -266,8 +266,8 @@
+ //		if(i==2869438)
+ //			printf("i=%d\n", i);
+ 		curData = spaceFillingValue[i];
+-		pred = 2*last3CmprsData[0] - last3CmprsData[1];
+-		//pred = last3CmprsData[0];
++		//pred = 2*last3CmprsData[0] - last3CmprsData[1];
++		pred = last3CmprsData[0];
+ 		predAbsErr = llabs(curData - pred);	
+ 		if(predAbsErr<=checkRadius)
+ 		{
+diff -uNr src/sz_int64.c src-hacc/sz_int64.c
+--- src/sz_int64.c	2017-09-06 14:20:10.126588104 -0500
++++ src-hacc/sz_int64.c	2017-09-06 15:14:39.068773693 -0500
+@@ -33,8 +33,8 @@
+ 	{
+ 		if(i%sampleDistance==0)
+ 		{
+-			pred_value = 2*oriData[i-1] - oriData[i-2];
+-			//pred_value = oriData[i-1];
++			//pred_value = 2*oriData[i-1] - oriData[i-2];
++			pred_value = oriData[i-1];
+ 			pred_err = llabs(pred_value - oriData[i]);
+ 			radiusIndex = (uint64_t)((pred_err/realPrecision+1)/2);
+ 			if(radiusIndex>=maxRangeRadius)
+@@ -267,8 +267,8 @@
+ //		if(i==2869438)
+ //			printf("i=%d\n", i);
+ 		curData = spaceFillingValue[i];
+-		pred = 2*last3CmprsData[0] - last3CmprsData[1];
+-		//pred = last3CmprsData[0];
++		//pred = 2*last3CmprsData[0] - last3CmprsData[1];
++		pred = last3CmprsData[0];
+ 		predAbsErr = llabs(curData - pred);	
+ 		if(predAbsErr<=checkRadius)
+ 		{
+diff -uNr src/sz_int8.c src-hacc/sz_int8.c
+--- src/sz_int8.c	2017-09-06 14:20:10.126588104 -0500
++++ src-hacc/sz_int8.c	2017-09-06 15:14:39.067773704 -0500
+@@ -33,8 +33,8 @@
+ 	{
+ 		if(i%sampleDistance==0)
+ 		{
+-			pred_value = 2*oriData[i-1] - oriData[i-2];
+-			//pred_value = oriData[i-1];
++			//pred_value = 2*oriData[i-1] - oriData[i-2];
++			pred_value = oriData[i-1];
+ 			pred_err = llabs(pred_value - oriData[i]);
+ 			radiusIndex = (uint64_t)((pred_err/realPrecision+1)/2);
+ 			if(radiusIndex>=maxRangeRadius)
+@@ -264,8 +264,8 @@
+ 	for(i=2;i<dataLength;i++)
+ 	{
+ 		curData = spaceFillingValue[i];
+-		pred = 2*last3CmprsData[0] - last3CmprsData[1];
+-		//pred = last3CmprsData[0];
++		//pred = 2*last3CmprsData[0] - last3CmprsData[1];
++		pred = last3CmprsData[0];
+ 		predAbsErr = llabs(curData - pred);	
+ 		if(predAbsErr<=checkRadius)
+ 		{
+diff -uNr src/sz_interface.lo src-hacc/sz_interface.lo
+--- src/sz_interface.lo	1969-12-31 18:00:00.000000000 -0600
++++ src-hacc/sz_interface.lo	2017-09-06 15:14:39.112773217 -0500
+@@ -0,0 +1,12 @@
++# src/sz_interface.lo - a libtool object file
++# Generated by libtool (GNU libtool) 2.4.6
++#
++# Please DO NOT delete this file!
++# It is necessary for linking the library.
++
++# Name of the PIC object.
++pic_object='.libs/sz_interface.o'
++
++# Name of the non-PIC object
++non_pic_object='sz_interface.o'
++
+Binary files src/sz_interface.o and src-hacc/sz_interface.o differ
