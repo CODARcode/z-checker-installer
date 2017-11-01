@@ -72,7 +72,7 @@ cd $rootDir
 git clone https://github.com/disheng222/SZ
 
 cd SZ/sz/src
-patch -p1 < ../../../sz-patches/sz-src-hacc.patch
+#patch -p1 < ../../../sz-patches/sz-src-hacc.patch
 
 cd ../..
 ./configure --prefix=$rootDir/SZ/sz-install

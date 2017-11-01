@@ -56,7 +56,7 @@ git clean -df
 git pull
 
 cd src
-patch -p1 < ../../../sz-patches/sz-src-hacc.patch
+#patch -p1 < ../../../sz-patches/sz-src-hacc.patch
 
 cd ../../
 ./configure --prefix=$rootDir/SZ/sz-install
