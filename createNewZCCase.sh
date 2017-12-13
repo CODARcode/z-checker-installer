@@ -34,7 +34,7 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp ../zc-patches/queryVarList $sz_caseName
 
-cp example/sz-zc-ratedistortion.sh $sz_caseName
+cp ../sz-patches//sz-zc-ratedistortion.sh $sz_caseName
 #cp example/testfloat_CompDecomp.sh $sz_caseName
 #cp example/testdouble_CompDecomp.sh $sz_caseName
 cp ../sz-patches/testfloat_CompDecomp.sh $sz_caseName
@@ -57,7 +57,7 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp ../zc-patches/queryVarList $sz_caseName
 
-cp example/sz-zc-ratedistortion.sh $sz_caseName
+cp ../sz-patches/sz-zc-ratedistortion.sh $sz_caseName
 #cp example/testfloat_CompDecomp.sh $sz_caseName
 #cp example/testdouble_CompDecomp.sh $sz_caseName
 cp ../sz-patches/testfloat_CompDecomp.sh $sz_caseName
