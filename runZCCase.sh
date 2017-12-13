@@ -27,10 +27,9 @@ if [[ $option == 1 ]]; then
 	dim3=$8
 	dim4=$9
 else
-	varListFile=$4
+	varListFile=`realpath $4`
 fi
 
-echo extension=$extension
 rootDir=`pwd`
 
 if [[ $errBoundMode == "ABS" ]]; then
@@ -50,9 +49,11 @@ elif [[ $errBoundMode == "PW_REL" ]]; then
 	fi
 fi
 
+if [[ $option == 1 ]]; then
 if [ ! -d "$dataDir" ]; then
 	echo "Error: $dataDir doesn't exist!"
 	exit
+fi
 fi
 
 envConfigPath="$rootDir/Z-checker/examples/env_config.sh"
@@ -88,7 +89,7 @@ if [[ $option == 1 ]]; then
 	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 
 cd $rootDir
@@ -103,7 +104,7 @@ if [[ $option == 1 ]]; then
 	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 
 cd $rootDir
@@ -118,7 +119,7 @@ if [[ $option == 1 ]]; then
 	./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./zfp-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 
 cd $rootDir
@@ -133,7 +134,7 @@ if [[ $option == 1 ]]; then
 	./analyzeDataProperty.sh $datatype $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./analyzeDataProperty.sh $datatype $varListFile
-	./analyzeDataProperty.sh $datatype $varListFile
+	./analyzeDataProperty.sh $datatype "$varListFile"
 fi
 
 ############## as follows, it's comparison ##############

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-if [[ $# < 4 ]]; then
-	echo "Usage: $0 [data type (-f or -d)] [errBoundMode] [data directory] [extension] [dimension sizes....]"
+if [[ $# < 3 ]]; then
+	echo "Usage - option 1: $0 [data type (-f or -d)] [errBoundMode] [data directory] [extension] [dimension sizes....]"
+	echo "      - option 2: $0 [data type (-f or -d)] [errBoundMode] [varLisetFile]"
 	echo "Example: $0 -f ABS /home/shdi/CESM-testdata/1800x3600 3600 1800"
 	exit
 fi
@@ -52,7 +53,7 @@ do
 		if [[ $option == 1 ]]; then
 			./testdouble_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 		else
-			./testdouble_CompDecomp.sh $errBoundMode $erBound "$varListFile"
+			./testdouble_CompDecomp.sh $errBoundMode $errBound "$varListFile"
 		fi
 	else
 		echo "Error: datatype = $datatype . "
