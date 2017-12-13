@@ -15,6 +15,7 @@ cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c
 
 #---------- download Z-checker --------------
+cd $rootDir
 cd Z-checker
 cd examples
 git fetch origin master
