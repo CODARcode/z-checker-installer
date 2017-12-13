@@ -3,19 +3,34 @@
 datatype=$1
 if [[ $# < 4 || ( $datatype != "-f" && $datatype != "-d" ) ]]
 then
-	echo "Usage: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [data dir] [dimensions....]"
-	echo "Example: $0 -f ABS testcase1 CESM-testdata/1800x3600 3600 1800"
+	echo "Usage: option 1: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [data dir] [extension] [dimensions....]"
+	echo "       option 2: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [varList.txt]"
+	echo "Example: $0 -f ABS testcase1 CESM-testdata/1800x3600 dat 3600 1800"
+	echo "         $0 -f REL testcase2 varList.txt"
 	exit
 fi 
 
 errBoundMode=$2
 testcase=$3
-dataDir=`cd "$4"; pwd`
-dim1=$5
-dim2=$6
-dim3=$7
-dim4=$8
 
+if [ -d "$4" ]; then
+	option=1
+else
+	option=0
+fi
+
+if [[ $option == 1 ]]; then
+	dataDir=`cd "$4"; pwd`
+	extension=$5
+	dim1=$6
+	dim2=$7
+	dim3=$8
+	dim4=$9
+else
+	varListFile=$4
+fi
+
+echo extension=$extension
 rootDir=`pwd`
 
 if [[ $errBoundMode == "ABS" ]]; then
@@ -68,8 +83,13 @@ if [[ $errBoundMode == "PW_REL" ]]; then
 else
 	cd SZ/${testcase}_fast
 fi
-echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+if [[ $option == 1 ]]; then
+	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+else
+	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+fi
 
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
@@ -77,8 +97,14 @@ if [[ $errBoundMode == "PW_REL" ]]; then
 else
 	cd SZ/${testcase}_deft
 fi
-echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
-./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+
+if [[ $option == 1 ]]; then
+	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+else
+	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+fi
 
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
@@ -86,8 +112,14 @@ if [[ $errBoundMode == "PW_REL" ]]; then
 else
 	cd zfp/${testcase}
 fi
-echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
-./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $dim1 $dim2 $dim3 $dim4
+
+if [[ $option == 1 ]]; then
+	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+else
+	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+fi
 
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
@@ -95,8 +127,16 @@ if [[ $errBoundMode == "PW_REL" ]]; then
 else
 	cd Z-checker/${testcase}
 fi
-echo ./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
-./analyzeDataProperty.sh $datatype $dataDir $dim1 $dim2 $dim3 $dim4
+
+if [[ $option == 1 ]]; then
+	echo ./analyzeDataProperty.sh $datatype $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./analyzeDataProperty.sh $datatype $dataDir $extension $dim1 $dim2 $dim3 $dim4
+else
+	echo ./analyzeDataProperty.sh $datatype $varListFile
+	./analyzeDataProperty.sh $datatype $varListFile
+fi
+
+############## as follows, it's comparison ##############
 
 if [[ $errBoundMode == "PW_REL" ]]; then
 	sz_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep comparisonCases`"

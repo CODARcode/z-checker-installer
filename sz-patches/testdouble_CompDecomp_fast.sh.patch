@@ -1,11 +1,11 @@
---- testdouble_CompDecomp.sh	2017-05-23 12:45:49.962147307 -0500
-+++ testdouble_CompDecomp.sh.fast	2017-05-23 12:46:14.796156821 -0500
-@@ -15,7 +15,7 @@
- dim3=$6
- dim4=$7
+--- testdouble_CompDecomp.sh	2017-12-11 22:47:35.484321893 -0600
++++ testdouble_CompDecomp.sh.fast	2017-12-11 23:08:58.461181277 -0600
+@@ -27,7 +27,7 @@
+ 	varListFile=$3
+ fi
  
 -compressor=sz
 +compressor=sz_f
  
- fileList=`cd "$dataDir";ls *.dat`
- for file in $fileList
+ #isDimNum is used to indicate the parameter options: either dim1...dim4 are dimensions or dim1 is varList.txt
+ 

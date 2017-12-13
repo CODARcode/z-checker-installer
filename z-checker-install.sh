@@ -43,6 +43,10 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 
 fi
 
+#--------- compile the codes in zc-patch ------------
+cd $rootDir/zc-patches
+gcc -O3 -o queryVarList queryVarList.c 
+
 #---------- download Z-checker --------------
 cd $rootDir
 git clone https://github.com/CODARcode/Z-checker.git

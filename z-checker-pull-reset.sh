@@ -10,6 +10,10 @@ if [ ! -d Z-checker ]; then
 	exit
 fi
 
+#--------- compile codes in zc-patches-------
+cd $rootDir/zc-patches
+gcc -O3 -o queryVarList queryVarList.c
+
 #---------- download Z-checker --------------
 cd Z-checker
 cd examples
