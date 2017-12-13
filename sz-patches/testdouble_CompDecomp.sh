@@ -19,10 +19,11 @@ fi
 
 if [[ $option == 1 ]]; then
 	dataDir=$3
-	dim1=$4
-	dim2=$5
-	dim3=$6
-	dim4=$7
+	extension=$4
+	dim1=$5
+	dim2=$6
+	dim3=$7
+	dim4=$8
 else
 	varListFile=$3
 fi
