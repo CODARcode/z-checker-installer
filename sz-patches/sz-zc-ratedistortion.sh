@@ -44,13 +44,13 @@ for errBound in $SZ_Err_Bounds
 do
 	if [[ $datatype == "-f" ]]; then
 		if [[ $option == 1 ]]; then
-			./testfloat_CompDecomp.sh $errBoundMode $errBound "$dataDir" $dim1 $dim2 $dim3 $dim4
+			./testfloat_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 		else
 			./testfloat_CompDecomp.sh $errBoundMode $errBound "$varListFile"
 		fi
 	elif [[ $datatype == "-d" ]]; then
 		if [[ $option == 1 ]]; then
-			./testdouble_CompDecomp.sh $errBoundMode $errBound "$dataDir" $dim1 $dim2 $dim3 $dim4
+			./testdouble_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 		else
 			./testdouble_CompDecomp.sh $errBoundMode $erBound "$varListFile"
 		fi
