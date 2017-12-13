@@ -25,6 +25,7 @@ if [ -d Z-checker/$caseName ]; then
 fi
 cd Z-checker
 ./createNewCase.sh $caseName
+cp ../zc-patches/queryVarList $caseName
 
 echo "Create a new case (fast mode) for SZ"
 cd ../SZ
