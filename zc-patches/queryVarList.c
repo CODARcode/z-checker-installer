@@ -74,6 +74,7 @@ void usage()
 	printf("	-e : print endian_type (LITTLE_ENDIAN or BIG_ENDIAN)\n");
 	printf("	-t : print data type (float or double)\n");
 	printf("	-f : print the file path\n");
+	printf("	-m : print the name of variable\n");
 	printf("* Examples:\n");
 	printf("	queryVarList -l -i multivars2.txt\n");
 	printf("	queryVarList -v CLDLOW -d -i multivars2.txt\n");
@@ -81,6 +82,7 @@ void usage()
 	printf("	queryVarList -I 2 -d -i multivars2.txt\n");
 	printf("	queryVarList -I 3 -t -i multivars2.txt\n");
 	printf("	queryVarList -n -i multivars2.txt\n");
+	printf("	queryVarList -m -I 2 -i multivars2.txt\n");
 }
 
 VarItem* createVarItemHeader()
@@ -211,6 +213,7 @@ int main(int argc, char* argv[])
 	int printEndianType = 0;
 	int printDataType = 0;
 	int printFilePath = 0;
+	int printVarName = 0;
 
 	char* inPath = NULL;
 	char* varName = NULL;
@@ -245,6 +248,9 @@ int main(int argc, char* argv[])
 			break;
 		case 'f':
 			printFilePath = 1;
+			break;
+		case 'm':
+			printVarName = 1;
 			break;
 		case 'i':
 			if (++i == argc)
@@ -364,6 +370,12 @@ int main(int argc, char* argv[])
 	if(printFilePath)
 	{
 		printf("%s", targetItem->dataFilePath);
+		return 0;
+	}
+
+	if(printVarName)
+	{
+		printf("%s", targetItem->varName);
 		return 0;
 	}
 	

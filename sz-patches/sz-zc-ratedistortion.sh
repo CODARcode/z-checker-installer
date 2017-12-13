@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [[ $# < 3 ]]; then
-	echo "Usage - option 1: $0 [data type (-f or -d)] [errBoundMode] [data directory] [extension] [dimension sizes....]"
-	echo "      - option 2: $0 [data type (-f or -d)] [errBoundMode] [varLisetFile]"
-	echo "Example: $0 -f ABS /home/shdi/CESM-testdata/1800x3600 3600 1800"
+	echo "| Usage - option 1: $0 [data type (-f or -d)] [errBoundMode] [data directory] [extension] [dimension sizes....]"
+	echo "|       - option 2: $0 [data type (-f or -d)] [errBoundMode] [varLisetFile]"
+	echo "| Example: $0 -f ABS /home/shdi/CESM-testdata/1800x3600 3600 1800"
 	exit
 fi
 
