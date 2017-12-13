@@ -28,7 +28,7 @@ else
 	varListFile=$3
 fi
 
-compressor=sz_f
+compressor=sz
 
 #isDimNum is used to indicate the parameter options: either dim1...dim4 are dimensions or dim1 is varList.txt
 
