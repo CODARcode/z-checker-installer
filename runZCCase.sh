@@ -27,7 +27,7 @@ if [[ $option == 1 ]]; then
 	dim3=$8
 	dim4=$9
 else
-	varListFile=`realpath $4`
+	varListFile=`readlink -f $4`
 
 	if [ ! -f "$varListFile" ]; then
 		echo "Error: $varListFile does not exist!\n";
