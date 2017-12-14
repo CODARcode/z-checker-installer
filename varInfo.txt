@@ -1,3 +1,5 @@
+#This varInfo.txt file corresponds to the CESM data set (http://www.mcs.anl.gov/~shdi/download/CESM-ATM-tylor.tar.gz)
+#You need to change /home/sdi/Data/CESM-ATM-tylor/1800x3600 to the downloading directory path on your machine
 #list of data files (each of which is an 1D or multi-dimensional array)
 CLDHGH:LITTLE_ENDIAN:FLOAT:1800x3600:/home/sdi/Data/CESM-ATM-tylor/1800x3600/CLDHGH_1_1800_3600.dat
 CLDLOW:LITTLE_ENDIAN:FLOAT:1800x3600:/home/sdi/Data/CESM-ATM-tylor/1800x3600/CLDLOW_1_1800_3600.dat
