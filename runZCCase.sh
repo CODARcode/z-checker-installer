@@ -30,7 +30,7 @@ else
 	varListFile=`realpath $4`
 
 	if [ ! -f "$varListFile" ]; then
-		printf("Error: $varListFile does not exist!\n");
+		echo "Error: $varListFile does not exist!\n";
 		exit
 	fi
 fi
