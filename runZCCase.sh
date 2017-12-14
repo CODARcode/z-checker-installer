@@ -4,7 +4,7 @@ datatype=$1
 if [[ $# < 4 || ( $datatype != "-f" && $datatype != "-d" ) ]]
 then
 	echo "Usage: option 1: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [data dir] [extension] [dimensions....]"
-	echo "       option 2: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [varList.txt]"
+	echo "       option 2: $0 [datatype (-f or -d)] [errBoundMode] [testcase] [varInfo.txt]"
 	echo "Example: $0 -f ABS testcase1 CESM-testdata/1800x3600 dat 3600 1800"
 	echo "         $0 -f REL testcase2 varList.txt"
 	exit
@@ -28,6 +28,11 @@ if [[ $option == 1 ]]; then
 	dim4=$9
 else
 	varListFile=`realpath $4`
+
+	if [ ! -f "$varListFile" ]; then
+		printf("Error: $varListFile does not exist!\n");
+		exit
+	fi
 fi
 
 rootDir=`pwd`
