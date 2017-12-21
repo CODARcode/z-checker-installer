@@ -21,7 +21,7 @@ sampleDistance = 100
 #The number of quantization intervals should be always set to an "even" number!
 #If it is set to 0, SZ will autamatically search for an optimized setting.
 #Otherwise, it has be to no less than 4 and no greater than 65536, such as 256.
-quantization_intervals = 65536
+quantization_intervals = 0
 
 #maximum quantization interval is valid only when quantization_intervals=0 (i.e., let the sz compressor optimize the intervals)
 #In general, this setting does not change the compression ratio/rate, but only affect the compression speed to a certain extent (only 10% in general).
