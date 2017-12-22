@@ -50,6 +50,9 @@ cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/*.sh zfp/utils
 
 make
+cd utils
+make clean
+make
 
 #---------- download SZ and set the configuration -----------
 cd $rootDir
