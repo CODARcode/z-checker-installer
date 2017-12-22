@@ -73,6 +73,7 @@ make install
 
 cd example
 patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
+make clean -f Makefile.bk
 make -f Makefile.bk
 
 cp ../../Z-checker/examples/zc.config .
