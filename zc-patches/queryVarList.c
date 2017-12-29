@@ -343,7 +343,7 @@ int main(int argc, char* argv[])
 			printf("%ld %ld", targetItem->dim1, targetItem->dim2);
 			break;
 		case 3: 
-			printf("%ld %ld %id", targetItem->dim1, targetItem->dim2, targetItem->dim3);
+			printf("%ld %ld %ld", targetItem->dim1, targetItem->dim2, targetItem->dim3);
 			break;
 		case 4:
 			printf("%ld %ld %ld %ld", targetItem->dim1, targetItem->dim2, targetItem->dim3, targetItem->dim4);
