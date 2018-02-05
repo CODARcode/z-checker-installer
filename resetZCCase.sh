@@ -1,0 +1,2 @@
+./removeZCCase.sh
+./createZCCase.sh
