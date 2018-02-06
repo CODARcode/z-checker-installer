@@ -488,7 +488,7 @@ int main(int argc, char* argv[])
 
 	  /* compress data */
 	  zfpsize = zfp_compress(zfp, field);
-	  compareResult = ZC_endCmpr(dataProperty, zfpsize);
+	  compareResult = ZC_endCmpr(dataProperty, cmpCaseKey, zfpsize);
 	  if (zfpsize == 0) {
 		  fprintf(stderr, "compression failed\n");
 		  return EXIT_FAILURE;
@@ -551,9 +551,9 @@ int main(int argc, char* argv[])
 		  return EXIT_FAILURE;
 	  }
 	  if(typesize==4)
-		ZC_endDec(compareResult, cmpCaseKey, (float*)fo);
+		ZC_endDec(compareResult, (float*)fo);
 	  else
-		ZC_endDec(compareResult, cmpCaseKey, (double*)fo);
+		ZC_endDec(compareResult, (double*)fo);
 
 	  /* optionally write reconstructed data */
 	  if (outpath) {
