@@ -80,6 +80,7 @@ if [ ! -d $zfp_caseName ]; then
 	mkdir $zfp_caseName
 fi
 cp utils/*.sh $zfp_caseName
+cp utils/zc.config $zfp_caseName
 cp $rootDir/zc-patches/queryVarList $zfp_caseName
 
 cd $rootDir/zc-patches
