@@ -280,6 +280,8 @@ int main(int argc, char* argv[])
     }
   }
 
+  ZC_Init("zc.config");
+
   typesize = zfp_type_size(type);
 
   /* make sure we have an input file */

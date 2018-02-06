@@ -69,6 +69,10 @@ cp zfp-patches/*.sh zfp/utils
 
 cd zfp/utils/
 patch -p0 < ../../zfp-patches/Makefile-zc.patch
+
+cp ../../Z-checker/examples/zc.config .
+patch -p0 < ../../zc-patches/zc-probe.config.patch
+
 make
 
 #---------- download SZ and set the configuration -----------

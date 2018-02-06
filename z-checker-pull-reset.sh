@@ -49,10 +49,16 @@ cd -
 cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/*.sh zfp/utils
 
+cd zfp
 make
 cd utils
+
+cp ../../Z-checker/examples/zc.config .
+patch -p0 < ../../zc-patches/zc-probe.config.patch
+
 make clean
 make
+cd ..
 
 #---------- download SZ and set the configuration -----------
 cd $rootDir
