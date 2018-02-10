@@ -16,6 +16,11 @@ gcc -O3 -o queryVarList queryVarList.c
 
 #---------- download Z-checker --------------
 cd $rootDir
+
+#backup zc.config
+cp Z-checker/examples/zc.config ./zc.config.bk
+
+#pull Z-checker
 cd Z-checker
 cd examples
 git fetch origin master
@@ -98,5 +103,8 @@ cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
 cd $rootDir
-rm zc.config
-ln -s $rootDir/Z-checker/examples/zc.config zc.config
+cp zc.config.bk Z-checker/examples/zc.config
+if [ ! -f zc.config ]
+then
+	ln -s $rootDir/Z-checker/examples/zc.config zc.config
+fi
