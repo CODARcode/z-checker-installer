@@ -103,7 +103,7 @@ cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
 cd $rootDir
-cp zc.config.bk Z-checker/examples/zc.config
+#cp zc.config.bk Z-checker/examples/zc.config
 if [ ! -f zc.config ]
 then
 	ln -s $rootDir/Z-checker/examples/zc.config zc.config
