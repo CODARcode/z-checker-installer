@@ -141,6 +141,8 @@ if [ ! -x "$PS2PDF_EXE_PATH" ]; then
 
 fi
 
+cd $rootDir
+ln -s $rootDir/Z-checker/examples/zc.config zc.config 
 
 if [ -f $rootDir/env_config.sh ]; then
 	mv $rootDir/env_config.sh $rootDir/Z-checker/examples/env_config.sh

@@ -22,12 +22,21 @@ git fetch origin master
 git reset --hard FETCH_HEAD
 git clean -df
 git pull
+
 cd ../zc
 
 git fetch origin master
 git reset --hard FETCH_HEAD
 git clean -df
 git pull
+
+cd ../template
+
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
+git pull
+
 cd ..
 
 ./configure --prefix=$rootDir/Z-checker/zc-install
@@ -88,3 +97,6 @@ cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
+cd $rootDir
+rm zc.config
+ln -s $rootDir/Z-checker/examples/zc.config zc.config
