@@ -31,8 +31,8 @@ void usage()
 	printf("	-w <workspace> : specify workspace\n");
 	printf("* Example:\n");
 	printf("	manageCompressor -c zc_manage.cfg\n");
-	printf("	manageCompressor -a sz -m fast -c zc_manage.cfg\n");
-	printf("	manageCompressor -d sz -m fast -c zc_manage.cfg\n");
+	printf("	manageCompressor -a zz -m best -c manageCompressor.cfg\n");
+	printf("	manageCompressor -d zz -m best -c manageCompressor.cfg\n");
 }
 
 int loadConfFile(char* zc_cfgFile, char** compressorName, char** compressorMode, char** compressor, char** workspaceDir, char** exeDir, char** preCommand, char** exeCommand)
@@ -210,7 +210,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 			preLine = preLine->next;
 		}
 		StringLine* modifyLine = curLine;
-		
+		trim(modifyLine->str);
 		int len = strlen(modifyLine->str);
 		modifyLine->str[len-1] = '\0';
 		memset(buf, 0, 256);
