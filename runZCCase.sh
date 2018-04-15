@@ -84,6 +84,8 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
+##begin: Compressor sz_f
+cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
 	cd SZ/${testcase}-pwr_fast
 else
@@ -96,7 +98,9 @@ else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
+##end: Compressor sz_f
 
+##begin: Compressor sz_d
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
 	cd SZ/${testcase}-pwr_deft
@@ -111,7 +115,9 @@ else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
+##end: Compressor sz_d
 
+##begin: Compressor ZFP
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
 	cd zfp/${testcase}-p
@@ -126,6 +132,10 @@ else
 	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 	./zfp-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
+##end: Compressor ZFP
+
+##New compressor to be added here
+
 
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then

@@ -26,16 +26,18 @@ fi
 cd Z-checker
 ./createNewCase.sh $caseName
 cp ../zc-patches/queryVarList $caseName
+cd ..
 
+##begin: Compressor SZ_fast
 echo "Create a new case (fast mode) for SZ"
-cd ../SZ
+cd SZ
 sz_caseName=${caseName}_fast
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
 fi
 cp ../zc-patches/queryVarList $sz_caseName
 
-cp ../sz-patches//sz-zc-ratedistortion.sh $sz_caseName
+cp ../sz-patches/sz-zc-ratedistortion.sh $sz_caseName
 #cp example/testfloat_CompDecomp.sh $sz_caseName
 #cp example/testdouble_CompDecomp.sh $sz_caseName
 cp ../sz-patches/testfloat_CompDecomp.sh $sz_caseName
@@ -48,10 +50,12 @@ ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
 ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
 patch -p0 < ../../sz-patches/testdouble_CompDecomp_fast.sh.patch
-cd ..
+cd ../..
+##end: Compressor SZ_fast
 
+##begin: Compressor SZ_default
 echo "Create a new case (default mode) for SZ"
-cd ../SZ
+cd SZ
 sz_caseName=${caseName}_deft
 if [ ! -d $sz_caseName ]; then
 	mkdir $sz_caseName
@@ -71,10 +75,12 @@ ln -s "$rootDir/SZ/example/testfloat_CompDecomp" testfloat_CompDecomp
 patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
 ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
 patch -p0 < ../../sz-patches/testdouble_CompDecomp_deft.sh.patch
-cd ..
+cd ../..
+##end: Compressor SZ_default
 
+##begin: Compressor ZFP
 echo Create a new case for ZFP
-cd ../zfp
+cd zfp
 zfp_caseName=${caseName}
 if [ ! -d $zfp_caseName ]; then
 	mkdir $zfp_caseName
@@ -82,9 +88,12 @@ fi
 cp utils/*.sh $zfp_caseName
 cp utils/zc.config $zfp_caseName
 cp $rootDir/zc-patches/queryVarList $zfp_caseName
+##end: Compressor ZFP
+
+##New compressor to be added here
 
 cd $rootDir/zc-patches
 
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
-./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}_fast sz_d:../../SZ/${caseName}_deft zfp:../../zfp/${zfp_caseName}"
+./modifyZCConfig zc.config compressors "sz_f:../../SZ/${caseName}_fast sz_d:../../SZ/${caseName}_deft zfp:../../zfp/${zfp_case"
