@@ -83,4 +83,9 @@ z-checker-web-install.sh
 6. Perform the assessment by runZCCase.sh.
 
 ### Remove a compressor
-manageCompressor -d zc -m best -c manageCompressor.cfg
+Remove sz_f (sz fast mode):
+$ manageCompressor -d sz -m fast -c manageCompressor-sz-f.cfg
+Remove sz_d (sz fast mode):
+$ manageCompressor -d sz -m deft -c manageCompressor-sz-d.cfg
+Remove zfp: 
+$ manageCompressor -d zfp -c manageCompressor-zfp.cfg

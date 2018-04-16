@@ -27,20 +27,17 @@ After installation, please download the two testing data sets, CESM-ATM and MD-s
 
 Then, you are ready to conduct the compression checking.
 You can generate compression results with SZ and ZFP using the following simple steps: 
-(Note: you have to run z-checker-install.sh or z-checker-install2.sh to install the software before doing the following tests)
+(Note: you have to run z-checker-install.sh to install the software before doing the following tests)
 
-1. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
+1. Configure the error bound setting and comparison cases in errBounds.cfg.
+
+2. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
    For example:
    [user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
 
-2. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [test-case-name] [data dir] [dimensions....].
+3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [dimensions....].
    Example:
-   [user@localhost z-checker-installer] ./runZCCase.sh -f CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
-   Note:
-   "-f" indicates single-precision floating point data set (-d for double-precision)
-   "CESM-ATM-tylor-data" refers to to the test-case
-   "/home/shdi/CESM-testdata/1800x3600" refers to the directory containing the data files
-   "3600 1800" are the dimension sizes
+   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
 
 Then, you can find the report generated in z-checker-installer/Z-checker/[test-case-name]/report.
 
@@ -48,13 +45,13 @@ Then, you can find the report generated in z-checker-installer/Z-checker/[test-c
 
 Unlike the above one-command checking, the following steps present the generation of compression results step by step.
 
-1. Go to zfp/utils/, and then execute "zfp-zc-ratedistortion.sh -f/-d [data directory] [dimension sizes....]". The compression results are stored in the compressionResults/ directory.
+1. Go to zfp/utils/, and then execute "zfp-zc-ratedistortion.sh [data directory] [dimension sizes....]". The compression results are stored in the compressionResults/ directory.
    For example, suppose the directory of CESM-ATM data set is here: /home/shdi/CESM-testdata/1800x3600, then the command is "zfp-zc-ratedistortion.sh /home/shdi/CESM-testdata/1800x3600 3600 1800". Note: the data files stored in the directory are also ending with .dat and the dimension sizes are the same (1800x3600) in this test-case.
 
-2. Similarly, go to SZ/example/, and then generate compression results by SZ compressor as follows: "sz-zc-ratedistortion.sh -f/-d [data directory] [dimension sizes....]". The compression results are stored in the compressionResults/ directory.
-   As for the example CESM-ATM, the test command is "sz-zc-ratedistortion.sh -f /home/shdi/CESM-testdata/1800x3600 3600 1800".
+2. Similarly, go to SZ/example/, and then generate compression results by SZ compressor as follows: "sz-zc-ratedistortion.sh [data directory] [dimension sizes....]". The compression results are stored in the compressionResults/ directory.
+   As for the example CESM-ATM, the test command is "sz-zc-ratedistortion.sh /home/shdi/CESM-testdata/1800x3600 3600 1800".
 
-3. Then, go to Z-checker/examples/ directory, and run the command "./analyzeDataProperty.sh -f/-d [data directory] [dimension sizes....]" to generate the data properties based on the data sets. This step has nothing to do with the compressors. The data analysis results are stored in the dataProperties/ directory. 
+3. Then, go to Z-checker/examples/ directory, and run the command "./analyzeDataProperty.sh [data directory] [dimension sizes....]" to generate the data properties based on the data sets. This step has nothing to do with the compressors. The data analysis results are stored in the dataProperties/ directory. 
 
 4. Generate the figure files: run the command "./generateReport.sh" simply. The results of comparing different compressors (such as sz and zfp in this test-case) are stored in the directory called compareCompressors/.
 
@@ -74,15 +71,21 @@ z-checker-update.sh can be used to update the repository (pull the new update fr
 Web installation allows to install a web server on the local machine, such that you can visualize the data through a local webpage and other people can view the data/results via that page if public ip is provided. 
 z-checker-web-install.sh
 
+
 ### Add a new compressor
 1. Make a monitoring program (e.g., called testfloat_CompDecomp.c) for your compressor. An example can be found in SZ/example/testfloat_CompDecomp.c, which is used for SZ compressor.)
-2. Modify the manageCompressor.cfg based on the workspaceDir on your computer and directory containing the compiled executable monitoring program.
-3. Suppose the new compressor's name is zz and the compression mode is called 'best'; then, run the following command to add the new compressor:
-        ./manageCompressor -a zz -m best -c manageCompressor.cfg
+2. Modify the manageCompressor.cfg based on the workspaceDir on your computer and directory containing the compiled executable monitoring program. 
+3. Suppose the new compressor's name is zz and the compression mode is called 'best'; then, run the following command to add the new compressor: 
+	./manageCompressor -a zz -m best -c manageCompressor.cfg
 4. Then, open errBounds.cfg to modify the error bounds for the new compressor; and also modify the comparison cases as follows (the compressor name 'zz_b' was set in manageCompressor.cfg):
-        comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1) sz_f(1E-2),sz_d(1E-2),zfp(1E-2)" --> comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1),zz_b(1E-2) sz_f(1E-2),sz_d(1E-2),zfp(1E-2),zz_b(1E-2)"
+	comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1) sz_f(1E-2),sz_d(1E-2),zfp(1E-2)" --> comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1),zz_b(1E-2) sz_f(1E-2),sz_d(1E-2),zfp(1E-2),zz_b(1E-2)"
 5. Finally, create a test case like this: ./createZCCase.sh case_name
 6. Perform the assessment by runZCCase.sh.
 
 ### Remove a compressor
-manageCompressor -d zc -m best -c manageCompressor.cfg
+Remove sz_f (sz fast mode):
+$ manageCompressor -d sz -m fast -c manageCompressor-sz-f.cfg
+Remove sz_d (sz fast mode):
+$ manageCompressor -d sz -m deft -c manageCompressor-sz-d.cfg
+Remove zfp: 
+$ manageCompressor -d zfp -c manageCompressor-zfp.cfg
