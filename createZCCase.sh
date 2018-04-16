@@ -28,7 +28,7 @@ cd Z-checker
 cp ../zc-patches/queryVarList $caseName
 cd ..
 
-##begin: Compressor SZ_fast
+##begin: Compressor sz_f
 echo "Create a new case (fast mode) for SZ"
 cd SZ
 sz_caseName=${caseName}_fast
@@ -51,9 +51,9 @@ patch -p0 < ../../sz-patches/testfloat_CompDecomp_fast.sh.patch
 ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
 patch -p0 < ../../sz-patches/testdouble_CompDecomp_fast.sh.patch
 cd ../..
-##end: Compressor SZ_fast
+##end: Compressor sz_f
 
-##begin: Compressor SZ_default
+##begin: Compressor sz_d
 echo "Create a new case (default mode) for SZ"
 cd SZ
 sz_caseName=${caseName}_deft
@@ -76,7 +76,7 @@ patch -p0 < ../../sz-patches/testfloat_CompDecomp_deft.sh.patch
 ln -s "$rootDir/SZ/example/testdouble_CompDecomp" testdouble_CompDecomp
 patch -p0 < ../../sz-patches/testdouble_CompDecomp_deft.sh.patch
 cd ../..
-##end: Compressor SZ_default
+##end: Compressor sz_d
 
 ##begin: Compressor ZFP
 echo Create a new case for ZFP
