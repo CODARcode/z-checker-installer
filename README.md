@@ -73,3 +73,16 @@ z-checker-update.sh can be used to update the repository (pull the new update fr
 
 Web installation allows to install a web server on the local machine, such that you can visualize the data through a local webpage and other people can view the data/results via that page if public ip is provided. 
 z-checker-web-install.sh
+
+### Add a new compressor
+1. Make a monitoring program (e.g., called testfloat_CompDecomp.c) for your compressor. An example can be found in SZ/example/testfloat_CompDecomp.c, which is used for SZ compressor.)
+2. Modify the manageCompressor.cfg based on the workspaceDir on your computer and directory containing the compiled executable monitoring program.
+3. Suppose the new compressor's name is zz and the compression mode is called 'best'; then, run the following command to add the new compressor:
+        ./manageCompressor -a zz -m best -c manageCompressor.cfg
+4. Then, open errBounds.cfg to modify the error bounds for the new compressor; and also modify the comparison cases as follows (the compressor name 'zz_b' was set in manageCompressor.cfg):
+        comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1) sz_f(1E-2),sz_d(1E-2),zfp(1E-2)" --> comparisonCases="sz_f(1E-1),sz_d(1E-1),zfp(1E-1),zz_b(1E-2) sz_f(1E-2),sz_d(1E-2),zfp(1E-2),zz_b(1E-2)"
+5. Finally, create a test case like this: ./createZCCase.sh case_name
+6. Perform the assessment by runZCCase.sh.
+
+### Remove a compressor
+manageCompressor -d zc -m best -c manageCompressor.cfg
