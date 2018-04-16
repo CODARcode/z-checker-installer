@@ -10,12 +10,6 @@ if [ ! -d Z-checker ]; then
 	exit
 fi
 
-#--------- compile codes in zc-patches-------
-cd $rootDir/zc-patches
-gcc -O3 -o queryVarList queryVarList.c
-gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include ../Z-checker/zc-install/lib/libzc.a -lm
-mv manageCompressor ..
-
 #---------- download Z-checker --------------
 cd $rootDir
 
@@ -55,6 +49,12 @@ cp ../zc-patches/generateReport.sh ./examples/
 cd examples
 make clean
 make
+
+#--------- compile codes in zc-patches-------
+cd $rootDir/zc-patches
+gcc -O3 -o queryVarList queryVarList.c
+gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include ../Z-checker/zc-install/lib/libzc.a -lm
+mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
