@@ -93,10 +93,10 @@ else
 fi
 if [[ $option == 1 ]]; then
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./sz_f-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
+	./sz_f-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 ##end: Compressor sz_f
 
@@ -110,10 +110,10 @@ fi
 
 if [[ $option == 1 ]]; then
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./sz_d-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
+	./sz_d-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 ##end: Compressor sz_d
 

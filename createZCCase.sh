@@ -37,7 +37,7 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp ../zc-patches/queryVarList $sz_caseName
 
-cp ../sz-patches/sz-zc-ratedistortion.sh $sz_caseName
+cp ../sz-patches/sz_f-zc-ratedistortion.sh $sz_caseName
 #cp example/testfloat_CompDecomp.sh $sz_caseName
 #cp example/testdouble_CompDecomp.sh $sz_caseName
 cp ../sz-patches/testfloat_CompDecomp.sh $sz_caseName
@@ -62,7 +62,7 @@ if [ ! -d $sz_caseName ]; then
 fi
 cp ../zc-patches/queryVarList $sz_caseName
 
-cp ../sz-patches/sz-zc-ratedistortion.sh $sz_caseName
+cp ../sz-patches/sz_d-zc-ratedistortion.sh $sz_caseName
 #cp example/testfloat_CompDecomp.sh $sz_caseName
 #cp example/testdouble_CompDecomp.sh $sz_caseName
 cp ../sz-patches/testfloat_CompDecomp.sh $sz_caseName
@@ -85,7 +85,7 @@ zfp_caseName=${caseName}
 if [ ! -d $zfp_caseName ]; then
 	mkdir $zfp_caseName
 fi
-cp utils/*.sh $zfp_caseName
+cp ../zfp-patches/*.sh $zfp_caseName
 cp utils/zc.config $zfp_caseName
 cp $rootDir/zc-patches/queryVarList $zfp_caseName
 ##end: Compressor zfp

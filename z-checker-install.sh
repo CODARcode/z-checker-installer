@@ -69,7 +69,7 @@ make
 
 cd -
 cp zfp-patches/zfp-zc.c zfp/utils
-cp zfp-patches/*.sh zfp/utils
+#cp zfp-patches/*.sh zfp/utils
 
 cd zfp/utils/
 patch -p0 < ../../zfp-patches/Makefile-zc.patch

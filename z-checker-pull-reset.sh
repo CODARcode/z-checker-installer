@@ -63,7 +63,7 @@ git pull
 
 cd -
 cp zfp-patches/zfp-zc.c zfp/utils
-cp zfp-patches/*.sh zfp/utils
+#cp zfp-patches/*.sh zfp/utils
 
 cd zfp
 make

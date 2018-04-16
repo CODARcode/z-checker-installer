@@ -10,10 +10,13 @@
 #define DELETE_CMPR 10
 #define MODIFY_RATE_DISTORTION_SH 1
 #define PRINT_INFO 0
+#define CHECK_ERRBOUNDS 2
 
 char* delim = " ";
 char* delim2 = "\"";
 char* delim3 = ":";
+char* delim4 = "=";
+char* delim5 = ",";
 
 void usage()
 {
@@ -24,6 +27,7 @@ void usage()
 	printf("	-d <compressor>: delete a compressor\n");
 	printf("	-z <compressor>: modify zc-ratedistortion.sh and testfloat_CompDecomp.sh\n");	
 	printf("	-p : print the information\n");	
+	printf("	-k : check validity of errBounds.cfg\n");
 	printf("* Mode:\n");
 	printf("	-m : the execution mode of the compressor (e.g., fast or deft)\n");
 	printf("* Input:\n");
@@ -260,7 +264,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 		//delete compressor
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
-			printf("No such a compressor: %s\n", compressor);
+			printf("No such a compressor in createZCCase.sh: %s\n", compressor);
 			exit(0);
 		}
 		else
@@ -455,7 +459,7 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 		//delete compressor
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
-			printf("No such a compressor: %s\n", compressor);
+			printf("No such a compressor in runZCCase.sh: %s\n", compressor);
 			exit(0);
 		}
 		else
@@ -572,7 +576,7 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 		//delete compressor
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
-			printf("No such a compressor: %s\n", compressor);
+			printf("No such a compressor in removeZCCase.sh: %s\n", compressor);
 			exit(0);
 		}
 		else
@@ -582,6 +586,62 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 	
 	if(header!=NULL)
 		ZC_freeLines(header);	
+}
+
+int removeComparisonCases(StringLine* line, char* compressor)
+{
+	int len = 0;
+	char value[512], buf[512], buf2[256];
+	char* newStr = (char*)malloc(512);
+	memset(newStr, 0, 512);
+	strcpy(newStr, "comparisonCases=\"");
+	memset(buf2, 0, 512);
+	char* p = strtok(line->str, delim4); //split by "="
+	
+	if(strcmp(p, "comparisonCases")!=0)
+		return 0;
+	else
+	{
+		p = strtok(NULL, delim4);
+		strcpy(value, p); //value
+		trim(value);
+		ZC_ReplaceStr2(value, "\"", ""); //remove '"'
+		char* q = strtok(value, delim), *r = NULL; //q is one item like sz_f(1E-1),sz_d(1E-1),zfp(1E-1)
+		int i = 0;
+		char buff[10][256];
+		for(i=0;q!=NULL;i++)
+		{
+			memset(buff[i], 0, 256);
+			strcpy(buff[i], q);
+			q = strtok(NULL, delim);
+		}
+		int count = i;
+		
+		for(i=0;i<count;i++)
+		{
+			strcpy(buf, buff[i]); //buf
+			r = strtok(buf, delim5); //split by ","
+			while(r!=NULL)
+			{
+				if(!ZC_startsWith(r, compressor))
+				{
+					sprintf(buf2, "%s%s,", newStr, r);
+					strcpy(newStr, buf2);
+				}
+				r = strtok(NULL, delim5);
+			}
+			//rmove the last ','
+			len = strlen(newStr);
+			newStr[len-1] = ' ';
+		}
+		trim(newStr);
+		len = strlen(newStr);
+		newStr[len]='\"';
+		newStr[len+1] = '\0';
+		free(line->str);
+		line->str = newStr;
+		return 1;
+	}
 }
 
 void processErrBounds(int operation, char* compressor)
@@ -632,7 +692,7 @@ void processErrBounds(int operation, char* compressor)
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "%s_ERR_BOUNDS=\"[TBD]\"\n", compressor);
+		sprintf(buf2, "%s_ERR_BOUNDS=\"5E-1 1E-1 1E-2 1E-3\"\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
@@ -684,15 +744,35 @@ void processErrBounds(int operation, char* compressor)
 					break;
 				}
 			}
+			
 			preLine = preLine->next;
 		}
 
-		//delete compressor
+		//delete the error bound information for the compressor
 		if(rmHeader!=NULL||rmTailer!=NULL)
-		{
 			ZC_removeLines(rmHeader, rmTailer);	
-			ZC_writeLines(header, "errBounds.cfg");
-		}
+			
+		//check comparisonCases setting and delete the compressor
+		preLine = header;
+		while(preLine->next!=NULL)
+		{
+			curLine = preLine->next;
+			
+			tag = ZC_startsWithLines(curLine, "comparisonCases");
+			if(tag)
+			{
+				int status = removeComparisonCases(curLine, compressor);
+				if(status==0) //failed
+				{
+					printf("Error: cannot fild ccomparisonCases setting in errBounds.cfg\n");
+					exit(0);
+				}
+				break;
+			}			
+			preLine = preLine->next;
+		}	
+			
+		ZC_writeLines(header, "errBounds.cfg");
 	}
 	
 	if(header!=NULL)
@@ -776,6 +856,18 @@ void modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
 		ZC_freeLines(header);	
 }
 
+int check_errBounds_cfg(char* errBoundsFile)
+{
+	if (access(zc_cfgFile, F_OK) != 0)
+	{
+		printf("[ZC] Configuration file NOT accessible.\n");
+		return 1;
+	}
+	int lineCount = 0;
+	StringLine* lines = ZC_readLines(errBoundsFile, &lineCount);
+	
+	
+}
 
 int main(int argc, char* argv[])
 {
@@ -837,6 +929,9 @@ int main(int argc, char* argv[])
 		case 'p':
 			operation = PRINT_INFO;
 			break;
+		case 'k':
+			operation = CHECK_ERRBOUNDS;
+			break;
 		default: 
 			usage();
 			break;
@@ -874,7 +969,11 @@ int main(int argc, char* argv[])
 	if(compressor == NULL)
 		compressor = compressor_;
 	
-	if(operation==MODIFY_RATE_DISTORTION_SH)
+	if(operation == CHECK_ERRBOUNDS)
+	{
+		
+	}
+	else if(operation==MODIFY_RATE_DISTORTION_SH)
 	{
 		modify_data_distortion_sh(compressor);
 		
