@@ -33,14 +33,14 @@ ZFP_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
 #echo errBoundMode=$errBoundMode dataDir=$dataDir
 if [ -f ../../errBounds.cfg ]; then
 	if [[ $errBoundMode == "PW_REL" ]]; then
-		zfp_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
+		zfp_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep zfp_ERR_BOUNDS`"
 	else
-		zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep ZFP_ERR_BOUNDS`"
+		zfp_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep zfp_ERR_BOUNDS`"
 	fi
 	echo "export $zfp_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp
-	ZFP_Err_Bounds="`echo $ZFP_ERR_BOUNDS`"
+	ZFP_Err_Bounds="`echo $zfp_ERR_BOUNDS`"
 	echo $ZFP_Err_Bounds
 fi
 

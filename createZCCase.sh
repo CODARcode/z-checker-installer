@@ -78,7 +78,7 @@ patch -p0 < ../../sz-patches/testdouble_CompDecomp_deft.sh.patch
 cd ../..
 ##end: Compressor sz_d
 
-##begin: Compressor ZFP
+##begin: Compressor zfp
 echo Create a new case for ZFP
 cd zfp
 zfp_caseName=${caseName}
@@ -88,7 +88,7 @@ fi
 cp utils/*.sh $zfp_caseName
 cp utils/zc.config $zfp_caseName
 cp $rootDir/zc-patches/queryVarList $zfp_caseName
-##end: Compressor ZFP
+##end: Compressor zfp
 
 ##New compressor to be added here
 

@@ -117,7 +117,7 @@ else
 fi
 ##end: Compressor sz_d
 
-##begin: Compressor ZFP
+##begin: Compressor zfp
 cd $rootDir
 if [[ $errBoundMode == "PW_REL" ]]; then
 	cd zfp/${testcase}-p
@@ -132,7 +132,7 @@ else
 	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 	./zfp-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
-##end: Compressor ZFP
+##end: Compressor zfp
 
 ##New compressor to be added here
 
