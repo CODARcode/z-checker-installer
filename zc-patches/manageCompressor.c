@@ -12,6 +12,9 @@
 #define PRINT_INFO 0
 #define CHECK_ERRBOUNDS 2
 
+#define MANAGE_SUC 1
+#define MANAGE_FAIL 0
+
 char* delim = " ";
 char* delim2 = "\"";
 char* delim3 = ":";
@@ -83,7 +86,7 @@ int loadConfFile(char* zc_cfgFile, char** compressorName, char** compressorMode,
 	return 0;
 }
 
-void processCreateZCCase(int operation, char* compressorName, char* mode, char* compressor, char* workspaceDir, char* exeDir, char* preCommand, char* exeCommand)
+int processCreateZCCase(int operation, char* compressorName, char* mode, char* compressor, char* workspaceDir, char* exeDir, char* preCommand, char* exeCommand, char* confFilePath)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -93,7 +96,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 
 	if(operation == PRINT_INFO)
 	{
-		return;
+		return MANAGE_SUC;
 	}
 	else if(operation == ADD_CMPR)
 	{
@@ -120,7 +123,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 			printf("Error: The line '##New compressor' is missing in createZCCase.sh\n");
 			printf("Reason: You probably removed that line manually in createZCCase.sh\n");
 			printf("Solution: add this line '##New compressor to be added here' before 'cd $rootDir/zc-patches'\n");
-			exit(0); 
+			return MANAGE_FAIL;
 		}		
 		
 		//add lines
@@ -162,7 +165,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);		
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "ln -s $rootDir/manageCompressor.cfg manageCompressor.cfg\n");
+		sprintf(buf2, "ln -s %s manageCompressor.cfg\n", confFilePath);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);	
 		
 		buf2 = (char*)malloc(256);
@@ -265,7 +268,7 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
 			printf("No such a compressor in createZCCase.sh: %s\n", compressor);
-			exit(0);
+			return MANAGE_FAIL;
 		}
 		else
 			ZC_removeLines(rmHeader, rmTailer);
@@ -314,15 +317,18 @@ void processCreateZCCase(int operation, char* compressorName, char* mode, char* 
 		trim(p2_);
 		sprintf(buf, "./modifyZCConfig zc.config compressors \"%s\"", p2_);
 	
-		strcpy(modifyLine->str, buf);		
+		strcpy(modifyLine->str, buf);
+			
 	}
 	ZC_writeLines(header, "createZCCase.sh");
 	
 	if(header!=NULL)
 		ZC_freeLines(header);
+		
+	return MANAGE_SUC;			
 }
 
-void processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir)
+int processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -332,7 +338,7 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 
 	if(operation == PRINT_INFO)
 	{
-		return;
+		return MANAGE_SUC;
 	}
 	else if(operation == ADD_CMPR)
 	{
@@ -359,7 +365,7 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 			printf("Error: The line '##New compressor' is missing in runZCCase.sh\n");
 			printf("Reason: You probably removed that line manually in runZCCase.sh\n");
 			printf("Solution: add this line '##New compressor to be added here' before \ncd $rootDir\nif [[ $errBoundMode == \"PW_REL\" ]]; then\n....\n");
-			exit(0); 
+			return MANAGE_FAIL; 
 		}		
 		
 		//add lines
@@ -414,7 +420,6 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 		insertLinesTail->next = newTailer;
 
 		free(insertLines); //actually only free the header of insertlines
-
 	}
 	else //operation == DELETE_CMPR
 	{
@@ -460,7 +465,7 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
 			printf("No such a compressor in runZCCase.sh: %s\n", compressor);
-			exit(0);
+			return MANAGE_FAIL;
 		}
 		else
 			ZC_removeLines(rmHeader, rmTailer);	
@@ -469,9 +474,11 @@ void processRunZCCase(int operation, char* mode, char* compressor, char* workspa
 	
 	if(header!=NULL)
 		ZC_freeLines(header);	
+	
+	return MANAGE_SUC;
 }
 
-void processRemoveZCCase(int operation, char* mode, char* compressor, char* workspaceDir)
+int processRemoveZCCase(int operation, char* mode, char* compressor, char* workspaceDir)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -481,7 +488,7 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 
 	if(operation == PRINT_INFO)
 	{
-		return;
+		return MANAGE_SUC;
 	}
 	else if(operation == ADD_CMPR)
 	{
@@ -508,7 +515,7 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 			printf("Error: The line '##New compressor' is missing in removeZCCase.sh\n");
 			printf("Reason: You probably removed that line manually in removeZCCase.sh\n");
 			printf("Solution: add this line '##New compressor to be added here' before \n\telse\n\t\techo No such testcase: $testcase\n\t\texit\n\tfi\n");
-			exit(0); 
+			return MANAGE_FAIL;
 		}
 		
 		//add lines
@@ -577,7 +584,7 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 		if(rmHeader==NULL||rmTailer==NULL)
 		{
 			printf("No such a compressor in removeZCCase.sh: %s\n", compressor);
-			exit(0);
+			return MANAGE_FAIL;
 		}
 		else
 			ZC_removeLines(rmHeader, rmTailer);	
@@ -586,6 +593,7 @@ void processRemoveZCCase(int operation, char* mode, char* compressor, char* work
 	
 	if(header!=NULL)
 		ZC_freeLines(header);	
+	return MANAGE_SUC;
 }
 
 int removeComparisonCases(StringLine* line, char* compressor)
@@ -644,7 +652,7 @@ int removeComparisonCases(StringLine* line, char* compressor)
 	}
 }
 
-void processErrBounds(int operation, char* compressor)
+int processErrBounds(int operation, char* compressor)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -654,7 +662,7 @@ void processErrBounds(int operation, char* compressor)
 
 	if(operation == PRINT_INFO)
 	{
-		return;
+		return MANAGE_SUC;
 	}
 	else if(operation == ADD_CMPR)
 	{
@@ -681,7 +689,7 @@ void processErrBounds(int operation, char* compressor)
 			printf("Error: The line '##New compressor' is missing in errBounds.cfg\n");
 			printf("Reason: You probably removed that line manually in errBounds.cfg\n");
 			printf("Solution: add this line '##New compressor to be added here' before '#Compression cases used for comparison between compressors'\n");
-			exit(0); 
+			return MANAGE_SUC;
 		}
 		//add lines
 		StringLine* insertLines = createStringLineHeader();
@@ -765,7 +773,7 @@ void processErrBounds(int operation, char* compressor)
 				if(status==0) //failed
 				{
 					printf("Error: cannot fild ccomparisonCases setting in errBounds.cfg\n");
-					exit(0);
+					return MANAGE_FAIL;
 				}
 				break;
 			}			
@@ -776,10 +784,12 @@ void processErrBounds(int operation, char* compressor)
 	}
 	
 	if(header!=NULL)
-		ZC_freeLines(header);		
+		ZC_freeLines(header);	
+		
+	return MANAGE_SUC;	
 }
 
-void modify_data_distortion_sh(char* compressor)
+int modify_data_distortion_sh(char* compressor)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -792,9 +802,11 @@ void modify_data_distortion_sh(char* compressor)
 	ZC_writeLines(header, "zc-ratedistortion.sh");
 	if(header!=NULL)
 		ZC_freeLines(header);		
+		
+	return MANAGE_SUC;
 }
 
-void modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
+int modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -854,6 +866,8 @@ void modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
 	ZC_writeLines(header, "testfloat_CompDecomp.sh");
 	if(header!=NULL)
 		ZC_freeLines(header);	
+		
+	return MANAGE_SUC;
 }
 
 int check_errBounds_cfg(char* errBoundsFile)
@@ -983,17 +997,40 @@ int main(int argc, char* argv[])
 	else
 	{
 		//modify createZCCase.sh
-		processCreateZCCase(operation,compressorName, mode, compressor, workspaceDir, exeDir, preCommand, exeCommand);
+		char confFilePath[512];
+		realpath(conFile, confFilePath);
+		int a = processCreateZCCase(operation,compressorName, mode, compressor, workspaceDir, exeDir, preCommand, exeCommand, confFilePath);
 
 		//modify runZCCase.sh
-		processRunZCCase(operation, mode, compressor, workspaceDir);
+		int b = processRunZCCase(operation, mode, compressor, workspaceDir);
 
 		//modify removeZCCase.sh
-		processRemoveZCCase(operation, mode, compressor, workspaceDir);
+		int c = processRemoveZCCase(operation, mode, compressor, workspaceDir);
 
 		//modify errBounds.cfg
-		processErrBounds(operation, compressor);
-	
+		int d = 0;
+		if(a*b*c!=0)
+			d = processErrBounds(operation, compressor);
+		
+		if(a*b*c*d == 1)
+		{
+			if(operation==ADD_CMPR)
+				printf("The compressor %s has been added successfully.\n", compressor);
+			else if(operation==DELETE_CMPR)
+				printf("The compressor %s has been deleted successfully.\n", compressor);
+		}
+		else
+		{
+			printf("Failed when ");
+			if(a==0)
+				printf("processing CreateZCCase\n");
+			else if(b==0)
+				printf("processing RunZCCase\n");
+			else if(c==0)
+				printf("processing RemoveZCCase\n");
+			else
+				printf("processing ErrBounds\n");
+		}
 	}
 	if(compressorName_!=NULL)
 		free(compressorName_);
