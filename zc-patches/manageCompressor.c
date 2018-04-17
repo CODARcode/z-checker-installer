@@ -28,7 +28,7 @@ void usage()
 	printf("* Operation:\n");
 	printf("	-a <compressor>: add a compressor\n");
 	printf("	-d <compressor>: delete a compressor\n");
-	printf("	-z <compressor>: modify zc-ratedistortion.sh and testfloat_CompDecomp.sh\n");	
+	printf("	-z <compressor>: modify zc-ratedistortion.sh and test_CompDecomp.sh\n");	
 	printf("	-p : print the information\n");	
 	printf("	-k : check validity of errBounds.cfg\n");
 	printf("* Mode:\n");
@@ -157,7 +157,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cp $rootDir/zc-patches/testfloat_CompDecomp.sh .\ncp $rootDir/zc-patches/zc-ratedistortion.sh .\n");
+		sprintf(buf2, "cp $rootDir/zc-patches/test_CompDecomp.sh .\ncp $rootDir/zc-patches/zc-ratedistortion.sh .\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(256);
@@ -806,12 +806,12 @@ int modify_data_distortion_sh(char* compressor)
 	return MANAGE_SUC;
 }
 
-int modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
+int modify_test_CompDecomp_sh(char* compressor, char* exeCommand)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	
-	header = ZC_readLines("testfloat_CompDecomp.sh", &lineCount);
+	header = ZC_readLines("test_CompDecomp.sh", &lineCount);
 	
 	ZC_replaceLines(header, "COMPRESSOR", compressor);
 	
@@ -863,7 +863,7 @@ int modify_testfloat_CompDecomp_sh(char* compressor, char* exeCommand)
 		preLine = preLine->next;
 	}
 	
-	ZC_writeLines(header, "testfloat_CompDecomp.sh");
+	ZC_writeLines(header, "test_CompDecomp.sh");
 	if(header!=NULL)
 		ZC_freeLines(header);	
 		
@@ -991,8 +991,8 @@ int main(int argc, char* argv[])
 	{
 		modify_data_distortion_sh(compressor);
 		
-		//modify testfloat_CompDecomp.sh
-		modify_testfloat_CompDecomp_sh(compressor, exeCommand);
+		//modify test_CompDecomp.sh
+		modify_test_CompDecomp_sh(compressor, exeCommand);
 	}
 	else
 	{
