@@ -40,21 +40,9 @@ fi
 
 for errBound in $ZZ_Err_Bounds
 do
-	if [[ $datatype == "-f" ]]; then
-		if [[ $option == 1 ]]; then
-			./testfloat_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
-		else
-			./testfloat_CompDecomp.sh $errBoundMode $errBound "$varListFile"
-		fi
-	elif [[ $datatype == "-d" ]]; then
-		if [[ $option == 1 ]]; then
-			./testdouble_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
-		else
-			./testdouble_CompDecomp.sh $errBoundMode $errBound "$varListFile"
-		fi
+	if [[ $option == 1 ]]; then
+		./test_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 	else
-		echo "Error: datatype = $datatype . "
-		echo "Note: datatype can only be either -f or -d."
-		exit
+		./test_CompDecomp.sh $errBoundMode $errBound "$varListFile"
 	fi
 done
