@@ -30,11 +30,7 @@ fi
 SZ_Err_Bounds="1E-1 1E-2 1E-3 1E-4"
 
 if [ -f ../../errBounds.cfg ]; then
-	if [[ $errBoundMode == "PW_REL" ]];then
-		sz_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep sz_d_ERR_BOUNDS`"
-	else
-		sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep sz_d_ERR_BOUNDS`"
-	fi
+	sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep sz_d_ERR_BOUNDS`"
 	echo "export $sz_err_env" > env.tmp
 	source env.tmp
 	rm env.tmp

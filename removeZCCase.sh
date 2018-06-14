@@ -17,9 +17,6 @@ fi
 if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 	if [ -d Z-checker/$testcase ]; then
 		rm -rf Z-checker/$testcase
-##begin: Compressor sz_f		
-		rm -rf SZ/${testcase}_fast
-##end: Compressor sz_f
 ##begin: Compressor sz_d
 		rm -rf SZ/${testcase}_deft
 ##end: Compressor sz_d
@@ -32,13 +29,13 @@ if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 		exit
 	fi
 elif [[ $errBoundMode == "PW_REL" ]]; then
-	if [ -d Z-checker/${testcase}-pwr ]; then
-		rm -rf Z-checker/$testcase-pwr
-		rm -rf SZ/${testcase}-pwr_fast
-		rm -rf SZ/${testcase}-pwr_def
-		rm -rf zfp/${testcase}-pwr
+	if [ -d Z-checker/${testcase} ]; then
+		rm -rf Z-checker/$testcase
+		rm -rf SZ/${testcase}_fast
+		rm -rf SZ/${testcase}_deft
+		rm -rf zfp/${testcase}
 	else
-		echo No such testcase: $testcase-pwr
+		echo No such testcase: $testcase
 		exit
 	fi
 else

@@ -48,7 +48,7 @@ elif [[ $errBoundMode == "REL" ]]; then
 		exit
 	fi
 elif [[ $errBoundMode == "PW_REL" ]]; then
-	if [ ! -d "Z-checker/$testcase-pwr" ]; then
+	if [ ! -d "Z-checker/$testcase" ]; then
 		echo "Error: Testcase $testcase for PW_REL doesn't exist!"
 		exit
 	fi
@@ -84,29 +84,10 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
-##begin: Compressor sz_f
-cd $rootDir
-if [[ $errBoundMode == "PW_REL" ]]; then
-	cd SZ/${testcase}-pwr_fast
-else
-	cd SZ/${testcase}_fast
-fi
-if [[ $option == 1 ]]; then
-	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-	./sz_f-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-else
-	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz_f-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
-fi
-##end: Compressor sz_f
 
 ##begin: Compressor sz_d
 cd $rootDir
-if [[ $errBoundMode == "PW_REL" ]]; then
-	cd SZ/${testcase}-pwr_deft
-else
-	cd SZ/${testcase}_deft
-fi
+cd SZ/${testcase}_deft
 
 if [[ $option == 1 ]]; then
 	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
@@ -119,11 +100,7 @@ fi
 
 ##begin: Compressor zfp
 cd $rootDir
-if [[ $errBoundMode == "PW_REL" ]]; then
-	cd zfp/${testcase}-p
-else
-	cd zfp/${testcase}
-fi
+cd zfp/${testcase}
 
 if [[ $option == 1 ]]; then
 	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
@@ -138,11 +115,7 @@ fi
 
 
 cd $rootDir
-if [[ $errBoundMode == "PW_REL" ]]; then
-	cd Z-checker/${testcase}-pwr
-else
-	cd Z-checker/${testcase}
-fi
+cd Z-checker/${testcase}
 
 if [[ $option == 1 ]]; then
 	echo ./analyzeDataProperty.sh $datatype $dataDir $extension $dim1 $dim2 $dim3 $dim4
@@ -154,11 +127,8 @@ fi
 
 ############## as follows, it's comparison ##############
 
-if [[ $errBoundMode == "PW_REL" ]]; then
-	sz_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep comparisonCases`"
-else
-	sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
-fi
+sz_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep comparisonCases`"
+
 echo "export $sz_err_env" > env.tmp
 source env.tmp
 rm env.tmp
@@ -167,11 +137,8 @@ SZ_Err_Bounds="`echo $comparisonCases`"
 echo comparisonCases=$comparisonCases
 ./modifyZCConfig zc.config comparisonCases "$comparisonCases"
 
-if [[ $errBoundMode == "PW_REL" ]]; then
-	zc_err_env="`cat ../../errBounds_pwr.cfg | grep -v "#" | grep numOfErrorBoundCases`"
-else
-	zc_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep numOfErrorBoundCases`"
-fi
+zc_err_env="`cat ../../errBounds.cfg | grep -v "#" | grep numOfErrorBoundCases`"
+
 echo "export $zc_err_env" > env.tmp
 source env.tmp
 rm env.tmp
@@ -181,7 +148,7 @@ echo numOfErrorBoundCasess=$numOfErrorBoundCases
 ./modifyZCConfig zc.config numOfErrorBoundCases "$numOfErrorBoundCases"
 
 if [[ $errBoundMode == "PW_REL" ]]; then
-	echo ./generateReport.sh ${testcase}-pwr
+	echo ./generateReport.sh ${testcase} with PW_REL
 	./generateReport.sh "${testcase} with PW_REL"
 else
 	echo ./generateReport.sh ${testcase}
