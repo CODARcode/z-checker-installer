@@ -38,7 +38,7 @@ cd $sz_fast_caseName
 cp $rootDir/zc-patches/test_CompDecomp.sh .
 cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
-ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompressor-sz-f.cfg manageCompressor.cfg
+ln -s $rootDir/manageCompressor-sz-f.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
 cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
 ./manageCompressor -z sz_f -c ./manageCompressor-sz-f.cfg
@@ -60,7 +60,7 @@ cd $sz_deft_caseName
 cp $rootDir/zc-patches/test_CompDecomp.sh .
 cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
-ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompressor-sz-d.cfg manageCompressor.cfg
+ln -s $rootDir/manageCompressor-sz-d.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
 cp $rootDir/Z-checker/examples/zc.config SZ/$sz_deft_caseName
 ./manageCompressor -z sz_d -c ./manageCompressor-sz-d.cfg
