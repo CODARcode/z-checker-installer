@@ -28,16 +28,13 @@ cd Z-checker
 cp ../zc-patches/queryVarList $caseName
 cd ..
 
-
-
-
 ##begin: Compressor sz_f
 echo Create a new case for sz_f
 cd $rootDir
 cd ./SZ
-sz_caseName=${caseName}_fast
-mkdir -p $sz_caseName
-cd $sz_caseName
+sz_fast_caseName=${caseName}_fast
+mkdir -p $sz_fast_caseName
+cd $sz_fast_caseName
 cp $rootDir/zc-patches/test_CompDecomp.sh .
 cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
@@ -45,20 +42,21 @@ ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompre
 ln -s $rootDir/manageCompressor manageCompressor
 ./manageCompressor -z sz_f -c ./manageCompressor.cfg
 cd $rootDir
-cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_caseName/./testfloat_CompDecomp
-cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_caseName
-cp SZ/example/sz.config ./SZ/$sz_caseName
-cd ./SZ/$sz_caseName
+cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_fast_caseName/./testfloat_CompDecomp
+cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
+cp SZ/example/sz.config ./SZ/$sz_fast_caseName
+cd ./SZ/$sz_fast_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
 cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_f
+
 ##begin: Compressor sz_d
 echo Create a new case for sz_d
 cd $rootDir
 cd SZ
-sz_caseName=${caseName}_deft
-mkdir -p $sz_caseName
-cd $sz_caseName
+sz_deft_caseName=${caseName}_deft
+mkdir -p $sz_deft_caseName
+cd $sz_deft_caseName
 cp $rootDir/zc-patches/test_CompDecomp.sh .
 cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
@@ -66,38 +64,30 @@ ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompre
 ln -s $rootDir/manageCompressor manageCompressor
 ./manageCompressor -z sz_d -c ./manageCompressor.cfg
 cd $rootDir
-cp SZ/example/./testfloat_CompDecomp SZ/$sz_caseName/./testfloat_CompDecomp
-cp $rootDir/Z-checker/examples/zc.config SZ/$sz_caseName
-cp SZ/example/sz.config SZ/$sz_caseName
-cd SZ/$sz_caseName
+cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
+cp $rootDir/Z-checker/examples/zc.config SZ/$sz_deft_caseName
+cp SZ/example/sz.config SZ/$sz_deft_caseName
+cd SZ/$sz_deft_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
 cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_d
-##begin: Compressor zfp
-echo Create a new case for zfp
-cd $rootDir
-cd ./zfp
-zfp_caseName=${caseName}_
-mkdir -p $zfp_caseName
-cd $zfp_caseName
-cp $rootDir/zc-patches/test_CompDecomp.sh .
-cp $rootDir/zc-patches/zc-ratedistortion.sh .
-ln -s $rootDir/errBounds.cfg errBounds.cfg
-ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompressor-zfp.cfg manageCompressor.cfg
-ln -s $rootDir/manageCompressor manageCompressor
-./manageCompressor -z zfp -c ./manageCompressor.cfg
-cd $rootDir
-cp ./zfp/bin/./zfp-zc ./zfp/$zfp_caseName/./zfp-zc
-cp $rootDir/Z-checker/examples/zc.config ./zfp/$zfp_caseName
 
-cd ./zfp/$zfp_caseName
-patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
-cp $rootDir/zc-patches/queryVarList .
+##begin: Compressor zfp
+echo Create a new case for ZFP
+cd zfp
+zfp_caseName=${caseName}
+if [ ! -d $zfp_caseName ]; then
+        mkdir $zfp_caseName
+fi
+cp ../zfp-patches/*.sh $zfp_caseName
+cp utils/zc.config $zfp_caseName
+cp $rootDir/zc-patches/queryVarList $zfp_caseName
 ##end: Compressor zfp
+
 ##New compressor to be added here
 
 cd $rootDir/zc-patches
 
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
-./modifyZCConfig zc.config compressors " sz_f:./SZ/${sz_caseName} sz_d:SZ/${sz_caseName} zfp:./zfp/${zfp_caseName}"
+./modifyZCConfig zc.config compressors " sz_f:/home/sdi/Development/z-checker-installer/z-checker-installer/SZ/${sz_fast_caseName} sz_d:/home/sdi/Development/z-checker-installer/z-checker-installer/SZ/${sz_deft_caseName} zfp:/home/sdi/Development/z-checker-installer/z-checker-installer/zfp/${zfp_caseName}"
