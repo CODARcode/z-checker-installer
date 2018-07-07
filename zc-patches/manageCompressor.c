@@ -91,8 +91,8 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	char* p = NULL;
-	char buf[256];
-	memset(buf, 0, 256);
+	char buf[4096];
+	memset(buf, 0, 4096);
 
 	if(operation == PRINT_INFO)
 	{
@@ -131,7 +131,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		StringLine* insertLinesTail = insertLines;
 
 		char caseName[256];
-		sprintf(caseName, "%s_caseName", compressorName);
+		sprintf(caseName, "%s_%s_caseName", compressorName, mode);
 		char* buf2 = (char*)malloc(256);
 		sprintf(buf2, "##begin: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
@@ -141,6 +141,8 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(256);
+		char  workspaceDir_fullPath[256];
+ 		realpath(workspaceDir,workspaceDir_fullPath);
 		sprintf(buf2, "cd $rootDir\ncd %s\n", workspaceDir);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -228,8 +230,8 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		trim(modifyLine->str);
 		int len = strlen(modifyLine->str);
 		modifyLine->str[len-1] = '\0';
-		memset(buf, 0, 256);
-		sprintf(buf, "%s %s:%s/${%s}\"", modifyLine->str, compressor, workspaceDir, caseName); 
+		memset(buf, 0, 4096);
+		sprintf(buf, "%s %s:%s/${%s}\"", modifyLine->str, compressor, workspaceDir_fullPath, caseName); 
 		strcpy(modifyLine->str, buf);
 	}
 	else //operation == DELETE_CMPR
@@ -341,8 +343,8 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	char* p = NULL;
-	char buf[256];
-	memset(buf, 0, 256);
+	char buf[4096];
+	memset(buf, 0, 4096);
 
 	if(operation == PRINT_INFO)
 	{
@@ -491,8 +493,8 @@ int processRemoveZCCase(int operation, char* mode, char* compressor, char* works
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	char* p = NULL;
-	char buf[256];
-	memset(buf, 0, 256);
+	char buf[4096];
+	memset(buf, 0, 4096);
 
 	if(operation == PRINT_INFO)
 	{
