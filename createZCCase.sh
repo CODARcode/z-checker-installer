@@ -91,4 +91,4 @@ cd $rootDir/zc-patches
 
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
-./modifyZCConfig zc.config compressors " sz_f:/home/sdi/Development/z-checker-installer/z-checker-installer/SZ/${sz_fast_caseName} sz_d:/home/sdi/Development/z-checker-installer/z-checker-installer/SZ/${sz_deft_caseName} zfp:/home/sdi/Development/z-checker-installer/z-checker-installer/zfp/${zfp_caseName}"
+./modifyZCConfig zc.config compressors "z_f:../../SZ/${sz_fast_caseName} sz_d:/home/sdi/Development/z-checker-installer/z-checker-installer/SZ/${sz_deft_caseName} zfp:/home/sdi/Development/z-checker-installer/z-checker-installer/zfp/${zfp_caseName}"
