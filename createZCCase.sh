@@ -44,7 +44,7 @@ ln -s $rootDir/manageCompressor manageCompressor
 cd $rootDir
 cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_fast_caseName/./testfloat_CompDecomp
 cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
-cp SZ/example/sz.config ./SZ/$sz_fast_caseName
+cp sz-patches/sz.config.fast_mode ./SZ/$sz_fast_caseName/sz.config
 cd ./SZ/$sz_fast_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
 cp $rootDir/zc-patches/queryVarList .
@@ -66,7 +66,7 @@ ln -s $rootDir/manageCompressor manageCompressor
 cd $rootDir
 cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
 cp $rootDir/Z-checker/examples/zc.config SZ/$sz_deft_caseName
-cp SZ/example/sz.config SZ/$sz_deft_caseName
+cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
 cp $rootDir/zc-patches/queryVarList .
