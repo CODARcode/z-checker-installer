@@ -73,6 +73,7 @@ cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_d
 
 ##begin: Compressor zfp
+cd $rootDir
 echo Create a new case for ZFP
 cd zfp
 zfp_caseName=${caseName}
