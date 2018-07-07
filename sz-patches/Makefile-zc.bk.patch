@@ -1,16 +1,16 @@
---- Makefile.bk	2017-11-29 11:41:47.523146513 -0600
-+++ Makefile-zc.bk	2017-11-29 11:40:47.995359645 -0600
-@@ -3,7 +3,8 @@
+--- Makefile.bk	2018-07-06 23:03:34.021562559 -0500
++++ Makefile-zc.bk	2018-07-06 23:07:48.468208715 -0500
+@@ -2,7 +2,8 @@
+ ##   Makefile to test SZ library.
  
  ##   PLEASE SET THIS VARIABLE BEFORE COMPILING
- #SZPATH		= /home/sdi/Install/sz-1.4.11-install
--SZPATH		= /tmp/sz-install
-+SZPATH         = ../../SZ/sz-install
-+ZCPATH         = ../../Z-checker/zc-install
+-SZPATH		= /home/sdi/Install/sz-2.0-install
++SZPATH		= ../../SZ/sz-install
++ZCPATH		= ../../Z-checker/zc-install
  GSLPATH = /usr/local/Cellar/gsl/2.4
  ##   COMPILERS
  CC		= gcc
-@@ -17,12 +18,13 @@
+@@ -16,12 +17,13 @@
  #SZFLAG 	= -I$(SZPATH)/include -L$(SZPATH)/lib -lSZ
  # Compiling using static library
  SZFLAG 	= -I$(SZPATH)/include $(SZPATH)/lib/libSZ.a $(SZPATH)/lib/libzlib.a -lm
@@ -20,14 +20,14 @@
  
  
  ##   TARGETS
--all: 		testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress
-+all: 		testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_batch_compress testdouble_batch_compress testfloat_CompDecomp testdouble_CompDecomp
+-all: 		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress
++all: 		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testint_compress:	testint_compress.c
-@@ -58,9 +60,15 @@
- testdouble_batch_compress:      testdouble_batch_compress.c
- 	$(CC)  -g -O3 -o testdouble_batch_compress testdouble_batch_compress.c $(SZFLAG)
+@@ -51,6 +53,12 @@
+ sz:		sz.c
+ 	$(CC)  -g -O0 -o sz	sz.c $(SZFLAG)
  
 +testfloat_CompDecomp:  testfloat_CompDecomp.c
 +	$(CC)  -g -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(ZCFLAG) $(SZFLAG)
@@ -35,10 +35,7 @@
 +testdouble_CompDecomp: testdouble_CompDecomp.c
 +	$(CC)  -g -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(ZCFLAG) $(SZFLAG)
 +
- sz:		sz.c
- 	$(HDF5CC)  -g -O3 -o sz	sz.c $(GSLFLAG) $(NETCDFFLAG) $(SZFLAG)
- 
  clean:
--	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f sz
-+	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f testfloat_batch_compress testdouble_batch_compress_f testfloat_CompDecomp testdouble_CompDecomp
+-	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f sz
++	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f sz testfloat_CompDecomp testdouble_CompDecomp
  
