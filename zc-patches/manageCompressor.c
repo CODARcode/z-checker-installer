@@ -175,7 +175,11 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);			
 		
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "./manageCompressor -z %s -c ./manageCompressor.cfg\n", compressor);
+		sprintf(buf2, "cp $rootDir/Z-checker/examples/zc.config %s/$%s\n", workspaceDir, caseName);
+		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+		
+		buf2 = (char*)malloc(256);
+		sprintf(buf2, "./manageCompressor -z %s -c manageCompressor.cfg\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
@@ -187,10 +191,6 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		sprintf(buf2, "cp %s/%s %s/$%s/%s\n", exeDir, exeCommand, workspaceDir, caseName, exeCommand); 
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cp $rootDir/Z-checker/examples/zc.config %s/$%s\n", workspaceDir, caseName);
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
-		
 		buf2 = (char*)malloc(256);
 		sprintf(buf2, "%s\n", preCommand);
 		ZC_ReplaceStr2(buf2, "$workspaceDir", workspaceDir);

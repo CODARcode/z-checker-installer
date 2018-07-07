@@ -40,10 +40,10 @@ cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
 ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompressor-sz-f.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
-./manageCompressor -z sz_f -c ./manageCompressor.cfg
+cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
+./manageCompressor -z sz_f -c ./manageCompressor-sz-f.cfg
 cd $rootDir
 cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_fast_caseName/./testfloat_CompDecomp
-cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
 cp sz-patches/sz.config.fast_mode ./SZ/$sz_fast_caseName/sz.config
 cd ./SZ/$sz_fast_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
@@ -62,10 +62,10 @@ cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
 ln -s /home/sdi/Development/z-checker-installer/z-checker-installer/manageCompressor-sz-d.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
-./manageCompressor -z sz_d -c ./manageCompressor.cfg
+cp $rootDir/Z-checker/examples/zc.config SZ/$sz_deft_caseName
+./manageCompressor -z sz_d -c ./manageCompressor-sz-d.cfg
 cd $rootDir
 cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
-cp $rootDir/Z-checker/examples/zc.config SZ/$sz_deft_caseName
 cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
 patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
