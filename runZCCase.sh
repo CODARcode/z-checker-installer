@@ -84,6 +84,9 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
+
+
+
 ##begin: Compressor sz_f
 cd $rootDir
 cd ./SZ/${testcase}_fast
@@ -95,33 +98,28 @@ else
 	./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 fi
 ##end: Compressor sz_f
-
 ##begin: Compressor sz_d
 cd $rootDir
 cd SZ/${testcase}_deft
-
 if [[ $option == 1 ]]; then
-	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-	./sz_d-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
-	echo ./sz-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./sz_d-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 fi
 ##end: Compressor sz_d
-
 ##begin: Compressor zfp
 cd $rootDir
-cd zfp/${testcase}
-
+cd ./zfp/${testcase}_
 if [[ $option == 1 ]]; then
-	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-	./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
-	echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-	./zfp-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
 fi
 ##end: Compressor zfp
-
 ##New compressor to be added here
 
 

@@ -141,7 +141,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cd %s\n", workspaceDir);
+		sprintf(buf2, "cd $rootDir\ncd %s\n", workspaceDir);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
@@ -176,19 +176,27 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		sprintf(buf2, "./manageCompressor -z %s -c ./manageCompressor.cfg\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
+		buf2 = (char*)malloc(256);
+		sprintf(buf2, "cd $rootDir\n");
+		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+		
 		strtok(exeCommand, delim);
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cd %s/$%s\nln -s %s/%s %s\ncd -\n", workspaceDir, caseName, exeDir, exeCommand, exeCommand); 
+		sprintf(buf2, "cp %s/%s %s/$%s/%s\n", exeDir, exeCommand, workspaceDir, caseName, exeCommand); 
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cp $rootDir/Z-checker/examples/zc.config .\n");
+		sprintf(buf2, "cp $rootDir/Z-checker/examples/zc.config %s/$%s\n", workspaceDir, caseName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(256);
 		sprintf(buf2, "%s\n", preCommand);
 		ZC_ReplaceStr2(buf2, "$workspaceDir", workspaceDir);
 		ZC_ReplaceStr2(buf2, "testcase", caseName); 
+		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+		buf2 = (char*)malloc(256);
+		sprintf(buf2, "cd %s/$%s\n", workspaceDir, caseName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
@@ -645,7 +653,8 @@ int removeComparisonCases(StringLine* line, char* compressor)
 		trim(newStr);
 		len = strlen(newStr);
 		newStr[len]='\"';
-		newStr[len+1] = '\0';
+		newStr[len+1] = '\n';
+		newStr[len+2] = '\0';
 		free(line->str);
 		line->str = newStr;
 		return 1;
