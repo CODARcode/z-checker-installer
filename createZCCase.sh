@@ -40,7 +40,7 @@ cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
 ln -s $rootDir/manageCompressor-sz-f.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
-cp $rootDir/Z-checker/examples/zc.config ./SZ/$sz_fast_caseName
+cp $rootDir/Z-checker/examples/zc.config .
 ./manageCompressor -z sz_f -c ./manageCompressor-sz-f.cfg
 cd $rootDir
 cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_fast_caseName/./testfloat_CompDecomp
@@ -62,7 +62,7 @@ cp $rootDir/zc-patches/zc-ratedistortion.sh .
 ln -s $rootDir/errBounds.cfg errBounds.cfg
 ln -s $rootDir/manageCompressor-sz-d.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
-cp $rootDir/Z-checker/examples/zc.config ./$sz_deft_caseName
+cp $rootDir/Z-checker/examples/zc.config .
 ./manageCompressor -z sz_d -c ./manageCompressor-sz-d.cfg
 cd $rootDir
 cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
