@@ -23,6 +23,9 @@ if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 ##begin: Compressor zfp
 		rm -rf zfp/${testcase}
 ##end: Compressor zfp
+##begin: Compressor sz_f
+	rm -rf ./SZ/${testcase}_fast
+##end: Compressor sz_f
 ##New compressor to be added here
 	else
 		echo No such testcase: $testcase

@@ -84,6 +84,17 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 	fi
 fi
 
+##begin: Compressor sz_f
+cd $rootDir
+cd ./SZ/${testcase}_fast
+if [[ $option == 1 ]]; then
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+	./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+else
+	echo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+	./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+fi
+##end: Compressor sz_f
 
 ##begin: Compressor sz_d
 cd $rootDir
