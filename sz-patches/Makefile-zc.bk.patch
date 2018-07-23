@@ -1,5 +1,5 @@
---- Makefile.bk	2018-07-06 23:03:34.021562559 -0500
-+++ Makefile-zc.bk	2018-07-06 23:07:48.468208715 -0500
+--- Makefile.bk	2018-07-22 22:32:02.869011922 -0500
++++ Makefile-zc.bk	2018-07-22 22:32:34.886723115 -0500
 @@ -2,7 +2,8 @@
  ##   Makefile to test SZ library.
  
@@ -13,7 +13,7 @@
 @@ -16,12 +17,13 @@
  #SZFLAG 	= -I$(SZPATH)/include -L$(SZPATH)/lib -lSZ
  # Compiling using static library
- SZFLAG 	= -I$(SZPATH)/include $(SZPATH)/lib/libSZ.a $(SZPATH)/lib/libzlib.a -lm
+ SZFLAG 	= -I$(SZPATH)/include $(SZPATH)/lib/libSZ.a $(SZPATH)/lib/libzlib.a $(SZPATH)/lib/libzstd.a -lm
 +ZCFLAG  = -I$(ZCPATH)/include $(ZCPATH)/lib/libzc.a
  GSLFLAG = -I$(GSLPATH)/include $(GSLPATH)/lib/libgsl.a
  NETCDFFLAG = -I$(NETCDFPATH)/include -lnetcdf
@@ -21,13 +21,13 @@
  
  ##   TARGETS
 -all: 		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress
-+all: 		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp
++all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp
  #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
  
  testint_compress:	testint_compress.c
 @@ -51,6 +53,12 @@
  sz:		sz.c
- 	$(CC)  -g -O0 -o sz	sz.c $(SZFLAG)
+ 	$(CC)  -g -O3 -o sz	sz.c $(SZFLAG)
  
 +testfloat_CompDecomp:  testfloat_CompDecomp.c
 +	$(CC)  -g -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(ZCFLAG) $(SZFLAG)
