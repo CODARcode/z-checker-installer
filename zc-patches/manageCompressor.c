@@ -38,8 +38,8 @@ void usage()
 	printf("	-w <workspace> : specify workspace\n");
 	printf("* Example:\n");
 	printf("	manageCompressor -c zc_manage.cfg\n");
-	printf("	manageCompressor -a zz -m best -c manageCompressor.cfg\n");
-	printf("	manageCompressor -d zz -m best -c manageCompressor.cfg\n");
+	printf("	manageCompressor -a sz -m fast -c manageCompressor-sz-f.cfg\n");
+	printf("	manageCompressor -d sz -m fast -c manageCompressor-sz-f.cfg\n");
 }
 
 int loadConfFile(char* zc_cfgFile, char** compressorName, char** compressorMode, char** compressor, char** workspaceDir, char** exeDir, char** preCommand, char** exeCommand)

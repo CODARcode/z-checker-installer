@@ -28,27 +28,6 @@ cd Z-checker
 cp ../zc-patches/queryVarList $caseName
 cd ..
 
-##begin: Compressor sz_f
-echo Create a new case for sz_f
-cd $rootDir
-cd ./SZ
-sz_fast_caseName=${caseName}_fast
-mkdir -p $sz_fast_caseName
-cd $sz_fast_caseName
-cp $rootDir/zc-patches/test_CompDecomp.sh .
-cp $rootDir/zc-patches/zc-ratedistortion.sh .
-ln -s $rootDir/errBounds.cfg errBounds.cfg
-ln -s $rootDir/manageCompressor-sz-f.cfg manageCompressor.cfg
-ln -s $rootDir/manageCompressor manageCompressor
-cp $rootDir/Z-checker/examples/zc.config .
-./manageCompressor -z sz_f -c ./manageCompressor.cfg
-cd $rootDir
-cp ./SZ/example/./testfloat_CompDecomp ./SZ/$sz_fast_caseName/./testfloat_CompDecomp
-cp sz-patches/sz.config.fast_mode ./SZ/$sz_fast_caseName/sz.config
-cd ./SZ/$sz_fast_caseName
-patch -p0 < $rootDir/zc-patches/zc-probe.config.patch
-cp $rootDir/zc-patches/queryVarList .
-##end: Compressor sz_f
 
 ##begin: Compressor sz_d
 echo Create a new case for sz_d
@@ -91,4 +70,4 @@ cd $rootDir/zc-patches
 
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
-./modifyZCConfig zc.config compressors "sz_f:../../SZ/${sz_fast_caseName} sz_d:../../SZ/${sz_deft_caseName} zfp:../../zfp/${zfp_caseName}"
+./modifyZCConfig zc.config compressors "sz_d:../../SZ/${sz_deft_caseName} zfp:../../zfp/${zfp_caseName}"
