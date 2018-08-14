@@ -36,11 +36,13 @@ if [[ $option == 1 ]]; then
 	fileList=`cd "$dataDir";ls *.${extension}`
 	for file in $fileList
 	do
+		echo Processing $file by $compressor
 ##EXECOMMAND_FILE	
 	done
 else
 	nbVars=`./queryVarList -n -i $varListFile`
 	for (( i = 0; i < nbVars; i++)); do
+		echo Processing $file by $compressor
 		varName=`./queryVarList -m -I $i -i $varListFile`
 		file=`./queryVarList -f -I $i -i $varListFile`
 		dims=`./queryVarList -d -I $i -i $varListFile`
