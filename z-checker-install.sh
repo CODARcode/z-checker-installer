@@ -72,7 +72,8 @@ cp zfp-patches/zfp-zc.c zfp/utils
 #cp zfp-patches/*.sh zfp/utils
 
 cd zfp/utils/
-patch -p0 < ../../zfp-patches/Makefile-zc.patch
+#patch -p0 < ../../zfp-patches/Makefile-zc.patch
+cp ../../zfp-patches/Makefile-zc ./Makefile
 
 cp ../../Z-checker/examples/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
