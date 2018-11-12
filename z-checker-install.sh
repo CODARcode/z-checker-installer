@@ -89,7 +89,7 @@ cd SZ/sz/src
 
 cd ../..
 ./configure --prefix=$rootDir/SZ/sz-install
-make
+make -j 4
 make install
 
 cd example
