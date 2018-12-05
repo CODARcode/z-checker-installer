@@ -8,13 +8,15 @@ cd $rootDir
 
 echo ------------------------------- CESM-ATM-Tylor --------------------------------
 app=CESM-ATM-Tylor
-compileMode=update
+compileMode='update'
 if [ ! -d SZ ]
 then
-	compileMode=install
+	compileMode='install'
 fi
 
-if [[ compileMode == install ]]
+echo compileMode=$compileMode
+
+if [[ $compileMode == 'install' ]]
 then
 	./z-checker-install.sh	
 else
