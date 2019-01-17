@@ -53,7 +53,7 @@ make
 #--------- compile codes in zc-patches-------
 cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c
-gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath=$rootDir/Z-checker/zc-install/lib
+gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
