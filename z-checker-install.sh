@@ -57,7 +57,7 @@ make install
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
-gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath=$rootDir/Z-checker/zc-install/lib
+gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
