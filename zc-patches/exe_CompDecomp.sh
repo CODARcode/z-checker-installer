@@ -8,24 +8,25 @@ then
 	exit
 fi
 
-errBoundMode=$1
-absErrBound=$2
+datatype=$1
+errBoundMode=$2
+absErrBound=$3
 
-if [ -d $3 ]; then
+if [ -d $4 ]; then
 	option=1
 else
 	option=0
 fi
 
 if [[ $option == 1 ]]; then
-	dataDir=$3
-	extension=$4
-	dim1=$5
-	dim2=$6
-	dim3=$7
-	dim4=$8
+	dataDir=$4
+	extension=$5
+	dim1=$6
+	dim2=$7
+	dim3=$8
+	dim4=$9
 else
-	varListFile=$3
+	varListFile=$4
 fi
 
 compressor=COMPRESSOR

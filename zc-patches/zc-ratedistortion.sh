@@ -41,8 +41,8 @@ fi
 for errBound in $ZZ_Err_Bounds
 do
 	if [[ $option == 1 ]]; then
-		./test_CompDecomp.sh $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
+		./exe_CompDecomp.sh $datatype $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 	else
-		./test_CompDecomp.sh $errBoundMode $errBound "$varListFile"
+		./exe_CompDecomp.sh $datatype $errBoundMode $errBound "$varListFile"
 	fi
 done

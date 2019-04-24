@@ -28,7 +28,7 @@ void usage()
 	printf("* Operation:\n");
 	printf("	-a <compressor>: add a compressor\n");
 	printf("	-d <compressor>: delete a compressor\n");
-	printf("	-z <compressor>: modify zc-ratedistortion.sh and test_CompDecomp.sh\n");	
+	printf("	-z <compressor>: modify zc-ratedistortion.sh and exe_CompDecomp.sh\n");	
 	printf("	-p : print the information\n");	
 	printf("	-k : check validity of errBounds.cfg\n");
 	printf("* Mode:\n");
@@ -61,8 +61,8 @@ int loadConfFile(char* zc_cfgFile, char** compressorName, char** compressorMode,
 	*compressor = (char*)malloc(100);
 	*workspaceDir = (char*)malloc(256);
 	*exeDir = (char*)malloc(256);
-	*preCommand = (char*)malloc(256);
-	*exeCommand = (char*)malloc(256);
+	*preCommand = (char*)malloc(512);
+	*exeCommand = (char*)malloc(512);
 
 	char* compressorN = iniparser_getstring(ini, "COMPRESSOR:compressor_name", NULL);
 	strcpy(*compressorName, compressorN);
@@ -159,7 +159,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cp $rootDir/zc-patches/test_CompDecomp.sh .\ncp $rootDir/zc-patches/zc-ratedistortion.sh .\n");
+		sprintf(buf2, "cp $rootDir/zc-patches/exe_CompDecomp.sh .\ncp $rootDir/zc-patches/zc-ratedistortion.sh .\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(256);
@@ -817,12 +817,12 @@ int modify_data_distortion_sh(char* compressor)
 	return MANAGE_SUC;
 }
 
-int modify_test_CompDecomp_sh(char* compressor, char* exeCommand)
+int modify_exe_CompDecomp_sh(char* compressor, char* exeCommand)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	
-	header = ZC_readLines("test_CompDecomp.sh", &lineCount);
+	header = ZC_readLines("exe_CompDecomp.sh", &lineCount);
 	
 	ZC_replaceLines(header, "COMPRESSOR", compressor);
 	
@@ -837,6 +837,7 @@ int modify_test_CompDecomp_sh(char* compressor, char* exeCommand)
 			char *buf2 = (char*)malloc(1024);
 			strcpy(buf, exeCommand);
 			ZC_ReplaceStr2(buf, "COMPRESSION_CASE", "\"${compressor}($absErrBound)\""); 
+			ZC_ReplaceStr2(buf, "DATA_TYPE", "\"$datatype\"");
 			ZC_ReplaceStr2(buf, "VAR_NAME", "\"$file\"");
 			ZC_ReplaceStr2(buf, "ERROR_MODE", "$errBoundMode");
 			ZC_ReplaceStr2(buf, "ERROR_BOUND", "$absErrBound");
@@ -858,6 +859,7 @@ int modify_test_CompDecomp_sh(char* compressor, char* exeCommand)
 			char *buf2 = (char*)malloc(1024);
 			strcpy(buf, exeCommand);
 			ZC_ReplaceStr2(buf, "COMPRESSION_CASE", "\"${compressor}($absErrBound)\""); 
+			ZC_ReplaceStr2(buf, "DATA_TYPE", "\"$datatype\"");
 			ZC_ReplaceStr2(buf, "VAR_NAME", "\"$varName\"");
 			ZC_ReplaceStr2(buf, "ERROR_MODE", "$errBoundMode");
 			ZC_ReplaceStr2(buf, "ERROR_BOUND", "$absErrBound");
@@ -874,7 +876,7 @@ int modify_test_CompDecomp_sh(char* compressor, char* exeCommand)
 		preLine = preLine->next;
 	}
 	
-	ZC_writeLines(header, "test_CompDecomp.sh");
+	ZC_writeLines(header, "exe_CompDecomp.sh");
 	if(header!=NULL)
 		ZC_freeLines(header);	
 		
@@ -1002,8 +1004,8 @@ int main(int argc, char* argv[])
 	{
 		modify_data_distortion_sh(compressor);
 		
-		//modify test_CompDecomp.sh
-		modify_test_CompDecomp_sh(compressor, exeCommand);
+		//modify exe_CompDecomp.sh
+		modify_exe_CompDecomp_sh(compressor, exeCommand);
 	}
 	else
 	{
