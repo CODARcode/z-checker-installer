@@ -11,6 +11,12 @@ workspace=$1
 
 rootDir=`pwd`
 
+if [ -d Z-checker/$workspace ];then
+	echo "Error: the workspace '$workspace' already exists."
+	echo "Please remove it by removeZCCase.sh before proceeding."
+	exit
+fi
+
 #copy results to sz_workspace
 sz_workspace=SZ/${workspace}_deft
 mkdir -p $sz_workspace/compressionResults
