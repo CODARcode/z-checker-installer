@@ -9,18 +9,42 @@ fi
 
 workspace=$1
 
-mkdir -p ../SZ/${workspace}_deft/compressionResults
-echo mv compressionResults/SZ* ../SZ/${workspace}_deft/compressionResults
-mv compressionResults/SZ* ../SZ/${workspace}_deft/compressionResults
+rootDir=`pwd`
 
-mkdir -p ../zfp/${workspace}/compressionResults
-echo mv compressionResults/ZFP* ../zfp/${workspace}/compressionResults
-mv compressionResults/ZFP* ../zfp/${workspace}/compressionResults
+#copy results to sz_workspace
+sz_workspace=SZ/${workspace}_deft
+mkdir -p $sz_workspace/compressionResults
+echo mv compressionResults/SZ* $sz_workspace/compressionResults
+mv compressionResults/SZ* $sz_workspace/compressionResults
 
-mkdir -p ../Z-checker/${workspace}/dataProperties
-echo mv dataProperties/* ../Z-checker/${workspace}/dataProperties
-mv dataProperties/* ../Z-checker/${workspace}/dataProperties
+#copy results to zfp_workspace
+zfp_workspace=zfp/${workspace}
+mkdir -p $zfp_workspace/compressionResults
+echo mv compressionResults/ZFP* $zfp_workspace/compressionResults
+mv compressionResults/ZFP* $zfp_workspace/compressionResults
 
+#create scripts for Z-checker workspace
+cd Z-checker
+if [ ! -d $workspace ];then
+	./createNewCase.sh $workspace
+	mkdir -p $workspace/dataProperties
+	echo mv dataProperties* $workspace/dataProperties
+	mv $rootDir/dataProperties/* $workspace/dataProperties
+else
+	echo Error: $workspace already exits!
+	echo Please remove it using removeZCCase.sh.
+
+	rm -rf $rootDir/compressionResults
+	rm -rf $rootDir/dataProperties
+	exit
+fi
+
+#modify zc.config based on compression cases
+cd $workspace
+./modifyZCConfig zc.config compressors "sz_d:../../SZ/${workspace}_deft zfp:../../zfp/${workspace}"
+
+#remove useless files
+cd $rootDir
 rm -rf compressionResults
 rm -rf dataProperties
 
