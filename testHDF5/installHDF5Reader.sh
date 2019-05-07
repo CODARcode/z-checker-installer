@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp Makefile.linux2 ../Z-checker/HDF5Reader
+
 cd ../Z-checker/HDF5Reader
 make -f Makefile.linux2 clean
 make -f Makefile.linux2

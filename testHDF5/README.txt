@@ -2,7 +2,7 @@
 
 Step 1. Install HDF5 package such as hdf5-1.10.1-install. 
 
-Step 2. Modify HDF5PATH in Z-checker/HDF5Reader/Makefile.linux2 as follows:
+Step 2. Modify HDF5PATH in ./Makefile.linux2 as follows:
 
 HDF5PATH        = [Your installation path that contains include and lib]
 
