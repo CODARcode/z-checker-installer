@@ -65,6 +65,7 @@ ZC_Err_Bounds="`echo $numOfErrorBoundCases`"
 echo numOfErrorBoundCasess=$numOfErrorBoundCases
 ./modifyZCConfig zc.config numOfErrorBoundCases "$numOfErrorBoundCases"
 
+testcase=$workspace
 if [[ $errBoundMode == "PW_REL" ]]; then
         echo ./generateReport.sh ${testcase} with PW_REL
         ./generateReport.sh "${testcase} with PW_REL"
@@ -80,7 +81,7 @@ rm -rf dataProperties
 
 if [ -f Z-checker/${workspace}/report/z-checker-report.pdf ];then
 	ln -f -s Z-checker/${workspace}/report/z-checker-report.pdf z-checker-report.pdf
-	echo The z-checker report has been generated (z-checker-report.pdf)
+	echo "The z-checker report has been generated (z-checker-report.pdf)"
 fi
 
 echo done

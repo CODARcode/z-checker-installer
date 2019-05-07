@@ -37,7 +37,7 @@ Options:
 * output Workspace
 	-o <workspace dir>
 * examples:
-	testHDF5_CompDecomp -i ../Z-checker/HDF5Reader/test/testdata/testdata.h5 -d 2 -c ../Z-checker/examples/zc.config -e ../errBounds.cfg
+	testHDF5_CompDecomp -i SZ/example/testdata/x86/testfloat_8_8_128.h5 -d 3 -c Z-checker/examples/zc.config -e ../errBounds.cfg
 
 Note: After executing testHDF5_CompDecomp, two directories - dataProperties and compressionResults - will be generated in the local directory. These two directories contain the data anaysis results and compression results, respectively.
 
