@@ -39,8 +39,12 @@ Options:
 * examples:
 	testHDF5_CompDecomp -i SZ/example/testdata/x86/testfloat_8_8_128.h5 -d 3 -c Z-checker/examples/zc.config -e ../errBounds.cfg
 
+The 'field filter' in testHDF5_CompDecomp can help select the fields based on specified requirement, such as only selecting 2D fields, some specific data type (float or double). 
+If there are multiple customzed requirements, such as -t 0 -n 1000 -d 2D, they will be combined together (i.e., AND operation).
+
 Note: After executing testHDF5_CompDecomp, two directories - dataProperties and compressionResults - will be generated in the local directory. These two directories contain the data anaysis results and compression results, respectively.
 
 Step 2. Execute 'runZCCase.sh [workspace_name]' to move the results to the workspace and generate Z-checker report.
 Example: runZCCase.sh CESM-ATM
 
+Note: If you already executed runZCCase_hdf5.sh, remember to use removeZCCase.sh to remove the old workspace case before running runZCCase_hdf5.sh again.
