@@ -69,7 +69,7 @@ if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
 fi
 
 #---------- download sam2p --------------------
-SAM2P_URL="https://github.com/pts/tif22pnm.git"
+SAM2P_URL="https://github.com/pts/sam2p.git"
 SAM2P_SRC_DIR=$rootDir/sam2p
 
 SAM2P_EXE_PATH=`which sam2p`
