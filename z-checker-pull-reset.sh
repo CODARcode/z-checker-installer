@@ -58,10 +58,27 @@ mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
-cd zfp
+cd zfp/src
+
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
 git pull
 
-cd -
+cd ../lib
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
+git pull
+
+cd ../util
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
+git pull
+
+
+cd ../..
 cp zfp-patches/zfp-zc.c zfp/utils
 #cp zfp-patches/*.sh zfp/utils
 
