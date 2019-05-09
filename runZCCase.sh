@@ -64,7 +64,15 @@ fi
 envConfigPath="$rootDir/Z-checker/examples/env_config.sh"
 GNUPLOT_EXE_PATH=`which gnuplot`
 SAM2P_EXE_PATH=`which sam2p`
-if [ ! -x "$GNUPLOT_EXE_PATH" || ! -x "$SAM2P_EXE_PATH" ]; then
+if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
+	if [ -f $envConfigPath ]; then
+		source $envConfigPath
+	else
+		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/examples/env_config.sh either."
+		exit
+	fi
+fi
+if [ ! -x "$SAM2P_EXE_PATH" ]; then
 	if [ -f $envConfigPath ]; then
 		source $envConfigPath
 	else
