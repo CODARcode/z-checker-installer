@@ -1,13 +1,14 @@
 #!/bin/bash
 
-if [ $# != 1 ]
+if [ $# != 2 ]
 then
-        echo Usage: $0 [workspace name]
-        echo Example: $0 CESM-ATM
+        echo Usage: $0 [workspace name] [zc configuration file]
+        echo Example: $0 CESM-ATM zc.config
         exit
 fi
 
 workspace=$1
+zcconfig=$2
 
 rootDir=`pwd`
 
@@ -28,6 +29,8 @@ zfp_workspace=zfp/${workspace}
 mkdir -p $zfp_workspace/compressionResults
 echo mv compressionResults/zfp* $zfp_workspace/compressionResults
 mv compressionResults/zfp* $zfp_workspace/compressionResults
+
+cp $zcconfig Z-checker/examples
 
 #create scripts for Z-checker workspace
 cd Z-checker
