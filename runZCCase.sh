@@ -61,14 +61,14 @@ if [ ! -d "$dataDir" ]; then
 fi
 fi
 
-envConfigPath="$rootDir/Z-checker/examples/env_config.sh"
+envConfigPath="$rootDir/Z-checker/env_config.sh"
 GNUPLOT_EXE_PATH=`which gnuplot`
 if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 	if [ -f $envConfigPath ]; then
 		echo source $envConfigPath to load gnuplot command
 		source $envConfigPath
 	else
-		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/examples/env_config.sh either."
+		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/env_config.sh either."
 		exit
 	fi
 fi
@@ -79,7 +79,7 @@ if [ ! -x "$SAM2P_EXE_PATH" ]; then
 		echo source $envConfigPath to load sam2p command
 		source $envConfigPath
 	else
-		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/examples/env_config.sh either."
+		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/env_config.sh either."
 		exit
 	fi
 fi
@@ -91,7 +91,7 @@ if [ ! -x "$LATEXMK_EXE_PATH" ]; then
 			echo source $envConfigPath to load latexmk command
 			source $envConfigPath
 		else
-			echo "Error: latexmk is not executable and cannot find Z-checker/examples/env_config.sh either."
+			echo "Error: latexmk is not executable and cannot find Z-checker/env_config.sh either."
 			exit
 		fi
 	fi

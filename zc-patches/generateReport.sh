@@ -23,7 +23,7 @@ if [ ! -x $LATEXMK_PATH ]; then
 	exit
 fi
 
-envConfigPath="../examples/env_config.sh"
+envConfigPath="../env_config.sh"
 if [ -f $envConfigPath ]
 then
 	source $envConfigPath

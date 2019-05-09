@@ -199,5 +199,5 @@ cd $rootDir
 ln -s $rootDir/zc-patches/zc.config zc.config 
 
 if [ -f $rootDir/env_config.sh ]; then
-	mv $rootDir/env_config.sh $rootDir/Z-checker/examples/env_config.sh
+	mv $rootDir/env_config.sh $rootDir/Z-checker/env_config.sh
 fi
