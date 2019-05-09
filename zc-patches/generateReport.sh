@@ -41,7 +41,7 @@ cd dataProperties
 pngFileList=`ls *.png`
 for file in $pngFileList
 do
-        sam2j $file ${file}.eps
+        sam2p $file ${file}.eps
 done
 cd -
 
