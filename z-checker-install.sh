@@ -75,7 +75,7 @@ cd zfp/utils/
 #patch -p0 < ../../zfp-patches/Makefile-zc.patch
 cp ../../zfp-patches/Makefile-zc ./Makefile
 
-cp ../../Z-checker/examples/zc.config .
+cp ../../zc-patches/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 make
@@ -95,7 +95,7 @@ make install
 cd example
 patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
 make -f Makefile.bk
-cp ../../Z-checker/examples/zc.config .
+cp ../../zc-patches/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 #cp ../../sz-patches/sz-zc-ratedistortion.sh .
@@ -147,7 +147,7 @@ if [ ! -x "$PS2PDF_EXE_PATH" ]; then
 fi
 
 cd $rootDir
-ln -s $rootDir/Z-checker/examples/zc.config zc.config 
+ln -s $rootDir/zc-patches/zc.config zc.config 
 
 if [ -f $rootDir/env_config.sh ]; then
 	mv $rootDir/env_config.sh $rootDir/Z-checker/examples/env_config.sh

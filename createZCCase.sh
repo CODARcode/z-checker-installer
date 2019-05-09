@@ -37,7 +37,7 @@ sz_deft_caseName=${caseName}_deft
 mkdir -p $sz_deft_caseName
 cd $sz_deft_caseName
 ln -s $rootDir/errBounds.cfg errBounds.cfg
-cp $rootDir/Z-checker/examples/zc.config .
+cp $rootDir/zc-patches/zc.config .
 
 #cp $rootDir/sz-patches/*.sh .
 cp $rootDir/sz-patches/test_CompDecomp.sh .

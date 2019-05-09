@@ -86,7 +86,7 @@ cd zfp
 make
 cd utils
 
-cp ../../Z-checker/examples/zc.config .
+cp ../../zc-patches/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
 
 make clean
@@ -115,7 +115,7 @@ patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
 make clean -f Makefile.bk
 make -f Makefile.bk
 
-cp ../../Z-checker/examples/zc.config .
+cp ../../zc-patches/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
 #cp ../../sz-patches/sz*-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
@@ -125,5 +125,5 @@ cd $rootDir
 #cp zc.config.bk Z-checker/examples/zc.config
 if [ ! -f zc.config ]
 then
-	ln -s $rootDir/Z-checker/examples/zc.config zc.config
+	ln -s $rootDir/zc-patches/zc.config zc.config
 fi
