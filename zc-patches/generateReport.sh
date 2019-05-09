@@ -23,6 +23,13 @@ if [ ! -x $LATEXMK_PATH ]; then
 	exit
 fi
 
+envConfigPath="../examples/env_config.sh"
+if [ -f $envConfigPath ]
+then
+	source $envConfigPath
+fi
+
+
 echo ./generateGNUPlot zc.config
 ./generateGNUPlot zc.config
 
