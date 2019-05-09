@@ -63,11 +63,12 @@ fi
 
 envConfigPath="$rootDir/Z-checker/examples/env_config.sh"
 GNUPLOT_EXE_PATH=`which gnuplot`
-if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
+SAM2P_EXE_PATH=`which sam2p`
+if [ ! -x "$GNUPLOT_EXE_PATH" || ! -x "$SAM2P_EXE_PATH" ]; then
 	if [ -f $envConfigPath ]; then
 		source $envConfigPath
 	else
-		echo "Error: gnuplot is not executable and cannot find Z-checker/examples/env_config.sh either."
+		echo "Error: gnuplot or sam2p is not executable and cannot find Z-checker/examples/env_config.sh either."
 		exit
 	fi
 fi
@@ -146,6 +147,16 @@ ZC_Err_Bounds="`echo $numOfErrorBoundCases`"
 
 echo numOfErrorBoundCasess=$numOfErrorBoundCases
 ./modifyZCConfig zc.config numOfErrorBoundCases "$numOfErrorBoundCases"
+
+#convert png files to eps files
+echo "converting png files (if any) to eps files"
+cd $rootDir/Z-checker/${testcase}/dataProperties
+pngFileList=`ls *.png`
+for file in $pngFileList
+do
+	sam2j $file ${file}.eps
+done
+cd -
 
 if [[ $errBoundMode == "PW_REL" ]]; then
 	echo ./generateReport.sh ${testcase} with PW_REL

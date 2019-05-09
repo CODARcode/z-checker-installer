@@ -43,6 +43,55 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 
 fi
 
+#---------- download tif22pnm ---------------
+TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
+TIF22PNM_SRC_DIR=$rootDir/tif22pnm
+
+TIF22PNM_EXE_PATH=`which png22pnm`
+if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
+	if [ ! -d "$TIF22PNG_SRC_DIR" ]; then
+		# download tif22pnm source
+		git clone $TIF22PNM_URL
+		if [ ! -d "$TIF22PNM_SRC_DIR" ] ; then
+			echo "FATAL: cannot download and extract tif22pnm source."
+			exit
+		fi
+
+		# compile tif22pnm
+		cd $TIF22PNM_SRC_DIR
+		./configure
+		./do.sh compile
+		cd $rootDir
+		echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" > $rootDir/env_config.sh
+		echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
+	fi
+
+fi
+
+#---------- download sam2p --------------------
+SAM2P_URL="https://github.com/pts/tif22pnm.git"
+SAM2P_SRC_DIR=$rootDir/sam2p
+
+SAM2P_EXE_PATH=`which sam2p`
+if [ ! -x "$SAM2P_EXE_PATH" ]; then
+	if [ ! -d "$SAM2P_SRC_DIR" ]; then
+		# download sam2p source
+		git clone $SAM2P_URL
+		if [ ! -d "$SAM2P_SRC_DIR" ] ; then
+			echo "FATAL: cannot download and extract sam2p source."
+			exit
+		fi
+
+		# compile sam2p
+		cd $SAM2P_SRC_DIR
+		./compile.sh
+		cd $rootDir
+		echo "export SAM2P_HOME=$SAM2P_SRC_DIR" > $rootDir/env_config.sh
+		echo "export PATH=\$PATH:\$SAM2P_HOME" >> $rootDir/env_config.sh
+	fi
+
+fi
+
 #--------- compile the codes in zc-patch ------------
 cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c 
