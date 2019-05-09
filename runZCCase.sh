@@ -148,16 +148,6 @@ ZC_Err_Bounds="`echo $numOfErrorBoundCases`"
 echo numOfErrorBoundCasess=$numOfErrorBoundCases
 ./modifyZCConfig zc.config numOfErrorBoundCases "$numOfErrorBoundCases"
 
-#convert png files to eps files
-echo "converting png files (if any) to eps files"
-cd $rootDir/Z-checker/${testcase}/dataProperties
-pngFileList=`ls *.png`
-for file in $pngFileList
-do
-	sam2j $file ${file}.eps
-done
-cd -
-
 if [[ $errBoundMode == "PW_REL" ]]; then
 	echo ./generateReport.sh ${testcase} with PW_REL
 	./generateReport.sh "${testcase} with PW_REL"

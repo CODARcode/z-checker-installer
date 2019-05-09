@@ -35,6 +35,16 @@ mv *_*.txt compareCompressors/data
 mkdir compareCompressors/gnuplot_scripts
 mv *.p compareCompressors/gnuplot_scripts
 
+#convert png files to eps files
+echo "converting png files (if any) to eps files"
+cd dataProperties
+pngFileList=`ls *.png`
+for file in $pngFileList
+do
+        sam2j $file ${file}.eps
+done
+cd -
+
 echo ./generateReport zc.config $dataSetName
 ./generateReport zc.config $dataSetName
 
