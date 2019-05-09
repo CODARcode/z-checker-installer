@@ -62,7 +62,7 @@ if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
 		./configure
 		./do.sh compile
 		cd $rootDir
-		echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" > $rootDir/env_config.sh
+		echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" >> $rootDir/env_config.sh
 		echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
 	fi
 
@@ -86,7 +86,7 @@ if [ ! -x "$SAM2P_EXE_PATH" ]; then
 		cd $SAM2P_SRC_DIR
 		./compile.sh
 		cd $rootDir
-		echo "export SAM2P_HOME=$SAM2P_SRC_DIR" > $rootDir/env_config.sh
+		echo "export SAM2P_HOME=$SAM2P_SRC_DIR" >> $rootDir/env_config.sh
 		echo "export PATH=\$PATH:\$SAM2P_HOME" >> $rootDir/env_config.sh
 	fi
 
