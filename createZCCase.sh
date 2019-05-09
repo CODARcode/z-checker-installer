@@ -24,6 +24,7 @@ if [ -d Z-checker/$caseName ]; then
 	exit
 fi
 cd Z-checker
+cp ../zc-patches/zc.config ./examples/
 ./createNewCase.sh $caseName
 cp ../zc-patches/queryVarList $caseName
 cd ..
