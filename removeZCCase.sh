@@ -24,7 +24,7 @@ if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 	rm -rf SZ/${testcase}_deft
 ##end: Compressor sz_d
 ##begin: Compressor zfp
-	rm -rf ./zfp/${testcase}_
+	rm -rf ./zfp/${testcase}
 ##end: Compressor zfp
 ##New compressor to be added here
 	else
@@ -34,7 +34,6 @@ if [[ $# == 1 || $errBoundMode == "ABS" || $errBoundMode == "REL" ]]; then
 elif [[ $errBoundMode == "PW_REL" ]]; then
 	if [ -d Z-checker/${testcase} ]; then
 		rm -rf Z-checker/$testcase
-		rm -rf SZ/${testcase}_fast
 		rm -rf SZ/${testcase}_deft
 		rm -rf zfp/${testcase}
 	else

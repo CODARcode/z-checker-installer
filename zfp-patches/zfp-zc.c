@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
   char* cmpCaseKey = 0;
   char* varName = 0;
   /* local variables */
-  int i;
+  size_t i;
   zfp_field* field = NULL;
   zfp_stream* zfp = NULL;
   bitstream* stream = NULL;
