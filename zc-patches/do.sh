@@ -118,5 +118,5 @@ build
 SOURCES='png22pnm.c'
 TARGET=png22pnm
 #LIBS="$LIBS_PNG $LIBS_M"
-LIBS="$LIBPNG_FLAG -lm"
+LIBS="$LIBPNG_FLAG -lm -Wl,-rpath,$libpngdir/lib"
 build
