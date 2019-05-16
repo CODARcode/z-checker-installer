@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=$PATH:.
+
 datatype=$1
 if [[ $# < 4 || ( $datatype != "-f" && $datatype != "-d" ) ]]
 then

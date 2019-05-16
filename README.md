@@ -5,7 +5,7 @@
 See COPYRIGHT in top-level directory.
 
 
-Authors: Sheng Di, Hanqi Guo
+Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 
 ## 3rd party libraries/tools
 
@@ -16,6 +16,10 @@ Authors: Sheng Di, Hanqi Guo
 - ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
 - latexmk (z-checker-install.sh will install latexmk automatically if missing)
 - gnuplot (z-checker-install.sh will install gnuplot automatically if missing)
+
+#tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
+- tif22pnm (z-checker-install.sh will install tif22pnm automatically if missing)
+- sam2p (z-checker-install.sh will install sam2p automatically if missing)
 
 ## Testing/Installation method
 
@@ -35,9 +39,9 @@ You can generate compression results with SZ and ZFP using the following simple 
    For example:
    [user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
 
-3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [dimensions....].
+3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [extension] [dimensions....].
    Example:
-   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
+   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 dat 3600 1800
 
 Then, you can find the report generated in z-checker-installer/Z-checker/[test-case-name]/report.
 
