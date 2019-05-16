@@ -133,6 +133,7 @@ cd Z-checker
 ./configure --prefix=$rootDir/Z-checker/zc-install
 make
 make install
+export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
@@ -155,7 +156,7 @@ cd zfp/utils/
 cp ../../zfp-patches/Makefile-zc ./Makefile
 
 cp ../../zc-patches/zc.config .
-patch -p0 < ../../zc-patches/zc-probe.config.patch
+modifyZCConfig ./zc.config checkingStatus PROB_COMPRESSOR
 
 make
 
@@ -175,7 +176,7 @@ cd example
 cp ../../sz-patches/Makefile.bk .
 make -f Makefile.bk
 cp ../../zc-patches/zc.config .
-patch -p0 < ../../zc-patches/zc-probe.config.patch
+modifyZCConfig ./zc.config checkingStatus PROB_COMPRESSOR
 
 #cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .

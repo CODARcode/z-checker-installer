@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rootDir=`pwd`
+export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 
 #---------- download libpng if missing ------
 LIBPNG_URL=http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz
@@ -165,7 +166,7 @@ make
 cd utils
 
 cp ../../zc-patches/zc.config .
-patch -p0 < ../../zc-patches/zc-probe.config.patch
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 make clean
 make
@@ -194,8 +195,7 @@ make clean -f Makefile.bk
 make -f Makefile.bk
 
 cp ../../zc-patches/zc.config .
-patch -p0 < ../../zc-patches/zc-probe.config.patch
-#cp ../../sz-patches/sz*-zc-ratedistortion.sh .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
