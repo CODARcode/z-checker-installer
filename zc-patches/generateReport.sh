@@ -26,7 +26,7 @@ then
 	source $envConfigPath
 fi
 
-cp ../../zc-patches/zc.config.compare ./zc.config
+modifyZCConfig ./zc.config checkingStatus COMPARE_COMPRESSOR
 echo ./generateGNUPlot zc.config
 ./generateGNUPlot zc.config
 
