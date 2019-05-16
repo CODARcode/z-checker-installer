@@ -117,6 +117,9 @@ LIBS="$LIBS_TIFF"
 build
 SOURCES='png22pnm.c'
 TARGET=png22pnm
-#LIBS="$LIBS_PNG $LIBS_M"
-LIBS="$LIBPNG_FLAG -lm -Wl,-rpath,$libpngdir/lib"
+if [ $# -gt 1 ];then
+	LIBS="$LIBPNG_FLAG -lm -Wl,-rpath,$libpngdir/lib"
+else
+	LIBS="$LIBS_PNG $LIBS_M"
+fi
 build
