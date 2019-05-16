@@ -44,15 +44,16 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 fi
 
 #---------- download libpng if missing ------
-LIBPNG_URL="http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz"
+LIBPNG_URL=http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz
 LIBPNG_SRC_DIR=$rootDir/libpng
 LIBPNG_EXE_PATH=`which libpng-config`
 
 if [ ! -x "$LIBPNG_EXE_PATH" ]; then
         if [ ! -d "$LIBPNG_SRC_DIR" ]; then
                 # download libpng source
-		curl -O $LIBPNG_URL
-		tar xzvf libpng-1.6.37.tar.gz
+		mkdir -p $LIBPNG_SRC_DIR
+		cd $LIBPNG_SRC_DIR
+		curl -L $LIBPNG_URL | tar zxf -
                 
                 if [ ! -d "$LIBPNG_SRC_DIR" ] ; then
                         echo "FATAL: cannot download and extract libpng source."
@@ -67,8 +68,8 @@ if [ ! -x "$LIBPNG_EXE_PATH" ]; then
         fi
 fi
 
-
 #---------- download tif22pnm ---------------
+cd $rootDir
 TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
 TIF22PNM_SRC_DIR=$rootDir/tif22pnm
 
