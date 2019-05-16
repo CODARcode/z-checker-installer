@@ -52,7 +52,7 @@ cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
 cp SZ/example/./testdouble_CompDecomp SZ/$sz_deft_caseName/./testdouble_CompDecomp
 cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
-cp SZ/example/zc.config .
+cp $rootDir/SZ/example/zc.config .
 cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_d
 
