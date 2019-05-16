@@ -8,7 +8,7 @@
 
 if [ $# -gt 1 ];then
 	libpngdir=$2
-	LIBPNG_FLAG=-I$libpngdir/include -L$libpngdir/lib -lpng
+	LIBPNG_FLAG="-I$libpngdir/include -L$libpngdir/lib -lpng"
 fi
 
 if [ -f tif22pnm.c ]; then : ; else
