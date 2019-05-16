@@ -202,7 +202,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);
-		sprintf(buf2, "cp $rootDir/zc-patches/zc.config.prob ./zc.config\n");
+		sprintf(buf2, "cp $rootDir/zc-patches/zc.config.probe ./zc.config\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(256);		
