@@ -172,7 +172,7 @@ make -j 4
 make install
 
 cd example
-patch -p0 < ../../sz-patches/Makefile-zc.bk.patch
+cp ../../sz-patches/Makefile.bk .
 make -f Makefile.bk
 cp ../../zc-patches/zc.config .
 patch -p0 < ../../zc-patches/zc-probe.config.patch
