@@ -39,9 +39,9 @@ You can generate compression results with SZ and ZFP using the following simple 
    For example:
    [user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
 
-3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [dimensions....].
+3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [extension] [dimensions....].
    Example:
-   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 3600 1800
+   [user@localhost z-checker-installer] ./runZCCase.sh -f REL CESM-ATM-tylor-data /home/shdi/CESM-testdata/1800x3600 dat 3600 1800
 
 Then, you can find the report generated in z-checker-installer/Z-checker/[test-case-name]/report.
 
