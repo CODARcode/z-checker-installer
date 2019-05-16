@@ -24,7 +24,6 @@ if [ -d Z-checker/$caseName ]; then
 	exit
 fi
 cd Z-checker
-./modifyZCConfig ../zc-patches/zc.config checkingStatus ANALYSIS_DATA 
 cp ../zc-patches/zc.config ./examples
 ./createNewCase.sh $caseName
 cp ../zc-patches/queryVarList $caseName
@@ -39,7 +38,7 @@ sz_deft_caseName=${caseName}_deft
 mkdir -p $sz_deft_caseName
 cd $sz_deft_caseName
 ln -s $rootDir/errBounds.cfg errBounds.cfg
-cp $rootDir/zc-patches/zc.config.analysis ./zc.config
+cp $rootDir/zc-patches/zc.config .
 
 #cp $rootDir/sz-patches/*.sh .
 cp $rootDir/sz-patches/test_CompDecomp.sh .
@@ -53,7 +52,7 @@ cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
 cp SZ/example/./testdouble_CompDecomp SZ/$sz_deft_caseName/./testdouble_CompDecomp
 cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
-cp $rootDir/zc-patches/zc.config.probe zc.config
+cp SZ/example/zc.config .
 cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_d
 
