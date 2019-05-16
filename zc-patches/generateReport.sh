@@ -8,9 +8,6 @@ then
 fi 
 
 dataSetName=$1
-if [ -f ../../zc-patches/zc-compare.config.patch ]; then
-	patch -p0 < ../../zc-patches/zc-compare.config.patch
-fi
 
 GNUPLOT_PATH=`which gnuplot`
 if [ ! -x $GNUPLOT_PATH ]; then
@@ -29,7 +26,7 @@ then
 	source $envConfigPath
 fi
 
-
+cp ../../zc-patches/zc.config.compare ./zc.config
 echo ./generateGNUPlot zc.config
 ./generateGNUPlot zc.config
 
@@ -61,10 +58,6 @@ if [ -f z-checker-report.pdf ]; then
 fi
 make
 cd ..
-
-if [ -f ../../zc-patches/zc-compare.config.patch ]; then
-	patch -RE -p0 < ../../zc-patches/zc-compare.config.patch
-fi
 
 if [ ! -f report/z-checker-report.pdf ]; then
 	zip -r report.zip report

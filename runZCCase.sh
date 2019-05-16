@@ -131,6 +131,7 @@ fi
 
 cd $rootDir
 cd Z-checker/${testcase}
+cp $rootDir/zc-patches/zc.config.anlaysis ./zc.config
 
 if [[ $option == 1 ]]; then
 	echo ./analyzeDataProperty.sh $datatype $dataDir $extension $dim1 $dim2 $dim3 $dim4
