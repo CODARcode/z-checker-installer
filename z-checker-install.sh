@@ -43,6 +43,31 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 
 fi
 
+#---------- download libpng if missing ------
+LIBPNG_URL="http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz"
+LIBPNG_SRC_DIR=$rootDir/libpng
+LIBPNG_EXE_PATH=`which libpng-config`
+
+if [ ! -x "$LIBPNG_EXE_PATH" ]; then
+        if [ ! -d "$LIBPNG_SRC_DIR" ]; then
+                # download libpng source
+		curl -O $LIBPNG_URL
+		tar xzvf libpng-1.6.37.tar.gz
+                
+                if [ ! -d "$LIBPNG_SRC_DIR" ] ; then
+                        echo "FATAL: cannot download and extract libpng source."
+                        exit
+                fi
+
+                # compile libpng
+                cd $LIBPNG_SRC_DIR/libpng-1.6.37
+                ./configure --prefix=$LIBPNG_SRC_DIR/libpng-1.6.37-install
+                make -j 4
+		make install
+        fi
+fi
+
+
 #---------- download tif22pnm ---------------
 TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
 TIF22PNM_SRC_DIR=$rootDir/tif22pnm
@@ -60,12 +85,16 @@ if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
 		# compile tif22pnm
 		cd $TIF22PNM_SRC_DIR
 		./configure
-		./do.sh compile
+		cp $rootDir/zc-patches/do.sh .
+		if [ -d $LIBPNG_SRC_DIR/libpng-1.6.37-install ];then
+			./do.sh fast $LIBPNG_SRC_DIR/libpng-1.6.37-install
+		else
+			./do.sh fast
+		fi
 		cd $rootDir
 		echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" >> $rootDir/env_config.sh
 		echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
 	fi
-
 fi
 
 #---------- download sam2p --------------------
