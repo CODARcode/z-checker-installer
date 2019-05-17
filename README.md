@@ -17,7 +17,7 @@ Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 - latexmk (z-checker-install.sh will install latexmk automatically if missing)
 - gnuplot (z-checker-install.sh will install gnuplot automatically if missing)
 
-* tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
+ tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
 - libpng (z-checker-install.sh will install tif22pnm automatically if missing)
 - tif22pnm (z-checker-install.sh will install tif22pnm automatically if missing)
 - sam2p (z-checker-install.sh will install sam2p automatically if missing)
