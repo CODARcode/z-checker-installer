@@ -17,7 +17,7 @@ Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 - latexmk (z-checker-install.sh will install latexmk automatically if missing)
 - gnuplot (z-checker-install.sh will install gnuplot automatically if missing)
 
-#tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
+* tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
 - libpng (z-checker-install.sh will install tif22pnm automatically if missing)
 - tif22pnm (z-checker-install.sh will install tif22pnm automatically if missing)
 - sam2p (z-checker-install.sh will install sam2p automatically if missing)
@@ -67,11 +67,11 @@ Unlike the above one-command checking, the following steps present the generatio
 For example, if you run the generateReport.sh in the directory ./Z-checker/examples, it is actually one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
 For another test case with another set of data or application, you can create a new workspace directory by the script createZCCase.sh (which calls ./Z-checker/createNewCase.sh).
 
-#### z-checker-update.sh
+### z-checker-update.sh
 
 z-checker-update.sh can be used to update the repository (pull the new update from the server), so that you don't have to perform the update manually.
 
-#### web installation
+### web installation
 
 Web installation allows to install a web server on the local machine, such that you can visualize the data through a local webpage and other people can view the data/results via that page if public ip is provided. 
 z-checker-web-install.sh
@@ -94,3 +94,19 @@ Remove sz_d (sz fast mode):
 $ manageCompressor -d sz -m deft -c manageCompressor-sz-d.cfg
 Remove zfp: 
 $ manageCompressor -d zfp -c manageCompressor-zfp.cfg
+
+### Generate Z-checker report based on HDF5 files
+
+You can generate Z-checker report directly based on an HDF5 file. 
+To this end, you need to install HDF5 library before hand, and then compile the Z-checker/HDF5Reader as follows: 
+
+You need to modify Makefile.linux2 by replacing "HDF5PATH = /home/sdi/Install/hdf5-1.10.1-install" by your HDF5 installation path.
+Then:
+make -f Makefile.linux2
+
+You will find the executable 'testHDF5_CompDecomp' generated on Z-checker/HDF5Reader/test/ directory.
+You can use this command to read HDF5 file and generate analysis results.
+
+After that, you can use 'installHDF5Reader.sh' and 'runZCCase_hdf5.sh' to generate the .pdf report. 
+More details can be found in testHDF5/README.txt
+
