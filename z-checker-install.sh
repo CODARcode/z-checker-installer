@@ -156,7 +156,7 @@ cd zfp/utils/
 cp ../../zfp-patches/Makefile-zc ./Makefile
 
 cp ../../zc-patches/zc.config .
-modifyZCConfig ./zc.config checkingStatus PROB_COMPRESSOR
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 make
 
@@ -176,7 +176,7 @@ cd example
 cp ../../sz-patches/Makefile.bk .
 make -f Makefile.bk
 cp ../../zc-patches/zc.config .
-modifyZCConfig ./zc.config checkingStatus PROB_COMPRESSOR
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 #cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
