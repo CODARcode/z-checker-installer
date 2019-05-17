@@ -36,9 +36,9 @@ You can generate compression results with SZ and ZFP using the following simple 
 
 1. Configure the error bound setting and comparison cases in errBounds.cfg.
 
-2. Create a new test-case, by executing "createNewZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
+2. Create a new test-case, by executing "createZCCase.sh [test-case-name]". You need to replace [test-case-name] by a meaningful name.
    For example:
-   [user@localhost z-checker-installer] ./createNewZCCase.sh CESM-ATM-tylor-data
+   [user@localhost z-checker-installer] ./createZCCase.sh CESM-ATM-tylor-data
 
 3. Perform the checking by running the command "runZCCase.sh": runZCCase.sh [data_type] [error-bound-mode] [test-case-name] [data dir] [extension] [dimensions....].
    Example:
@@ -62,10 +62,10 @@ Unlike the above one-command checking, the following steps present the generatio
 
 ### Create a new case
 
-"createNewZCCase.sh [test-case-name]" allows you to create a new test-case.  This command will create a new workspace directory in Z-checker, SZ, and zfp respectively. The compression results will be put in those workspace directories to avoid bing messed with other test-cases.
+"createZCCase.sh [test-case-name]" allows you to create a new test-case.  This command will create a new workspace directory in Z-checker, SZ, and zfp respectively. The compression results will be put in those workspace directories to avoid bing messed with other test-cases.
 
 For example, if you run the generateReport.sh in the directory ./Z-checker/examples, it is actually one test case, where the compression results and data analysis results will be put in the dataProperty/ and compressionResults/ under it.
-For another test case with another set of data or application, you can create a new workspace directory by the script createNewZCCase.sh (which calls ./Z-checker/createNewCase.sh).
+For another test case with another set of data or application, you can create a new workspace directory by the script createZCCase.sh (which calls ./Z-checker/createNewCase.sh).
 
 #### z-checker-update.sh
 
