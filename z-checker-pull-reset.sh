@@ -75,6 +75,9 @@ if [ ! -x "$SAM2P_EXE_PATH" ]; then
 
                 # compile sam2p
                 cd $SAM2P_SRC_DIR
+		# fix a potential bug in sam2p
+		cp $rootDir/zc-patches/gensio.cpp .
+		# compilation
                 ./compile.sh
                 cd $rootDir
                 echo "export SAM2P_HOME=$SAM2P_SRC_DIR" >> $rootDir/env_config.sh
