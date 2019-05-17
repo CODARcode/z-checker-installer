@@ -10,15 +10,15 @@ Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 ## 3rd party libraries/tools
 
 - gcc
-- perl
 - git
-- texlive
+- texlive (e.g., execute 'sudo yum install texlive-*' on linux)
 - ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
 - latexmk (z-checker-install.sh will install latexmk automatically if missing)
 - gnuplot (z-checker-install.sh will install gnuplot automatically if missing)
+- perl (used by only web-visualization support)
 
- tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these two tools are not needed.
-- libpng (z-checker-install.sh will install tif22pnm automatically if missing)
+The following libraries - libpng, tif22pnm and sam2p are used to convert slice image png files to eps. If plotSliceImag option is disabled (in zc.config), these three libraries are not needed. 
+- libpng (z-checker-install.sh will install tif22pnm automatically if missing; in fact, libpng can be installed using system installation command such as 'yum install libpng-devel' on linux.)
 - tif22pnm (z-checker-install.sh will install tif22pnm automatically if missing)
 - sam2p (z-checker-install.sh will install sam2p automatically if missing)
 
