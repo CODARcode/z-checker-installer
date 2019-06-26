@@ -23,7 +23,7 @@ NETCDFFLAG = -I$(NETCDFPATH)/include -lnetcdf
 
 
 ##   TARGETS
-all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp sz_zc
+all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp sz-zc-vis
 #all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
 
 testint_compress:	testint_compress.c
@@ -59,9 +59,9 @@ testfloat_CompDecomp:  testfloat_CompDecomp.c
 testdouble_CompDecomp: testdouble_CompDecomp.c
 	$(CC)  -g -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(ZCFLAG) $(SZFLAG)
 
-sz_zc:  sz_zc.c
-	$(CC) -g -O3 -o sz_zc sz_zc.c $(ZCFLAG) $(SZFLAG)
+sz-zc-vis:  sz-zc-vis.c
+	$(CC) -g -O3 -o sz-zc-vis sz-zc-vis.c $(ZCFLAG) $(SZFLAG)
 
 clean:
-	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f sz testfloat_CompDecomp testdouble_CompDecomp sz_zc
+	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f sz testfloat_CompDecomp testdouble_CompDecomp sz-zc-vis
 
