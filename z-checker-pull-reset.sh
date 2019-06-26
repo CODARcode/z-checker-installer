@@ -53,10 +53,13 @@ if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
                         ./do.sh fast
                 fi
                 cd $rootDir
-                echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" >> $rootDir/env_config.sh
-                echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
-        fi
 
+		png22pnm_var=`cat $rootDir/env_config.sh | grep PNG22PNM_HOME`
+		if [[ $png22pnm_var == "" ]]; then
+			echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" >> $rootDir/env_config.sh
+                	echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
+		fi
+	fi
 fi
 
 #---------- download sam2p --------------------
@@ -162,6 +165,7 @@ git pull
 
 cd ../..
 cp zfp-patches/zfp-zc.c zfp/utils
+cp zfp-patches/zfp-zc-vis.c zfp/utils
 #cp zfp-patches/*.sh zfp/utils
 
 cd zfp

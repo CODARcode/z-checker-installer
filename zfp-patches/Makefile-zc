@@ -5,8 +5,9 @@ ZCFLAG  = -I$(ZCPATH)/include $(ZCPATH)/lib/libzc.a
 
 TARGET = ../bin/zfp
 TARGET2 = ../bin/zfp-zc
+TARGET3 = ../bin/zfp-zc-vis
 
-all: $(TARGET) $(TARGET2)
+all: $(TARGET) $(TARGET2) $(TARGET3)
 
 $(TARGET): zfp.c ../lib/libzfp.a
 	mkdir -p ../bin
@@ -16,5 +17,9 @@ $(TARGET2): zfp-zc.c ../lib/libzfp.a
 	mkdir -p ../bin
 	$(CC) $(CFLAGS) zfp-zc.c -L../lib -lzfp -lm -o $(TARGET2) $(ZCFLAG)
 
+$(TARGET3): zfp-zc-vis.c ../lib/libzfp.a
+	mkdir -p ../bin
+	$(CC) $(CFLAGS) zfp-zc-vis.c -L../lib -lzfp -lm -o $(TARGET3) $(ZCFLAG)
+
 clean:
-	rm -f $(TARGET) $(TARGET2) fields.o
+	rm -f $(TARGET) $(TARGET2) $(TARGET3) fields.o
