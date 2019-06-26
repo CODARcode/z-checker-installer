@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
   char* cmpCaseKey = 0;
   char* varName = 0;
   /* local variables */
-  size_t i;
+  int i;
   zfp_field* field = NULL;
   zfp_stream* zfp = NULL;
   bitstream* stream = NULL;
@@ -399,6 +399,7 @@ int main(int argc, char* argv[])
       case 'a':
 		if(relErrMode==1)
 		{
+			size_t k = 0;
 			double valRange = 0;
 
 			if (type == zfp_type_float)
@@ -407,10 +408,10 @@ int main(int argc, char* argv[])
 				float max = data[0];
 				float min = data[0];
 				
-				for (i = 0; i < nx*ny*nz; i++)
+				for (k = 0; k < nx*ny*nz; k++)
 				{
-					if (data[i] > max) max = data[i];
-					if (data[i] < min) min = data[i];
+					if (data[k] > max) max = data[k];
+					if (data[k] < min) min = data[k];
 				}
 				valRange = max - min;
 			}
@@ -420,10 +421,10 @@ int main(int argc, char* argv[])
 				double max = data[0];
 				double min = data[0];
 				
-				for (i = 0; i < nx*ny*nz; i++)
+				for (k = 0; k < nx*ny*nz; k++)
 				{
-					if (data[i] > max) max = data[i];
-					if (data[i] < min) min = data[i];
+					if (data[k] > max) max = data[k];
+					if (data[k] < min) min = data[k];
 				}
 				valRange = max - min;
 			}
@@ -558,6 +559,9 @@ int main(int argc, char* argv[])
 		ZC_endDec(compareResult, (float*)fo);
 	  else
 		ZC_endDec(compareResult, (double*)fo);
+
+	  compareResult->compressionMode = relErrMode==0?0:1;
+
 
 	  /* optionally write reconstructed data */
 	  if (outpath) {

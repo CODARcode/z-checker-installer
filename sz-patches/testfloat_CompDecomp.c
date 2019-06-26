@@ -96,8 +96,6 @@ int main(int argc, char * argv[])
     free(bytes);
     free(decData);
 
-    printf("second\n");
-
     data = readFloatData(oriFilePath, &nbEle, &status);
    
     dataProperty = ZC_startCmpr(varName, ZC_FLOAT, data, r5, r4, r3, r2, r1);
@@ -110,7 +108,8 @@ int main(int argc, char * argv[])
     ZC_startDec();
     decData = SZ_decompress(SZ_FLOAT, bytes, outSize, r5, r4, r3, r2, r1);
     ZC_endDec(compareResult, decData);
-    //ZC_endDec(compareResult, "sz(1E-7)", decData);
+
+    compareResult->compressionMode = errboundmode==ABS?0:1;
 
     freeDataProperty(dataProperty);
     freeCompareResult(compareResult);

@@ -293,6 +293,8 @@ int main(int argc, char* argv[])
 		float *dec_data = SZ_decompress(SZ_FLOAT, bytes, outSize, r5, r4, r3, r2, r1);
 		ZC_endDec(compareResult, dec_data);	
 		
+		compareResult->compressionMode = errorBoundMode==ABS?0:1;
+
 		freeDataProperty(dataProperty);
 		freeCompareResult(compareResult);
 		free(bytes);
@@ -388,7 +390,9 @@ int main(int argc, char* argv[])
 		ZC_startDec();
 		double *dec_data = SZ_decompress(SZ_DOUBLE, bytes, outSize, r5, r4, r3, r2, r1);
 		ZC_endDec(compareResult, dec_data);	
-		
+	
+		compareResult->compressionMode = errorBoundMode==ABS?0:1;
+
 		freeDataProperty(dataProperty);
 		freeCompareResult(compareResult);
 		free(bytes);
