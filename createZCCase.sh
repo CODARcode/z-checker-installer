@@ -34,6 +34,7 @@ cd ..
 echo Create a new case for sz_d
 cd $rootDir
 cd SZ
+cp example/sz-zc-vis $rootDir/Z-checker/$caseName
 sz_deft_caseName=${caseName}_deft
 mkdir -p $sz_deft_caseName
 cd $sz_deft_caseName
@@ -60,6 +61,7 @@ cp $rootDir/zc-patches/queryVarList .
 cd $rootDir
 echo Create a new case for ZFP
 cd zfp
+cp bin/zfp-zc-vis $rootDir/Z-checker/$caseName
 zfp_caseName=${caseName}
 if [ ! -d $zfp_caseName ]; then
         mkdir $zfp_caseName
