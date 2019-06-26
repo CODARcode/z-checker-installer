@@ -197,6 +197,9 @@ make
 make install
 
 cd example
+cp ../../sz-patches/testfloat_CompDecomp.c .
+cp ../../sz-patches/testdouble_CompDecomp.c .
+cp ../../sz-patches/sz-zc-vis.c .
 cp ../../sz-patches/Makefile.bk .
 make clean -f Makefile.bk
 make -f Makefile.bk
