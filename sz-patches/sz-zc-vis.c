@@ -11,7 +11,7 @@ void usage()
 	printf("Options:\n");
 	printf("* Z-checker parameters:\n");
 	printf("	-v <variable name>: variable name\n");
-	printf("	-y <solution name>: solution name\n");
+	printf("	-k <solution name>: solution name\n");
 	printf("	-C <zc configuration file> : configuraiton file zc.config\n");	
 	printf("* operation type:\n");
 	printf("	-h: print the help information\n");
@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 				usage();
 			varName = argv[i];
 			break;	
-		case 'y': 
+		case 'k': 
 			if (++i == argc)
 				usage();
 			solName = argv[i];
