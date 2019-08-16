@@ -166,6 +166,7 @@ git pull
 cd ../..
 cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/zfp-zc-vis.c zfp/utils
+cp zfp-patches/Makefile-zc zfp/utils/Makefile
 #cp zfp-patches/*.sh zfp/utils
 
 cd zfp
