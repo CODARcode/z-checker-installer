@@ -1,0 +1,21 @@
+LIBPRESSIOPATH=$(abspath ../install)
+MGARDPATH = $(abspath ../../MGARD/MGARD-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
+MGARDFLAG = -fPIC -I$(MGARDPATH)/include -L$(MGARDPATH)/lib -lzfp -lm -Wl,-rpath,"$(MGARDPATH)/lib"
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,-rpath,"$(ZCPATH)/lib"
+
+MGARD_FLOAT = mgardfloat_CompDecomp
+MGARD_DOUBLE = mgarddouble_CompDecomp
+
+all: $(MGARD_FLOAT) $(MGARD_DOUBLE)
+
+$(MGARD_FLOAT): mgardfloat_CompDecomp.c
+	$(CC) $(CFLAGS) mgardfloat_CompDecomp.c $(LIBPRESSIOFLAG) $(MGARDFLAG) $(ZCFLAG) -lm -o $(MGARD_FLOAT)
+
+$(MGARD_DOUBLE): mgarddouble_CompDecomp.c
+	$(CC) $(CFLAGS) mgarddouble_CompDecomp.c $(LIBPRESSIOFLAG) $(MGARDFLAG) $(ZCFLAG) -lm -o $(MGARD_DOUBLE)
+
+clean:
+	rm -f $(MGARD_FLOAT) $(MGARD_DOUBLE)
