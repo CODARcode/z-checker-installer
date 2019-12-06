@@ -1,7 +1,10 @@
 include ../Config
 
-ZCPATH = ../../Z-checker/zc-install
-ZCFLAG  = -I$(ZCPATH)/include $(ZCPATH)/lib/libzc.a
+ZFPPATH = $(abspath ../zfp-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+ZFPFLAG = -fPIC -I$(ZFPPATH)/include -L$(ZFPPATH)/lib -lzfp -lm -Wl,-rpath,"$(ZFPPATH)/lib"
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,-rpath,"$(ZCPATH)/lib"
 
 TARGET = ../bin/zfp
 TARGET2 = ../bin/zfp-zc
@@ -9,17 +12,17 @@ TARGET3 = ../bin/zfp-zc-vis
 
 all: $(TARGET) $(TARGET2) $(TARGET3)
 
-$(TARGET): zfp.c ../lib/libzfp.a
+$(TARGET): zfp.c
 	mkdir -p ../bin
-	$(CC) $(CFLAGS) zfp.c -L../lib -lzfp -lm -o $(TARGET) 
+	$(CC) $(CFLAGS) zfp.c $(ZFPFLAG) -lm -o $(TARGET) 
 
-$(TARGET2): zfp-zc.c ../lib/libzfp.a
+$(TARGET2): zfp-zc.c
 	mkdir -p ../bin
-	$(CC) $(CFLAGS) zfp-zc.c -L../lib -lzfp -lm -o $(TARGET2) $(ZCFLAG)
+	$(CC) $(CFLAGS) zfp-zc.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET2)
 
-$(TARGET3): zfp-zc-vis.c ../lib/libzfp.a
+$(TARGET3): zfp-zc-vis.c
 	mkdir -p ../bin
-	$(CC) $(CFLAGS) zfp-zc-vis.c -L../lib -lzfp -lm -o $(TARGET3) $(ZCFLAG)
+	$(CC) $(CFLAGS) zfp-zc-vis.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET3)
 
 clean:
 	rm -f $(TARGET) $(TARGET2) $(TARGET3) fields.o

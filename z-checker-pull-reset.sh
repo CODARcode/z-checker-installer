@@ -150,13 +150,7 @@ git reset --hard FETCH_HEAD
 git clean -df
 git pull
 
-cd ../lib
-git fetch origin master
-git reset --hard FETCH_HEAD
-git clean -df
-git pull
-
-cd ../util
+cd ../utils
 git fetch origin master
 git reset --hard FETCH_HEAD
 git clean -df
@@ -170,8 +164,15 @@ cp zfp-patches/Makefile-zc zfp/utils/Makefile
 #cp zfp-patches/*.sh zfp/utils
 
 cd zfp
-make
-cd utils
+#make
+mkdir -p build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/zfp/zfp-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib
+make clean
+make -j$(nproc)
+make install
+
+cd ../utils
 
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
@@ -194,8 +195,19 @@ cd src
 
 cd ../../
 ./configure --prefix=$rootDir/SZ/sz-install
+mkdir -p build
+cd build
+make clean
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/SZ/sz-install -DCMAKE_INSTALL_LIBDIR=lib
+make -j $(nproc)
+make install
+cd ../zlib
 make
 make install
+cd ../zstd
+make
+make install
+cd ..
 
 cd example
 cp ../../sz-patches/testfloat_CompDecomp.c .

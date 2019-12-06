@@ -148,9 +148,14 @@ cd $rootDir
 
 git clone https://github.com/LLNL/zfp.git
 cd zfp
-make
+#make
+mkdir -p build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/zfp/zfp-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib
+make -j$(nproc)
+make install
+cd ../..
 
-cd -
 cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/zfp-zc-vis.c zfp/utils
 #cp zfp-patches/*.sh zfp/utils
@@ -173,10 +178,19 @@ cd SZ/sz/src
 
 cd ../..
 ./configure --prefix=$rootDir/SZ/sz-install
-make -j 4
+mkdir -p build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/SZ/sz-install -DCMAKE_INSTALL_LIBDIR=lib
+make -j $(nproc)
+make install
+cd ../zlib
+make
+make install
+cd ../zstd
+make
 make install
 
-cd example
+cd ../example
 cp ../../sz-patches/testfloat_CompDecomp.c .
 cp ../../sz-patches/testdouble_CompDecomp.c .
 cp ../../sz-patches/sz-zc-vis.c .
@@ -188,6 +202,10 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 #cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
+
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_install.sh
 
 #----------- download latexmk --------------------------------
 cd $rootDir
