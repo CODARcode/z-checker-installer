@@ -194,6 +194,7 @@ cd src
 #patch -p1 < ../../../sz-patches/sz-src-hacc.patch
 
 cd ../../
+rm -rf $rootDir/SZ/sz-install
 ./configure --prefix=$rootDir/SZ/sz-install
 mkdir -p build
 cd build
