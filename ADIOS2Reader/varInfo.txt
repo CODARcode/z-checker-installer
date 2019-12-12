@@ -1,0 +1,2 @@
+bpFloats:FLOAT:10:./bpFloats_10.f32
+bpInts:INT:10:./bpInts_10.i32
