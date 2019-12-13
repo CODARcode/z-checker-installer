@@ -212,6 +212,18 @@ class Zcbp_variable {
 		outFileName += dataTypeString;
 	}
 	
+	size_t getSize() const noexcept {
+		if(dimension==1)
+			return r1;
+		else if(dimension==2)
+			return r1*r2;
+		else if(dimension==3)
+			return r1*r2*r3;
+		else if(dimension==4)
+			return r1*r2*r3*r4;
+		else if(dimension==5)
+			return r1*r2*r3*r4*r5;
+	}
 	private:
 	string name;
 	int dimension;
@@ -285,6 +297,48 @@ void freeZCVarVector(vector<Zcbp_variable*> v)
     v.clear();
 }
 
+
+void filterDataType(vector<Zcbp_variable*> *v, int dataType)
+{
+	vector<Zcbp_variable*>::iterator it = (*v).begin();
+	while(it != (*v).end())
+	{
+		Zcbp_variable* var = *it;
+		if(var->getDataType() != dataType)
+			it = (*v).erase(it);
+		else
+			++it;
+	}
+}
+
+void filterSize(vector<Zcbp_variable*> *v, size_t lowerbound, size_t upperbound)
+{
+	vector<Zcbp_variable*>::iterator iter = (*v).begin();
+	while(iter != (*v).end())
+	{
+		Zcbp_variable* var = *iter;
+		size_t s = var->getSize();
+		if(s < lowerbound || s > upperbound)
+			iter = (*v).erase(iter);
+		else
+			++iter;
+	}
+}
+
+void filterDimension(vector<Zcbp_variable*> *v, int dimension)
+{
+	vector<Zcbp_variable*>::iterator iter = (*v).begin();
+	while(iter != (*v).end())
+	{
+		Zcbp_variable* var = *iter;
+		int dim = var->getDimension();
+		if(dim != dimension)
+			iter = (*v).erase(iter);
+		else
+			++iter;
+	}
+} 
+
 int main(int argc, char *argv[])
 {
     string filename = "";
@@ -294,9 +348,9 @@ int main(int argc, char *argv[])
 	int report = 0;
 	int nbVars = 0;
 	size_t l_nbPoints = 0;
-	size_t u_nbPoints = 0;
-	int dataType = ZCBP_FLOAT; //0: float, 1: double
-	int dimension = 0; //1,2, or 3
+	size_t u_nbPoints = (numeric_limits<size_t>::max)();
+	int dataType = -1; //0: float, 1: double
+	int dimension = -1; //1,2, or 3
 	
 	vector<string> varVector; //set by users
 	vector<Zcbp_variable*> zc_var_vector; //zc_var_vector
@@ -350,15 +404,15 @@ int main(int argc, char *argv[])
 		case 't':
 			if (++i == argc)
 				usage();
-			if(argv[i]=="float")
+			if(strcmp(argv[i],"float")==0)
 				dataType = ZCBP_FLOAT;
-			else if(argv[i]=="double")
+			else if(strcmp(argv[i],"double")==0)
 				dataType = ZCBP_DOUBLE;
-			else if(argv[i]=="int16")
+			else if(strcmp(argv[i],"int16")==0)
 				dataType = ZCBP_INT16;
-			else if(argv[i]=="int32")
+			else if(strcmp(argv[i],"int32")==0)
 				dataType = ZCBP_INT32;
-			else if(argv[i]=="int64")
+			else if(strcmp(argv[i],"int64")==0)
 				dataType = ZCBP_INT64;
 			else 
 			{
@@ -367,6 +421,8 @@ int main(int argc, char *argv[])
 			}	
 			break;	
 		case 'd':
+			if (++i == argc)
+				usage();
 			sscanf(argv[i], "%d", &dimension);
 			break;
 		case 'i':
@@ -490,8 +546,14 @@ int main(int argc, char *argv[])
 	}
 	
 	//from zc_var_vector, select the variables customized by users
+	if(dataType!=-1)
+		filterDataType(&zc_var_vector, dataType);
+	if(dimension!=-1)
+		filterDimension(&zc_var_vector, dimension);
+	if(l_nbPoints > 0 || u_nbPoints < (numeric_limits<size_t>::max)())
+		filterSize(&zc_var_vector, l_nbPoints, u_nbPoints);
 	
-	
+	cout << "the final number of variables after filtering: " << zc_var_vector.size() << "\n";
 	
 	ofstream outf; 
 	string varInfoTxtFile = outputDir + "/varInfo.txt";
