@@ -110,3 +110,15 @@ You can use this command to read HDF5 file and generate analysis results.
 After that, you can use 'installHDF5Reader.sh' and 'runZCCase_hdf5.sh' to generate the .pdf report. 
 More details can be found in testHDF5/README.txt
 
+### Generate Z-checker report based on ADIOS2 files
+
+Go to the directory ADIOS2Header, and then do the following steps:
+1. Modify the ADIOS2's installation path in Makefile
+2. make
+3. execute 'testAdios2'
+
+Example:
+testAdios2 -i myVector_cpp.bp -n 2 -v bpFloats bpInts -o [target output directory]
+
+The generated binary data files will be put in the target output directory. A meta file called 'varInfo.txt' contains the extracted variables' information and it will be put in the target output directory as well.
+varInfo.txt and the binary files can be processed by runZCCase.sh
