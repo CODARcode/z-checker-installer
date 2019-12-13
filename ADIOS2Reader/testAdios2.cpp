@@ -255,11 +255,14 @@ void usage()
 	std::cout << "Usage: testAdios2 <options>\n";
 	std::cout << "Options:\n";
 	std::cout << "* input & output:\n";
-	std::cout << "       -i: input file\n";
-	std::cout << "       -o: output directory\n";
+	std::cout << "       -i <input file> : input file\n";
+	std::cout << "       -o <output dir> : output directory\n";
 	std::cout << "* operation type:\n";
-	std::cout << "       -b: extract data and store into binary files\n";
-	std::cout << "       -r: directly generate assessment report (to do: comming soon)\n";
+	std::cout << "       -r <workspace> <error-bound type>: directly generate assessment report\n";
+	std::cout << "           * <workspace> is the name of the test use-case.\n";
+	std::cout << "           * <error-bound type> is the type of error bound, either ABS or REL\n";
+	std::cout << "       -R <root-dir>: this specifies the root directory of z-checker-installer\n";
+	std::cout << "           (it is ../ by default if you run the testAdios2 command under ADIOS2Reader/)\n";
 	std::cout << "       -h: print the help information\n";
 	std::cout << "* select variables:\n";
 	std::cout << "       -n <number of variables>\n";
@@ -270,6 +273,7 @@ void usage()
 	std::cout << "       -d <D> : select the variables with the dimension D\n";
 	std::cout << "* examples:\n";
 	std::cout << "       testAdios2 -i myVector_cpp.bp -n 2 -v bpFloats bpInts -o .\n";
+	std::cout << "       testAdios2 -i myVector_cpp.bp -o ./outputData -r testmyVector REL\n";
 }
 
 adios2::Params queryVarParameter(string varName, std::map<std::string, adios2::Params> varMap)
@@ -339,12 +343,29 @@ void filterDimension(vector<Zcbp_variable*> *v, int dimension)
 	}
 } 
 
+void executeCMD(const string cmd)
+{   
+	char line[1024];
+	FILE *fp;
+	const char *sysCommand = cmd.data();
+	if ((fp = popen(sysCommand, "r")) == NULL) {
+		cout << "error" << endl;
+		return;
+	}
+	while(fgets(line, sizeof(line)-1, fp) != NULL) {
+		cout << line;
+	}
+	pclose(fp);
+}  
+
 int main(int argc, char *argv[])
 {
     string filename = "";
     string outputDir = "";
+    string workspace = "";
+    string errorBoundType = "";
+    string rootDir = "../";
 
-	int convert = 0;
 	int report = 0;
 	int nbVars = 0;
 	size_t l_nbPoints = 0;
@@ -369,12 +390,19 @@ int main(int argc, char *argv[])
 		case 'h':
 			usage();
 			exit(0);
-		case 'b':
-			convert = 1;
-			break;
-		case 'r': 
+		case 'r':
+			if (i+2 == argc)
+				usage();
+			i++;
+			workspace = argv[i];		
+			i++;
+			errorBoundType = argv[i];
 			report = 1;
 			break;
+		case 'R':
+			if (++i == argc)
+				usage();
+			rootDir = argv[i];
 		case 'n': 
 			if (++i == argc)
 				usage();
@@ -444,6 +472,13 @@ int main(int argc, char *argv[])
 	if (filename.empty())
 	{
 		cout << "Error: input file is null\n";
+		exit(0);
+	}
+	
+	ifstream fin(filename);
+	if (!fin)
+	{
+		cout << "Error: the input file "+filename+" does not exsit.\n";
 		exit(0);
 	}
 
@@ -556,7 +591,15 @@ int main(int argc, char *argv[])
 	cout << "the final number of variables after filtering: " << zc_var_vector.size() << "\n";
 	
 	ofstream outf; 
-	string varInfoTxtFile = outputDir + "/varInfo.txt";
+	if(outputDir=="")
+		outputDir = ".";
+		
+	char abs_path_buff[1024];		
+	realpath(outputDir.data(), abs_path_buff);
+	outputDir = abs_path_buff;
+	
+	string varInfoTxtFile = outputDir + "/varInfo.txt";	
+	
 	outf.open(varInfoTxtFile);
 	
 	string ENDIAN_TYPE = sysEndianType==LITTLE_ENDIAN_SYSTEM ? "LITTLE_ENDIAN" : "BIG_ENDIAN";
@@ -569,7 +612,7 @@ int main(int argc, char *argv[])
 		int type = var->getDataType();
 		string name = var->getName();
 		
-		outf << name << ":";
+		outf << name << ":" << ENDIAN_TYPE << ":";
 		
 		cout << "type: " << type << " name: " << name << "\n";
 		if(type==ZCBP_FLOAT)
@@ -584,6 +627,8 @@ int main(int argc, char *argv[])
 			p->getDimensionString(dimensionString);			
 			
 			string outFilePath = outputDir+"/";
+			string tmp = "mkdir -p "+outFilePath;
+			system(tmp.data());
 			p->getOutFileName(outFilePath);
 			cout << "outFilePath: " << outFilePath << "\n";
 			
@@ -650,6 +695,19 @@ int main(int argc, char *argv[])
 			
 			delete[] writable_str;
 		}
+	}
+	
+	if(report == 1)
+	{
+		cout << "[Z-checker] Creating workspace ....\n";
+		string createZCCase = "cd "+rootDir+";./createZCCase.sh "+workspace;
+		cout << createZCCase << endl;
+		executeCMD(createZCCase.data());
+		
+		cout << "[Z-checker] Running data compression assessment ....\n";
+		string runZCCase = "cd "+rootDir+";./runZCCase.sh -f "+errorBoundType+" "+workspace+" "+outputDir+"/varInfo.txt";
+		cout << runZCCase << endl;
+		executeCMD(runZCCase.data());
 	}
 	
 	freeZCVarVector(zc_var_vector);
