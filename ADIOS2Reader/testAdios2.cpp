@@ -272,8 +272,8 @@ void usage()
 	std::cout << "       -t <T> : select the variables with data type T [float/double]\n";
 	std::cout << "       -d <D> : select the variables with the dimension D\n";
 	std::cout << "* examples:\n";
-	std::cout << "       testAdios2 -i myVector_cpp.bp -n 2 -v bpFloats bpInts -o .\n";
-	std::cout << "       testAdios2 -i myVector_cpp.bp -o ./outputData -r testmyVector REL\n";
+	std::cout << "       testAdios2 -i testdata.bp -n 2 -v bpFloats bpInts -o .\n";
+	std::cout << "       testAdios2 -i testdata.bp -o ./outputData -r testmyVector REL\n";
 }
 
 adios2::Params queryVarParameter(string varName, std::map<std::string, adios2::Params> varMap)
