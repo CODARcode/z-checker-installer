@@ -37,4 +37,5 @@ pushd libpressio/build
 cmake .. $LIBPRESSIO_CMAKE_ARGS -DLIBPRESSIO_HAS_MGARD=ON -DLIBPRESSIO_HAS_HDF=OFF -DLIBPRESSIO_HAS_MAGICK=OFF
 make -j$(nproc)
 make install
+cp liblibpressio* ../install/lib
 popd
