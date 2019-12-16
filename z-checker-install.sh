@@ -143,6 +143,10 @@ cd $rootDir/zc-patches
 gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
 mv manageCompressor ..
 
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_install.sh
+
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
 
@@ -192,7 +196,9 @@ make install
 
 cd ../example
 cp ../../sz-patches/testfloat_CompDecomp.c .
+cp ../../sz-patches/testfloat_CompDecomp_libpressio.c .
 cp ../../sz-patches/testdouble_CompDecomp.c .
+cp ../../sz-patches/testdouble_CompDecomp_libpressio.c .
 cp ../../sz-patches/sz-zc-vis.c .
 cp ../../sz-patches/Makefile.bk .
 make -f Makefile.bk
@@ -202,10 +208,6 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 #cp ../../sz-patches/sz-zc-ratedistortion.sh .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
-
-#----------- download MGARD and libpressio and install -------
-cd $rootDir
-./libpressio_install.sh
 
 #----------- download latexmk --------------------------------
 cd $rootDir

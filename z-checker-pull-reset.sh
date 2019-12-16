@@ -135,6 +135,10 @@ cd examples
 make clean
 make
 
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_install.sh
+
 #--------- compile codes in zc-patches-------
 cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c
