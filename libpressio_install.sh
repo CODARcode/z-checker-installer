@@ -8,7 +8,9 @@ fi
 
 rootDir=`pwd`
 
-git clone https://github.com/CODARcode/MGARD
+curl -L https://github.com/CODARcode/MGARD/archive/0.0.0.2.tar.gz | tar zxf -
+mv MGARD-0.0.0.2 MGARD
+#git clone https://github.com/CODARcode/MGARD
 git clone https://github.com/CODARcode/libpressio
 
 mkdir -p MGARD/build
