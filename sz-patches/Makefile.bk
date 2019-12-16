@@ -5,7 +5,7 @@
 SZPATH		= $(abspath ../../SZ/sz-install)
 ZCPATH		= $(abspath ../../Z-checker/zc-install)
 LIBPRESSIOPATH	= $(abspath ../../libpressio/install)
-MGARDPATH 	= $(abspath ../../MGARD/MGARD-install)
+#MGARDPATH 	= $(abspath ../../MGARD/MGARD-install)
 
 ##   COMPILERS
 CC		= gcc
@@ -21,7 +21,7 @@ HDF5CC		= h5cc
 SZFLAG 	= -fPIC -I$(SZPATH)/include -I$(SZPATH)/include/sz -L$(SZPATH)/lib -lSZ -L$(SZPATH)/lib -lzlib -L$(SZPATH)/lib -lzstd -lm -Wl,-rpath,"$(SZPATH)/lib"
 ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -Wl,-rpath,"$(ZCPATH)/lib"
 LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
-MGARDFLAG = -fPIC -I$(MGARDPATH)/include -L$(MGARDPATH)/lib -lmgard -lm -Wl,-rpath,"$(MGARDPATH)/lib"
+#MGARDFLAG = -fPIC -I$(MGARDPATH)/include -L$(MGARDPATH)/lib -lmgard -lm -Wl,-rpath,"$(MGARDPATH)/lib"
 
 ##   TARGETS
 all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp sz-zc-vis testfloat_CompDecomp_libpressio testdouble_CompDecomp_libpressio
