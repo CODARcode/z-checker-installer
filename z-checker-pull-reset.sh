@@ -135,10 +135,6 @@ cd examples
 make clean
 make
 
-#----------- download MGARD and libpressio and install -------
-cd $rootDir
-./libpressio_install.sh
-
 #--------- compile codes in zc-patches-------
 cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c
@@ -221,13 +217,20 @@ cp ../../sz-patches/testdouble_CompDecomp.c .
 cp ../../sz-patches/testdouble_CompDecomp_libpressio.c .
 cp ../../sz-patches/sz-zc-vis.c .
 cp ../../sz-patches/Makefile.bk .
-make clean -f Makefile.bk
-make -f Makefile.bk
-
-cp ../../zc-patches/zc.config .
-modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
+
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_install.sh
+
+#-----Go back to SZ and compile testxxxx_CompDecopm_libpressio.c
+cd SZ/example
+make clean -f Makefile.bk
+make -f Makefile.bk
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+
 
 cd $rootDir
 #cp zc.config.bk Z-checker/examples/zc.config
