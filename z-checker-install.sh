@@ -125,6 +125,11 @@ if [ ! -x "$SAM2P_EXE_PATH" ]; then
 
 fi
 
+
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_install.sh
+
 #--------- compile the codes in zc-patch ------------
 cd $rootDir/zc-patches
 gcc -O3 -o queryVarList queryVarList.c 
@@ -146,15 +151,15 @@ mv manageCompressor ..
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
 
-git clone https://github.com/LLNL/zfp.git
-cd zfp
+#git clone https://github.com/LLNL/zfp.git
+#cd zfp
 #make
-mkdir -p build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/zfp/zfp-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib
-make -j$(nproc)
-make install
-cd ../..
+#mkdir -p build
+#cd build
+#cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/zfp/zfp-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib
+#make -j$(nproc)
+#make install
+#cd ../..
 
 cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/zfp-zc-vis.c zfp/utils
@@ -171,26 +176,26 @@ make
 
 #---------- download SZ and set the configuration -----------
 cd $rootDir
-git clone https://github.com/disheng222/SZ
+#git clone https://github.com/disheng222/SZ
 
-cd SZ/sz/src
+#cd SZ/sz/src
 #patch -p1 < ../../../sz-patches/sz-src-hacc.patch
 
-cd ../..
-./configure --prefix=$rootDir/SZ/sz-install
-mkdir -p build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/SZ/sz-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j $(nproc)
-make install
-cd ../zlib
-make
-make install
-cd ../zstd
-make
-make install
+#cd ../..
+#./configure --prefix=$rootDir/SZ/sz-install
+#mkdir -p build
+#cd build
+#cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/SZ/sz-install -DCMAKE_INSTALL_LIBDIR=lib
+#make -j $(nproc)
+#make install
+#cd ../zlib
+#make
+#make install
+#cd ../zstd
+#make
+#make install
 
-cd ../example
+cd SZ/example
 cp ../../sz-patches/testfloat_CompDecomp.c .
 cp ../../sz-patches/testfloat_CompDecomp_libpressio.c .
 cp ../../sz-patches/testdouble_CompDecomp.c .
@@ -201,11 +206,9 @@ cp ../../sz-patches/Makefile.bk .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
-#----------- download MGARD and libpressio and install -------
-cd $rootDir
-./libpressio_install.sh
 
 #---go back to SZ and compile testxxxxx_CompDecopm_libpressio.c
+cd $rootDir
 cd SZ/example
 make -f Makefile.bk
 cp ../../zc-patches/zc.config .
