@@ -49,8 +49,8 @@ ln -s $rootDir/manageCompressor-sz-d.cfg manageCompressor.cfg
 ln -s $rootDir/manageCompressor manageCompressor
 ./manageCompressor -z sz_d -c ./manageCompressor.cfg
 cd $rootDir
-cp SZ/example/./testfloat_CompDecomp SZ/$sz_deft_caseName/./testfloat_CompDecomp
-cp SZ/example/./testdouble_CompDecomp SZ/$sz_deft_caseName/./testdouble_CompDecomp
+cp SZ/example/./testfloat_CompDecomp_libpressio SZ/$sz_deft_caseName/./testfloat_CompDecomp
+cp SZ/example/./testdouble_CompDecomp_libpressio SZ/$sz_deft_caseName/./testdouble_CompDecomp
 cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
 cp $rootDir/SZ/example/zc.config .
