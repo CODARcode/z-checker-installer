@@ -95,6 +95,10 @@ if [ ! -d Z-checker ]; then
 	exit
 fi
 
+#----------- download MGARD and libpressio and install -------
+cd $rootDir
+./libpressio_update.sh
+
 #---------- download Z-checker --------------
 cd $rootDir
 
@@ -143,36 +147,13 @@ mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
 cd $rootDir
-cd zfp/src
 
-git fetch origin master
-git reset --hard FETCH_HEAD
-git clean -df
-git pull
-
-cd ../utils
-git fetch origin master
-git reset --hard FETCH_HEAD
-git clean -df
-git pull
-
-
-cd ../..
 cp zfp-patches/zfp-zc.c zfp/utils
 cp zfp-patches/zfp-zc-vis.c zfp/utils
 cp zfp-patches/Makefile-zc zfp/utils/Makefile
 #cp zfp-patches/*.sh zfp/utils
 
-cd zfp
-#make
-mkdir -p build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/zfp/zfp-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib
-make clean
-make -j$(nproc)
-make install
-
-cd ../utils
+cd zfp/utils
 
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
@@ -182,35 +163,7 @@ make
 cd ..
 
 #---------- download SZ and set the configuration -----------
-cd $rootDir
-cd SZ
-cd sz
-git fetch origin master
-git reset --hard FETCH_HEAD
-git clean -df
-git pull
-
-cd src
-#patch -p1 < ../../../sz-patches/sz-src-hacc.patch
-
-cd ../../
-rm -rf $rootDir/SZ/sz-install
-./configure --prefix=$rootDir/SZ/sz-install
-mkdir -p build
-cd build
-make clean
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/SZ/sz-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j $(nproc)
-make install
-cd ../zlib
-make
-make install
-cd ../zstd
-make
-make install
-cd ..
-
-cd example
+cd $rootDir/SZ/example
 cp ../../sz-patches/testfloat_CompDecomp.c .
 cp ../../sz-patches/testfloat_CompDecomp_libpressio.c .
 cp ../../sz-patches/testdouble_CompDecomp.c .
@@ -220,12 +173,7 @@ cp ../../sz-patches/Makefile.bk .
 cp ../../sz-patches/testfloat_CompDecomp.sh .
 cp ../../sz-patches/testdouble_CompDecomp.sh .
 
-#----------- download MGARD and libpressio and install -------
-cd $rootDir
-./libpressio_install.sh
-
 #-----Go back to SZ and compile testxxxx_CompDecopm_libpressio.c
-cd SZ/example
 make clean -f Makefile.bk
 make -f Makefile.bk
 cp ../../zc-patches/zc.config .

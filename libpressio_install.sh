@@ -29,7 +29,7 @@ ln -s $rootDir/compressor-install/ $rootDir/SZ/sz-install
 
 mkdir -p zfp/build
 pushd zfp/build
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_TESTING=OFF
 make -j
 make install
 popd
@@ -49,5 +49,4 @@ pushd libpressio/build
 cmake .. $LIBPRESSIO_CMAKE_ARGS -DLIBPRESSIO_HAS_MGARD=ON -DLIBPRESSIO_HAS_HDF=OFF -DLIBPRESSIO_HAS_MAGICK=OFF
 make -j
 make install
-cp liblibpressio* ../install/lib
 popd
