@@ -4,7 +4,7 @@
 ##   PLEASE SET THIS VARIABLE BEFORE COMPILING
 SZPATH		= $(abspath ../../SZ/sz-install)
 ZCPATH		= $(abspath ../../Z-checker/zc-install)
-LIBPRESSIOPATH	= $(abspath ../../libpressio/install)
+LIBPRESSIOPATH	= $(abspath ../../compressor-install)
 #MGARDPATH 	= $(abspath ../../MGARD/MGARD-install)
 
 ##   COMPILERS
@@ -18,7 +18,7 @@ HDF5CC		= h5cc
 # Compiling using shared library
 #SZFLAG 	= -I$(SZPATH)/include -L$(SZPATH)/lib -lSZ
 # Compiling using static library
-SZFLAG 	= -fPIC -I$(SZPATH)/include -I$(SZPATH)/include/sz -L$(SZPATH)/lib -lSZ -L$(SZPATH)/lib -lzlib -L$(SZPATH)/lib -lzstd -lm -Wl,-rpath,"$(SZPATH)/lib"
+SZFLAG 	= -fPIC -I$(SZPATH)/include -I$(SZPATH)/include/sz -L$(SZPATH)/lib -lSZ -L$(SZPATH)/lib $(shell pkg-config --libs zlib) -L$(SZPATH)/lib -lzstd -lm -Wl,-rpath,"$(SZPATH)/lib"
 ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -Wl,-rpath,"$(ZCPATH)/lib"
 LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
 #MGARDFLAG = -fPIC -I$(MGARDPATH)/include -L$(MGARDPATH)/lib -lmgard -lm -Wl,-rpath,"$(MGARDPATH)/lib"
