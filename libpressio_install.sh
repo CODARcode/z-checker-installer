@@ -20,7 +20,7 @@ git clone https://github.com/CODARcode/libpressio
 mkdir -p MGARD/build
 pushd MGARD/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/MGARD/MGARD-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j$(nproc)
+make -j
 make install
 popd
 
