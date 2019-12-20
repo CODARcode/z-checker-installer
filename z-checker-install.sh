@@ -2,6 +2,19 @@
 
 rootDir=`pwd`
 
+#----------check gcc version----------------
+cd zc-patches
+g++ -std=c++17 foo.cc
+if [[ $? == 1 ]]
+then
+	echo "Fatal issue: too old gcc version! "
+	echo "Please update your gcc to gcc 7.3 or later version."
+ 	exit
+fi
+ 
+cd $rootDir
+
+
 #----------check X11------------------------
 X_PATH=`which X`
 if [ ! -x ${X_PATH} ];then
