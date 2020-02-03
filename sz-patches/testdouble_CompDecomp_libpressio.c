@@ -15,7 +15,6 @@
 #include "rw.h"
 #include "zc.h"
 #include <libpressio.h>
-#include <libpressio_ext/compressors/sz.h>
 #include <libpressio_ext/io/posix.h>
 
 int main(int argc, char * argv[])

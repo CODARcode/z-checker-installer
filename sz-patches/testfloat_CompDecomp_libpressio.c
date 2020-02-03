@@ -14,6 +14,7 @@
 #include "sz.h"
 #include "rw.h"
 #include "zc.h"
+#include <libpressio.h>
 #include <libpressio_ext/io/posix.h>
 
 int main(int argc, char * argv[])
