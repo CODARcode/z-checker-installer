@@ -9,7 +9,7 @@ Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 
 ## 3rd party libraries/tools
 
-- gcc
+- gcc (version: 7.3+)
 - git
 - texlive (e.g., execute 'sudo yum install texlive-*' on linux)
 - ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
