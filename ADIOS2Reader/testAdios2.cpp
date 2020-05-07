@@ -597,7 +597,11 @@ int main(int argc, char *argv[])
 	char abs_path_buff[1024];		
 	realpath(outputDir.data(), abs_path_buff);
 	outputDir = abs_path_buff;
-	
+
+ 	string mkdir_command;
+	mkdir_command  = "mkdir -p " + outputDir;  
+    	system(mkdir_command.c_str());
+
 	string varInfoTxtFile = outputDir + "/varInfo.txt";	
 	
 	outf.open(varInfoTxtFile);
@@ -697,6 +701,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	
+	outf.close();
 	if(report == 1)
 	{
 		cout << "[Z-checker] Creating workspace ....\n";
@@ -711,7 +716,6 @@ int main(int argc, char *argv[])
 	}
 	
 	freeZCVarVector(zc_var_vector);
-	outf.close();
 
     return 0;
 }
