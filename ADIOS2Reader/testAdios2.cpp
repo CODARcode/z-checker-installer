@@ -165,16 +165,16 @@ class Zcbp_variable {
 			dimString = to_string(r1);
 			break;
 		case 2:
-			dimString = to_string(r2) + "X" + to_string(r1);
+			dimString = to_string(r2) + "x" + to_string(r1);
 			break;
 		case 3:
-			dimString = to_string(r3) + "X" + to_string(r2) + "X" + to_string(r1);
+			dimString = to_string(r3) + "x" + to_string(r2) + "x" + to_string(r1);
 			break;
 		case 4:
-			dimString = to_string(r4) + "X" + to_string(r3) + "X" + to_string(r2) + "X" + to_string(r1);
+			dimString = to_string(r4) + "x" + to_string(r3) + "x" + to_string(r2) + "x" + to_string(r1);
 			break;
 		case 5:
-			dimString = to_string(r5) + "X" + to_string(r4) + "X" + to_string(r3) + "X" + to_string(r2) + "X" + to_string(r1);
+			dimString = to_string(r5) + "x" + to_string(r4) + "x" + to_string(r3) + "x" + to_string(r2) + "x" + to_string(r1);
 			break;
 		}		
 	}
