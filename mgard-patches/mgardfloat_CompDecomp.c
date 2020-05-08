@@ -121,7 +121,11 @@ int main(int argc, char *argv[])
   else if(errboundmode==1)
 	absErrBound = errBound*valueRange;
   linfErrBound = absErrBound/L_inf_value;
- 
+
+  if(errboundmode==0)
+	printf("mode=ABS, error bound setting=%f, actual absErrBound=%f, linfErrBound=%f\n", errBound, absErrBound, linfErrBound);
+  else 
+	printf("mode=REL, error bound setting=%f, actual absErrBound=%f, linfErrBound=%f\n", errBound, absErrBound, linfErrBound);
   pressio_options_set_double(mgard_options, "mgard:tolerance", linfErrBound);
 
   if(pressio_compressor_check_options(compressor, mgard_options)) {
