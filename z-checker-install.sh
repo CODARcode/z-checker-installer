@@ -230,6 +230,8 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 #---------- download MGARD and set the configuration ------------
 cd $rootDir/mgard-patches
 ./compile-mgard-zchecker.sh
+cp ../libpressio/test/mgardfloat_CompDecomp ../MGARD/build/bin
+cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
 cd ..
 
 #----------- download latexmk --------------------------------
