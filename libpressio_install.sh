@@ -8,10 +8,10 @@ fi
 
 rootDir=`pwd`
 
-curl -L https://github.com/CODARcode/MGARD/archive/0.0.0.2.tar.gz | tar zxf -
-mv MGARD-0.0.0.2 MGARD
-#git clone https://github.com/CODARcode/MGARD
-#cd MGARD
+#curl -L https://github.com/CODARcode/MGARD/archive/0.0.0.2.tar.gz | tar zxf -
+#mv MGARD-0.0.0.2 MGARD
+git clone https://github.com/CODARcode/MGARD
+cd MGARD
 #git checkout 8a1e16949d8ceee881d16e245ea262bd2d924609
 #cd -
 
