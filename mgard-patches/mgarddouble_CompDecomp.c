@@ -1,6 +1,6 @@
 #include <libpressio.h>
 #include <libpressio_ext/io/posix.h>
-#include <libpressio_ext/compressors/mgard.h>
+#include <mgard.h>
 
 #include "make_input_data.h"
 #include "zc.h"
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
   
   struct pressio_data* input_buffer = pressio_data_new_owning(pressio_double_dtype, dim, dims);
   struct pressio_data* input_data = pressio_io_data_path_read(input_buffer, oriFilePath);
-  double* data = pressio_data_ptr(input_data, NULL);
+  double* data = (double*)pressio_data_ptr(input_data, NULL);
 
   //compute the L-inf value of data
   double L_inf_value = 0, value, max, min;
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
   ZC_Init(zcFile);
 
   //compress the data
-  data = pressio_data_ptr(input_data,NULL);
+  data = (double*)pressio_data_ptr(input_data,NULL);
   ZC_DataProperty* dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, data, r5, r4, r3, r2, r1);
   if(pressio_compressor_compress(compressor, input_data, compressed_data)) {
     printf("%s\n", pressio_compressor_error_msg(compressor));

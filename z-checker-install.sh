@@ -227,6 +227,11 @@ make -f Makefile.bk
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
+#---------- download MGARD and set the configuration ------------
+cd $rootDir/mgard-patches
+./compile-mgard.sh
+cd ..
+
 #----------- download latexmk --------------------------------
 cd $rootDir
 latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip

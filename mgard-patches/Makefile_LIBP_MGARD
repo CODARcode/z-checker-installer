@@ -1,5 +1,5 @@
-LIBPRESSIOPATH=$(abspath ../install)
-MGARDPATH = $(abspath ../../MGARD/MGARD-install)
+LIBPRESSIOPATH=$(abspath ../../compressor-install)
+MGARDPATH = $(abspath ../../compressor-install)
 ZCPATH = $(abspath ../../Z-checker/zc-install)
 
 LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
@@ -8,6 +8,8 @@ ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,-rpath,"$(ZCPATH)/lib
 
 MGARD_FLOAT = mgardfloat_CompDecomp
 MGARD_DOUBLE = mgarddouble_CompDecomp
+
+CC=g++
 
 all: $(MGARD_FLOAT) $(MGARD_DOUBLE)
 
