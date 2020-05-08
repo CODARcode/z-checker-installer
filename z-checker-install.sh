@@ -229,7 +229,7 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 #---------- download MGARD and set the configuration ------------
 cd $rootDir/mgard-patches
-./compile-mgard.sh
+./compile-mgard-zchecker.sh
 cd ..
 
 #----------- download latexmk --------------------------------

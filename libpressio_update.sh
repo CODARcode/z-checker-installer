@@ -45,5 +45,5 @@ make install
 popd
 
 cd $rootDir/mgard-patches
-./compile-mgard.sh
+./compile-mgard-zchecker.sh
 cd ..
