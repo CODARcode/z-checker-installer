@@ -182,8 +182,8 @@ cd zfp/utils/
 #patch -p0 < ../../zfp-patches/Makefile-zc.patch
 cp ../../zfp-patches/Makefile-zc ./Makefile
 
-cp ../../zc-patches/zc.config .
-modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+#cp ../../zc-patches/zc.config .
+#modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 make
 

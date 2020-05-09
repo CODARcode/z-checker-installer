@@ -29,6 +29,8 @@ cp ../zc-patches/zc.config ./examples
 cp ../zc-patches/queryVarList $caseName
 cd ..
 
+cp ./zc-patches/zc.config zc.config.tmp
+Z-checker/examples/modifyZCConfig ./zc.config.tmp checkingStatus PROBE_COMPRESSOR
 
 ##begin: Compressor sz_d
 echo Create a new case for sz_d
@@ -39,7 +41,7 @@ sz_deft_caseName=${caseName}_deft
 mkdir -p $sz_deft_caseName
 cd $sz_deft_caseName
 ln -s $rootDir/errBounds.cfg errBounds.cfg
-cp $rootDir/zc-patches/zc.config .
+cp $rootDir/zc.config.tmp ./zc.config
 
 #cp $rootDir/sz-patches/*.sh .
 cp $rootDir/sz-patches/test_CompDecomp.sh .
@@ -53,7 +55,6 @@ cp SZ/example/./testfloat_CompDecomp_libpressio SZ/$sz_deft_caseName/./testfloat
 cp SZ/example/./testdouble_CompDecomp_libpressio SZ/$sz_deft_caseName/./testdouble_CompDecomp
 cp sz-patches/sz.config.default_mode SZ/$sz_deft_caseName/sz.config
 cd SZ/$sz_deft_caseName
-cp $rootDir/SZ/example/zc.config .
 cp $rootDir/zc-patches/queryVarList .
 ##end: Compressor sz_d
 
@@ -67,7 +68,7 @@ if [ ! -d $zfp_caseName ]; then
         mkdir $zfp_caseName
 fi
 cp ../zfp-patches/*.sh $zfp_caseName
-cp utils/zc.config $zfp_caseName
+cp $rootDir/zc.config.tmp $zfp_caseName/zc.config
 cp $rootDir/zc-patches/queryVarList $zfp_caseName
 ##end: Compressor zfp
 
@@ -78,3 +79,5 @@ cd $rootDir/zc-patches
 echo Modify Z-checker/$caseName/zc.config
 cd ../Z-checker/$caseName
 ./modifyZCConfig zc.config compressors "sz_d:../../SZ/${sz_deft_caseName} zfp:../../zfp/${zfp_caseName}"
+
+rm $rootDir/zc.config.tmp
