@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 	printf("mode=ABS, error bound setting=%f, actual absErrBound=%f, linfErrBound=%f\n", errBound, absErrBound, linfErrBound);
   else 
 	printf("mode=REL, error bound setting=%f, actual absErrBound=%f, linfErrBound=%f\n", errBound, absErrBound, linfErrBound);
-  pressio_options_set_double(mgard_options, "mgard:tolerance", linfErrBound);
+  pressio_options_set_float(mgard_options, "mgard:tolerance", linfErrBound);
 
   if(pressio_compressor_check_options(compressor, mgard_options)) {
     printf("%s\n", pressio_compressor_error_msg(compressor));
