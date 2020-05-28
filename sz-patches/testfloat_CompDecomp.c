@@ -96,27 +96,6 @@ int main(int argc, char * argv[])
     free(bytes);
     free(decData);
 
-    data = readFloatData(oriFilePath, &nbEle, &status);
-   
-    dataProperty = ZC_startCmpr(varName, ZC_FLOAT, data, r5, r4, r3, r2, r1);
-    
-    bytes = SZ_compress_args(SZ_FLOAT, data, &outSize, errboundmode, absErrBound, absErrBound, absErrBound, r5, r4, r3, r2, r1);
-    //unsigned char *bytes = SZ_compress(SZ_FLOAT, data, &outSize, r5, r4, r3, r2, r1);
-    compareResult = ZC_endCmpr(dataProperty, solName, outSize);
-    //writeByteData(bytes, outSize, outputFilePath, &status);
-   
-    ZC_startDec();
-    decData = SZ_decompress(SZ_FLOAT, bytes, outSize, r5, r4, r3, r2, r1);
-    ZC_endDec(compareResult, decData);
-
-    compareResult->compressionMode = errboundmode==ABS?0:1;
-
-    freeDataProperty(dataProperty);
-    freeCompareResult(compareResult);
-    free(data);
-    free(bytes);
-    free(decData);
-
     printf("done\n");
     
     SZ_Finalize();
