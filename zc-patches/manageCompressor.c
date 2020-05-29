@@ -321,7 +321,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 			}
 		}
 		trim(p2_);
-		sprintf(buf, "./modifyZCConfig zc.config compressors \"%s\"", p2_);
+		sprintf(buf, "./modifyZCConfig zc.config compressors \"%s\"\n", p2_);
 	
 		strcpy(modifyLine->str, buf);
 			
