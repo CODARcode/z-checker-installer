@@ -143,7 +143,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		buf2 = (char*)malloc(1024);
 		char  workspaceDir_fullPath[1024];
  		realpath(workspaceDir,workspaceDir_fullPath);
-		sprintf(buf2, "cd $rootDir\ncd %s\n", workspaceDir);
+		sprintf(buf2, "cd $rootDir\nmkdir -p %s\ncd %s\n", workspaceDir, workspaceDir);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 		buf2 = (char*)malloc(1024);
