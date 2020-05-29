@@ -59,8 +59,8 @@ int loadConfFile(char* zc_cfgFile, char** compressorName, char** compressorMode,
 	*compressorName = (char*)malloc(100);
 	*compressorMode = (char*)malloc(100);
 	*compressor = (char*)malloc(100);
-	*workspaceDir = (char*)malloc(256);
-	*exeDir = (char*)malloc(256);
+	*workspaceDir = (char*)malloc(1024);
+	*exeDir = (char*)malloc(1024);
 	*preCommand = (char*)malloc(512);
 	*exeCommand = (char*)malloc(512);
 
@@ -130,82 +130,82 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		StringLine* insertLines = createStringLineHeader();
 		StringLine* insertLinesTail = insertLines;
 
-		char caseName[256];
+		char caseName[1024];
 		sprintf(caseName, "%s_%s_caseName", compressorName, mode);
-		char* buf2 = (char*)malloc(256);
+		char* buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##begin: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "echo Create a new case for %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
-		buf2 = (char*)malloc(256);
-		char  workspaceDir_fullPath[256];
+		buf2 = (char*)malloc(1024);
+		char  workspaceDir_fullPath[1024];
  		realpath(workspaceDir,workspaceDir_fullPath);
 		sprintf(buf2, "cd $rootDir\ncd %s\n", workspaceDir);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "%s=${caseName}_%s\n", caseName, mode);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "mkdir -p $%s\n", caseName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cd $%s\n", caseName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cp $rootDir/zc-patches/exe_CompDecomp.sh .\ncp $rootDir/zc-patches/zc-ratedistortion.sh .\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "ln -s $rootDir/errBounds.cfg errBounds.cfg\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);		
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "ln -s %s manageCompressor.cfg\n", confFilePath);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);	
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "ln -s $rootDir/manageCompressor manageCompressor\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);			
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cp $rootDir/zc.config.tmp ./zc.config\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "./manageCompressor -z %s -c manageCompressor.cfg\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cd $rootDir\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		strtok(exeCommand, delim);
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cp %s/%s %s/$%s/%s\n", exeDir, exeCommand, workspaceDir, caseName, exeCommand); 
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "%s\n", preCommand);
 		ZC_ReplaceStr2(buf2, "$workspaceDir", workspaceDir);
 		ZC_ReplaceStr2(buf2, "testcase", caseName); 
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cd %s/$%s\n", workspaceDir, caseName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);		
+		buf2 = (char*)malloc(1024);		
 		sprintf(buf2, "cp $rootDir/zc-patches/queryVarList .\n", compressorName);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##end: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -227,12 +227,12 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		int len = strlen(modifyLine->str);
 		modifyLine->str[len-1] = '\0';
 		memset(buf, 0, 4096);
-		sprintf(buf, "%s %s:%s/${%s}\"", modifyLine->str, compressor, workspaceDir_fullPath, caseName); 
+		sprintf(buf, "%s %s:%s/${%s}\"\n", modifyLine->str, compressor, workspaceDir_fullPath, caseName); 
 		strcpy(modifyLine->str, buf);
 	}
 	else //operation == DELETE_CMPR
 	{
-		char buf2[256];
+		char buf2[1024];
 		header = ZC_readLines("createZCCase.sh", &lineCount);
 		preLine = header;
 		StringLine* curLine;
@@ -293,7 +293,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		
 		strtok(modifyLine->str, delim2);
 		p = strtok(NULL, delim2); 
-		char p2[256], p3[256]; 
+		char p2[1024], p3[1024]; 
 		char* zname;
 		strcpy(p2, p); //p2==sz_f:../../SZ/${caseName}_fast sz_d:../../SZ/${caseName}_deft zfp:../../zfp/${zfp_caseName}
 
@@ -307,8 +307,8 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 			p = strtok(NULL, delim);
 		}
 
-		char tmp[256], p2_[256];
-		memset(p2_, 0, 256);
+		char tmp[1024], p2_[1024];
+		memset(p2_, 0, 1024);
 		for(i=0;i<counter;i++)
 		{
 			p = cmprs[i];
@@ -378,47 +378,47 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 		StringLine* insertLines = createStringLineHeader();
 		StringLine* insertLinesTail = insertLines;
 
-		char* buf2 = (char*)malloc(256);
+		char* buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##begin: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cd $rootDir\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "cd %s/${testcase}_%s\n", workspaceDir, mode);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "if [[ $option == 1 ]]; then\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "else\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);		
+		buf2 = (char*)malloc(1024);		
 		sprintf(buf2, "fi\n");
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##end: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -429,7 +429,7 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 	}
 	else //operation == DELETE_CMPR
 	{
-		char buf2[256];
+		char buf2[1024];
 		header = ZC_readLines("runZCCase.sh", &lineCount);
 		preLine = header;
 		StringLine* curLine;
@@ -528,15 +528,15 @@ int processRemoveZCCase(int operation, char* mode, char* compressor, char* works
 		StringLine* insertLines = createStringLineHeader();
 		StringLine* insertLinesTail = insertLines;
 
-		char* buf2 = (char*)malloc(256);
+		char* buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##begin: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "\trm -rf %s/${testcase}_%s\n", workspaceDir, mode);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##end: Compressor %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -548,7 +548,7 @@ int processRemoveZCCase(int operation, char* mode, char* compressor, char* works
 	}
 	else //operation == DELETE_CMPR
 	{
-		char buf2[256];
+		char buf2[1024];
 		header = ZC_readLines("removeZCCase.sh", &lineCount);
 		preLine = header;
 		StringLine* curLine;
@@ -605,7 +605,7 @@ int processRemoveZCCase(int operation, char* mode, char* compressor, char* works
 int removeComparisonCases(StringLine* line, char* compressor)
 {
 	int len = 0;
-	char value[512], buf[512], buf2[256];
+	char value[512], buf[512], buf2[1024];
 	char* newStr = (char*)malloc(512);
 	memset(newStr, 0, 512);
 	strcpy(newStr, "comparisonCases=\"");
@@ -622,10 +622,10 @@ int removeComparisonCases(StringLine* line, char* compressor)
 		ZC_ReplaceStr2(value, "\"", ""); //remove '"'
 		char* q = strtok(value, delim), *r = NULL; //q is one item like sz_f(1E-1),sz_d(1E-1),zfp(1E-1)
 		int i = 0;
-		char buff[10][256];
+		char buff[10][1024];
 		for(i=0;q!=NULL;i++)
 		{
-			memset(buff[i], 0, 256);
+			memset(buff[i], 0, 1024);
 			strcpy(buff[i], q);
 			q = strtok(NULL, delim);
 		}
@@ -664,8 +664,8 @@ int processErrBounds(int operation, char* compressor)
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	char* p = NULL;
-	char buf[256];
-	memset(buf, 0, 256);
+	char buf[1024];
+	memset(buf, 0, 1024);
 
 	if(operation == PRINT_INFO)
 	{
@@ -702,15 +702,15 @@ int processErrBounds(int operation, char* compressor)
 		StringLine* insertLines = createStringLineHeader();
 		StringLine* insertLinesTail = insertLines;
 
-		char* buf2 = (char*)malloc(256);
+		char* buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##begin: Compression_error_bounds for %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "%s_ERR_BOUNDS=\"5E-1 1E-1 1E-2 1E-3\"\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(256);
+		buf2 = (char*)malloc(1024);
 		sprintf(buf2, "##end: Compression_error_bounds for %s\n", compressor);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -722,7 +722,7 @@ int processErrBounds(int operation, char* compressor)
 	}
 	else //operation == DELETE_CMPR
 	{
-		char buf2[256];
+		char buf2[1024];
 		header = ZC_readLines("errBounds.cfg", &lineCount);
 		preLine = header;
 		StringLine* curLine;
@@ -801,7 +801,7 @@ int modify_data_distortion_sh(char* compressor)
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
 	
-	char errBoundKey[256];
+	char errBoundKey[1024];
 	sprintf(errBoundKey, "%s_ERR_BOUNDS", compressor);
 	
 	header = ZC_readLines("zc-ratedistortion.sh", &lineCount);
