@@ -2,17 +2,19 @@
 H5CC	= h5cc
 CC	= gcc
 
+COMPRESSOR_PATH = ../../compressor-install
 #SZPATH          = /home/sdi/Install/sz-2.1-install
-SZPATH		= ../../SZ/sz-install
-#ZFPPATH          = /home/sdi/Development/z-checker-installer/z-checker-installer/zfp
-ZFPPATH          = ../../zfp
+SZ_INCLUDE_PATH		= $(COMPRESSOR_PATH)/include/sz
+SZ_LIB_PATH		= $(COMPRESSOR_PATH)/lib
+ZFP_INCLUDE_PATH          = $(COMPRESSOR_PATH)/include/
+ZFP_LIB_PATH          = $(COMPRESSOR_PATH)/lib
 ZCPATH		= ../zc-install
-HDF5PATH        = /home/sdi/Install/hdf5-1.10.1-install
+HDF5PATH        = /home/sdi/Softwares/hdf5-software/hdf5-1.12.0-install
 
-SZFLAG  = -I$(SZPATH)/include $(SZPATH)/lib/libSZ.a $(SZPATH)/lib/libzlib.a $(SZPATH)/lib/libzstd.a -lm
-ZCFLAG  = -I$(ZCPATH)/include $(ZCPATH)/lib/libzc.a
-HDF5FLAG = -I$(HDF5PATH)/include $(HDF5PATH)/lib/libhdf5.a
-ZFPFLAG = -I$(ZFPPATH)/include $(ZFPPATH)/lib/libzfp.a
+SZFLAG  = -I$(SZ_INCLUDE_PATH) -L$(SZ_LIB_PATH) -lSZ -lzstd -lm -Wl,-rpath,"$(SZ_LIB_PATH)"
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -Wl,-rpath,"$(ZCPATH)/lib"
+HDF5FLAG = -I$(HDF5PATH)/include -L$(HDF5PATH)/lib -lhdf5 -Wl,-rpath,"$(HDF5PATH)/lib"
+ZFPFLAG = -I$(ZFP_INCLUDE_PATH) -L$(ZFP_LIB_PATH) -lzfp -Wl,-rpath,"$(ZFP_LIB_PATH)"
 
 SO_FLAGS = -shared
 INC	 = -I./include
