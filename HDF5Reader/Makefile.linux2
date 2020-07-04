@@ -2,13 +2,13 @@
 H5CC	= h5cc
 CC	= gcc
 
-COMPRESSOR_PATH = ../../compressor-install
+COMPRESSOR_PATH =  $(abspath ../../compressor-install)
 #SZPATH          = /home/sdi/Install/sz-2.1-install
 SZ_INCLUDE_PATH		= $(COMPRESSOR_PATH)/include/sz
 SZ_LIB_PATH		= $(COMPRESSOR_PATH)/lib
 ZFP_INCLUDE_PATH          = $(COMPRESSOR_PATH)/include/
 ZFP_LIB_PATH          = $(COMPRESSOR_PATH)/lib
-ZCPATH		= ../zc-install
+ZCPATH		=  $(abspath ../zc-install)
 HDF5PATH        = /home/sdi/hdf5-software/hdf5-1.12.0-install
 
 SZFLAG  = -I$(SZ_INCLUDE_PATH) -L$(SZ_LIB_PATH) -lSZ -lzstd -lm -Wl,-rpath,"$(SZ_LIB_PATH)"
