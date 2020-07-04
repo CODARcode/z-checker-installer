@@ -9,7 +9,7 @@ SZ_LIB_PATH		= $(COMPRESSOR_PATH)/lib
 ZFP_INCLUDE_PATH          = $(COMPRESSOR_PATH)/include/
 ZFP_LIB_PATH          = $(COMPRESSOR_PATH)/lib
 ZCPATH		= ../zc-install
-HDF5PATH        = /home/sdi/Softwares/hdf5-software/hdf5-1.12.0-install
+HDF5PATH        = /home/sdi/hdf5-software/hdf5-1.12.0-install
 
 SZFLAG  = -I$(SZ_INCLUDE_PATH) -L$(SZ_LIB_PATH) -lSZ -lzstd -lm -Wl,-rpath,"$(SZ_LIB_PATH)"
 ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -Wl,-rpath,"$(ZCPATH)/lib"
@@ -31,10 +31,10 @@ libhdf5reader.a:	$(OBJS)
 	ar crvs $@ $^
 
 libhdf5reader.so:	$(OBJS)
-	$(CC) $(SO_FLAGS) -Wl,-soname,libhdf5reader.so -o $@ $^ -lc
+	$(CC) $(SO_FLAGS) -Wl,-soname,libhdf5reader.so -o $@ $^ -lc $(HDF5FLAG)
 
 test/test_HDF5Reader:	test/test_HDF5Reader.c
-	$(H5CC) $(INC) -o test/test_HDF5Reader test/test_HDF5Reader.c libhdf5reader.a $(SZFLAG) $(ZFPFLAG) $(ZCFLAG)
+	$(H5CC) $(INC) -o test/test_HDF5Reader test/test_HDF5Reader.c libhdf5reader.a $(SZFLAG) $(ZFPFLAG) $(ZCFLAG) $(HDF5FLAG)
 
 test/testHDF5_CompDecomp_SZ:	test/testHDF5_CompDecomp_SZ.c
 	$(H5CC) -DH5_USE_16_API -g -O3 $(INC) -fPIC libhdf5reader.a  -o test/testHDF5_CompDecomp_SZ test/testHDF5_CompDecomp_SZ.c $(SZFLAG) $(ZFPFLAG) $(HDF5FLAG) $(ZCFLAG)
