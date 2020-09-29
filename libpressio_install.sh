@@ -15,9 +15,17 @@ git clone https://github.com/CODARcode/MGARD
 #git checkout 8a1e16949d8ceee881d16e245ea262bd2d924609
 #cd -
 
-git clone http://github.com/disheng222/SZ
-git clone http://github.com/LLNL/zfp
+git clone https://github.com/facebook/zstd
+git clone https://github.com/szcompressor/SZ
+git clone https://github.com/LLNL/zfp
 git clone https://github.com/CODARcode/libpressio
+
+mkdir -p zstd/builddir
+pushd zstd/builddir
+cmake ../build/cmake/ -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+make -j
+make install
+popd
 
 mkdir -p SZ/build
 pushd SZ/build

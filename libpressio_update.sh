@@ -15,6 +15,23 @@ git pull
 #git checkout 8a1e16949d8ceee881d16e245ea262bd2d924609
 cd -
 
+
+if [[ ! -d zstd ]]; then
+  git clone https://github.com/facebook/zstd
+  mkdir -p zstd/builddir
+  pushd zstd/builddir
+  cmake ../build/cmake/ -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+  popd
+fi
+
+pushd SZ/builddir
+git pull
+make -j
+make install
+popd
+
+
+
 mkdir -p SZ/build
 pushd SZ/build
 git pull
