@@ -240,6 +240,7 @@ cd fpzip/tests
 cp ../../fpzip-patches/Makefile-zc .
 cp ../../fpzip-patches/fpzipfloat_CompDecomp.c .
 cp ../../fpzip-patches/fpzipdouble_CompDecomp.c .
+cp ../../fpzip-patches/fpzip_CompDecomp.sh .
 make -f Makefile-zc
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
