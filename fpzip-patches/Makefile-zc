@@ -1,0 +1,26 @@
+LIBPRESSIOPATH=$(abspath ../../compressor-install)
+FPZIP = $(abspath ../../compressor-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
+FPZIPFLAG = -fPIC -I$(FPZIP)/include -L$(FPZIP)/lib -lmgard -lm -Wl,-rpath,"$(FPZIP)/lib"
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,-rpath,"$(ZCPATH)/lib"
+
+
+FPZIP_FLOAT = fpzipfloat_CompDecomp
+FPZIP_DOUBLE = fpzipdouble_CompDecomp
+
+CC=g++
+
+all: $(FPZIP_FLOAT) $(FPZIP_DOUBLE)
+	
+$(FPZIP_FLOAT): fpzipfloat_CompDecomp.c
+	$(CC) fpzipfloat_CompDecomp.c $(LIBPRESSIOFLAG) $(FPZIPFLAG) $(ZCFLAG) -lm -o $(FPZIP_FLOAT)
+	
+$(FPZIP_DOUBLE): fpzipdouble_CompDecomp.c
+	$(CC) fpzipdouble_CompDecomp.c $(LIBPRESSIOFLAG) $(FPZIPFLAG) $(ZCFLAG) -lm -o $(FPZIP_DOUBLE)
+
+
+clean:
+	rm -f $(FPZIP_FLOAT) $(FPZIP_DOUBLE)

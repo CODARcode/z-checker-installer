@@ -158,7 +158,7 @@ export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
-gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
+gcc -g -O0 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
@@ -233,6 +233,19 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 #cp ../libpressio/test/mgardfloat_CompDecomp ../MGARD/build/bin
 #cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
 #cd ..
+
+#---------- download FPZIP and set the configuration -----------
+cd $rootDir
+cd fpzip/tests
+cp ../../fpzip-patches/Makefile-zc .
+cp ../../fpzip-patches/fpzipfloat_CompDecomp.c .
+cp ../../fpzip-patches/fpzipdouble_CompDecomp.c .
+cp ../../fpzip-patches/fpzip_CompDecomp.sh .
+make -f Makefile-zc
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
 
 #----------- download latexmk --------------------------------
 cd $rootDir
