@@ -1013,7 +1013,7 @@ int main(int argc, char* argv[])
 	{
 		//modify createZCCase.sh
 		char confFilePath[PATH_MAX+1];
-		char* res = realpath(conFile, NULL);
+		char* res = realpath(conFile, confFilePath);
 		if(!res)
 		{
 			printf("cannot find the path of the file \n");
