@@ -476,9 +476,9 @@ int main(int argc, char* argv[])
 	  if(ny==1&&nz==1&&np==1)
 		yy = zz = pp = 0;
 	  if(type==zfp_type_double)
-		dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, 0, pp, zz, yy, xx);
+		dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, pp, zz, yy, xx);
 	  else
-		dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, 0, pp, zz, yy, xx);
+		dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, pp, zz, yy, xx);
 	  /* allocate buffer for compressed data */
 	  bufsize = zfp_stream_maximum_size(zfp, field);
 	  if (!bufsize) {
