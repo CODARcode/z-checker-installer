@@ -552,7 +552,7 @@ int main(int argc, char* argv[])
 		  nx = MAX(field->nx, 1u);
 		  ny = MAX(field->ny, 1u);
 		  nz = MAX(field->nz, 1u);
-		  np = MAX(field->np, 1u);
+		  np = MAX(field->nw, 1u);
 	  }
 
 	  /* allocate memory for decompressed data */
