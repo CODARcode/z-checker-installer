@@ -100,6 +100,7 @@ usage()
   fprintf(stderr, "  -1 <nx> : dimensions for 1D array a[nx]\n");
   fprintf(stderr, "  -2 <nx> <ny> : dimensions for 2D array a[ny][nx]\n");
   fprintf(stderr, "  -3 <nx> <ny> <nz> : dimensions for 3D array a[nz][ny][nx]\n");
+  fprintf(stderr, "  -4 <nx> <ny> <nz> <np> : dimensions for 4D array a[np][nz][ny][nx]\n");
   fprintf(stderr, "Compression parameters (needed with -i):\n");
   fprintf(stderr, "  -r <rate> : fixed rate (# compressed bits per floating-point value)\n");
   fprintf(stderr, "  -p <precision> : fixed precision (# uncompressed bits per value)\n");
@@ -134,6 +135,7 @@ int main(int argc, char* argv[])
   uint nx = 0;
   uint ny = 0;
   uint nz = 0;
+  uint np = 0;
   double rate = 0;
   uint precision = 0;
   double tolerance = 0;
@@ -175,14 +177,14 @@ int main(int argc, char* argv[])
       case '1':
         if (++i == argc || sscanf(argv[i], "%u", &nx) != 1)
           usage();
-        ny = nz = 1;
+        ny = nz = np = 1;
         dims = 1;
         break;
       case '2':
         if (++i == argc || sscanf(argv[i], "%u", &nx) != 1 ||
             ++i == argc || sscanf(argv[i], "%u", &ny) != 1)
           usage();
-        nz = 1;
+        nz = np = 1;
         dims = 2;
         break;
       case '3':
@@ -190,7 +192,16 @@ int main(int argc, char* argv[])
             ++i == argc || sscanf(argv[i], "%u", &ny) != 1 ||
             ++i == argc || sscanf(argv[i], "%u", &nz) != 1)
           usage();
+	np = 1;
         dims = 3;
+        break;
+      case '4':
+        if (++i == argc || sscanf(argv[i], "%u", &nx) != 1 ||
+            ++i == argc || sscanf(argv[i], "%u", &ny) != 1 ||
+            ++i == argc || sscanf(argv[i], "%u", &nz) != 1 ||
+	    ++i == argc || sscanf(argv[i], "%u", &np) != 1)
+          usage();
+        dims = 4;
         break;
       case 'a':
         if (++i == argc || sscanf(argv[i], "%lf", &tolerance) != 1)
@@ -298,7 +309,7 @@ int main(int argc, char* argv[])
 
   /* make sure we know array dimensions */
   if ((inpath || !header) && !dims) {
-    fprintf(stderr, "must specify array dimensions via -1, -2, or -3 or header via -h\n");
+    fprintf(stderr, "must specify array dimensions via -1, -2, -3 or -4 or header via -h\n");
     return EXIT_FAILURE;
   }
 
@@ -331,13 +342,13 @@ int main(int argc, char* argv[])
       fprintf(stderr, "cannot open input file\n");
       return EXIT_FAILURE;
     }
-    rawsize = typesize * nx * ny * nz;
+    rawsize = typesize * nx * ny * nz * np;
     fi = malloc(rawsize);
     if (!fi) {
       fprintf(stderr, "cannot allocate memory\n");
       return EXIT_FAILURE;
     }
-    if (fread(fi, typesize, nx * ny * nz, file) != nx * ny * nz) {
+    if (fread(fi, typesize, nx * ny * nz * np, file) != nx * ny * nz * np) {
       fprintf(stderr, "cannot read input file\n");
       return EXIT_FAILURE;
     }
@@ -390,6 +401,9 @@ int main(int argc, char* argv[])
       case 3:
         zfp_field_set_size_3d(field, nx, ny, nz);
         break;
+      case 4:
+	zfp_field_set_size_4d(field, nx, ny, nz, np);
+	break;
     }
 
     /* set (de)compression mode */
@@ -406,7 +420,7 @@ int main(int argc, char* argv[])
 				float max = data[0];
 				float min = data[0];
 				
-				for (k = 0; k < nx*ny*nz; k++)
+				for (k = 0; k < nx*ny*nz*np; k++)
 				{
 					if (data[k] > max) max = data[k];
 					if (data[k] < min) min = data[k];
@@ -419,7 +433,7 @@ int main(int argc, char* argv[])
 				double max = data[0];
 				double min = data[0];
 				
-				for (k = 0; k < nx*ny*nz; k++)
+				for (k = 0; k < nx*ny*nz*np; k++)
 				{
 					if (data[k] > max) max = data[k];
 					if (data[k] < min) min = data[k];
@@ -454,15 +468,17 @@ int main(int argc, char* argv[])
   ZC_CompareData* compareResult = NULL;
   /* compress input file if provided */
   if (inpath) {
-	  uint zz = nz, yy = ny, xx = nx;
+	  uint pp = np, zz = nz, yy = ny, xx = nx;
 	  if(nz==1) 
 		zz = 0;
 	  if(ny==1&&nz==1)
 		yy = zz = 0;
+	  if(ny==1&&nz==1&&np==1)
+		yy = zz = pp = 0;
 	  if(type==zfp_type_double)
-		dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, 0, zz, yy, xx);
+		dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, (double*)fi, 0, pp, zz, yy, xx);
 	  else
-		dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, 0, zz, yy, xx);
+		dataProperty = ZC_startCmpr(varName, ZC_FLOAT, (float*)fi, 0, pp, zz, yy, xx);
 	  /* allocate buffer for compressed data */
 	  bufsize = zfp_stream_maximum_size(zfp, field);
 	  if (!bufsize) {
@@ -536,11 +552,12 @@ int main(int argc, char* argv[])
 		  nx = MAX(field->nx, 1u);
 		  ny = MAX(field->ny, 1u);
 		  nz = MAX(field->nz, 1u);
+		  np = MAX(field->np, 1u);
 	  }
 
 	  /* allocate memory for decompressed data */
 	  ZC_startDec();
-	  rawsize = typesize * nx * ny * nz;
+	  rawsize = typesize * nx * ny * nz * np;
 	  fo = malloc(rawsize);
 	  if (!fo) {
 		  fprintf(stderr, "cannot allocate memory\n");
@@ -567,7 +584,7 @@ int main(int argc, char* argv[])
 			  fprintf(stderr, "cannot create output file\n");
 			  return EXIT_FAILURE;
 		  }
-		  if (fwrite(fo, typesize, nx * ny * nz, file) != nx * ny * nz) {
+		  if (fwrite(fo, typesize, nx * ny * nz * np, file) != nx * ny * nz * np) {
 			  fprintf(stderr, "cannot write output file\n");
 			  return EXIT_FAILURE;
 		  }
@@ -578,10 +595,10 @@ int main(int argc, char* argv[])
   /* print compression and error statistics */
   if (!quiet) {
 	  const char* type_name[] = { "int32", "int64", "float", "double" };
-	  fprintf(stderr, "type=%s nx=%u ny=%u nz=%u", type_name[type - zfp_type_int32], nx, ny, nz);
-	  fprintf(stderr, " raw=%lu zfp=%lu ratio=%.3g rate=%.4g", (unsigned long)rawsize, (unsigned long)zfpsize, (double)rawsize / zfpsize, CHAR_BIT * (double)zfpsize / (nx * ny * nz));
+	  fprintf(stderr, "type=%s nx=%u ny=%u nz=%u np=%u", type_name[type - zfp_type_int32], nx, ny, nz, np);
+	  fprintf(stderr, " raw=%lu zfp=%lu ratio=%.3g rate=%.4g", (unsigned long)rawsize, (unsigned long)zfpsize, (double)rawsize / zfpsize, CHAR_BIT * (double)zfpsize / (nx * ny * nz * np));
 	  if (stats)
-		print_error(fi, fo, type, nx * ny * nz);
+		print_error(fi, fo, type, nx * ny * nz * np);
 	  fprintf(stderr, "\n");
   }
 
