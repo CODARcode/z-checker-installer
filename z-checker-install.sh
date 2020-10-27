@@ -234,6 +234,19 @@ modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 #cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
 #cd ..
 
+#---------- download bit_grooming and set the configuration -----------
+cd $rootDir
+cd BitGroomingZ/examples
+cp ../../bg-patches/Makefile-bg .
+cp ../../bg-patches/bgfloat_CompDecomp.cpp .
+cp ../../bg-patches/bgdouble_CompDecomp.cpp .
+cp ../../bg-patches/bg_CompDecomp.sh .
+make -f Makefile-bg
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a bg -c manageCompressor-bg.cfg
+
 #---------- download FPZIP and set the configuration -----------
 cd $rootDir
 cd fpzip/tests
