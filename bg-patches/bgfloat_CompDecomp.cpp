@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   
   // configure the compressor
     
-   pressio_options_set_integer(bit_grooming_options, "bit_grooming:nsd", nsd);
+   pressio_options_set_integer(bit_grooming_options, "bit_grooming:n_sig_digits", nsd);
    
    if(pressio_compressor_check_options(compressor, bit_grooming_options)) {
     printf("%s\n", pressio_compressor_error_msg(compressor));
