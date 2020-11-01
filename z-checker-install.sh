@@ -246,6 +246,8 @@ cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cd $rootDir
 ./manageCompressor -a bg -c manageCompressor-bg.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg bg_ERR_BOUNDS "\"1 2 3 4 5\""
+
 
 #---------- download FPZIP and set the configuration -----------
 cd $rootDir
@@ -259,6 +261,7 @@ cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cd $rootDir
 ./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
 #----------- download latexmk --------------------------------
 cd $rootDir
