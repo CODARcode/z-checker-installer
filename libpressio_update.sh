@@ -36,6 +36,20 @@ make -j
 make install
 popd
 
+mkdir -p fpzip/build
+pushd fpzip/build
+git pull
+make -j
+make install
+popd
+
+mkdir -p BitGroomingZ/build
+pushd BitGroomingZ/build
+git pull
+make -j
+make install
+popd
+
 LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib"
 mkdir -p libpressio/build
 pushd libpressio/build
