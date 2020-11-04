@@ -248,6 +248,19 @@ cd $rootDir
 ./manageCompressor -a bg -c manageCompressor-bg.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg bitgrooming_ERR_BOUNDS "\"1 2 3 4 5\""
 
+#---------- download digit_rounding and set the configuration -----------
+cd $rootDir
+cd digitroundingZ/examples
+cp ../../dr-patches/Makefile-dr .
+cp ../../dr-patches/drfloat_CompDecomp.cpp .
+cp ../../dr-patches/drdouble_CompDecomp.cpp .
+cp ../../dr-patches/dr_CompDecomp.sh .
+make -f Makefile-dr
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a digitrounding -c manageCompressor-dr.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg digitrounding_ERR_BOUNDS "\"3 4 5 6 7\""
 
 #---------- download FPZIP and set the configuration -----------
 cd $rootDir
