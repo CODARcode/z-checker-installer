@@ -1,6 +1,6 @@
 # Z-checker installer
 
- (C) 2017 by Mathematics and Computer Science (MCS), Argonne National Laboratory.
+ (C) 2017-2021 by Mathematics and Computer Science (MCS), Argonne National Laboratory.
 
 See COPYRIGHT in top-level directory.
 
@@ -9,6 +9,7 @@ Authors: Sheng Di, Dingwen Tao, Hanqi Guo
 
 ## 3rd party libraries/tools
 
+- cmake (version: 3.13+)
 - gcc (version: 7.3+)
 - git
 - texlive (e.g., execute 'sudo yum install texlive-*' on linux)
