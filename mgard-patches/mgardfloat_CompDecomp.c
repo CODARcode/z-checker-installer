@@ -95,8 +95,28 @@ int main(int argc, char *argv[])
   dims[2] = r3;
   dims[3] = r4;
   dims[4] = r5;
+  
   int dim = (dims[0] != 0) +(dims[1] != 0)+(dims[2] != 0)+(dims[3] != 0)+(dims[4] != 0);
   
+  if(dim==2)
+  {
+ 	dims[0] = 1;
+	dims[1] = r2;
+	dims[2] = r1;
+  }
+  else if(dim==3)
+  {
+	dims[0] = r3;
+	dims[1] = r2;
+	dims[2] = r1;
+  }
+  else if(dim==4)
+  {
+	dims[0] = r3*r4;
+	dims[1] = r2;
+	dims[2] = r1;
+	dims[3] = 0;
+  }
   struct pressio_data* input_buffer = pressio_data_new_owning(pressio_float_dtype, dim, dims);
   struct pressio_data* input_data = pressio_io_data_path_read(input_buffer, oriFilePath);
   float* data = (float*)pressio_data_ptr(input_data, NULL);
