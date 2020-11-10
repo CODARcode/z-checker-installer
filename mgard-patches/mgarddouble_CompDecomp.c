@@ -1,6 +1,6 @@
 #include <libpressio.h>
 #include <libpressio_ext/io/posix.h>
-#include <mgard.h>
+#include <mgard.hpp>
 
 #include "make_input_data.h"
 #include "zc.h"
