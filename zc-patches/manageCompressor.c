@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include <stdlib.h>
+#include <limits.h>
 #include <string.h>
 #include "ZC_rw.h"
 #include "ZC_util.h"
@@ -141,8 +142,13 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 		
 		buf2 = (char*)malloc(1024);
-		char  workspaceDir_fullPath[1024];
- 		realpath(workspaceDir,workspaceDir_fullPath);
+		char  workspaceDir_fullPath[PATH_MAX+1];
+ 		char* res = realpath(workspaceDir,workspaceDir_fullPath);
+ 		if(!res)
+		{
+			printf("cannot find the path of the file \n");
+			return 1;
+		}
 		sprintf(buf2, "cd $rootDir\nmkdir -p %s\ncd %s\n", workspaceDir, workspaceDir);
 		insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
@@ -1006,8 +1012,13 @@ int main(int argc, char* argv[])
 	else
 	{
 		//modify createZCCase.sh
-		char confFilePath[512];
-		realpath(conFile, confFilePath);
+		char confFilePath[PATH_MAX+1];
+		char* res = realpath(conFile, confFilePath);
+		if(!res)
+		{
+			printf("cannot find the path of the file \n");
+			return 1;
+		}
 		int a = processCreateZCCase(operation,compressorName, mode, compressor, workspaceDir, exeDir, preCommand, exeCommand, confFilePath);
 
 		//modify runZCCase.sh

@@ -1,0 +1,22 @@
+LIBPRESSIOPATH = $(abspath ../../compressor-install)
+BGPATH = $(abspath ../../compressor-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,--disable-new-dtags,-rpath,$(LIBPRESSIOPATH)/lib
+BGFLAG = -fPIC -I$(BGPATH)/include/bg -L$(BGPATH)/lib -lbg -Wl,-rpath=$(BGPATH)/lib
+ZLIBFLAG = -I$(BGPATH)/include -L$(BGPATH)/lib -lZLIB -Wl,-rpath=$(BGPATH)/lib
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,--disable-new-dtags,-rpath,$(ZCPATH)/lib
+
+
+CC=g++
+BG_FLOAT = bgfloat_CompDecomp
+BG_DOUBLE = bgdouble_CompDecomp
+
+all: $(BG_FLOAT) $(BG_DOUBLE)
+
+$(BG_FLOAT): bgfloat_CompDecomp.cpp
+	$(CC) -g bgfloat_CompDecomp.cpp $(LIBPRESSIOFLAG) $(BGFLAG) $(ZLIBFLAG) $(ZCFLAG) -lm -o $(BG_FLOAT)
+
+$(BG_DOUBLE): bgdouble_CompDecomp.cpp
+	$(CC) -g bgdouble_CompDecomp.cpp $(LIBPRESSIOFLAG) $(BGFLAG) $(ZLIBFLAG) $(ZCFLAG) -lm -o $(BG_DOUBLE)

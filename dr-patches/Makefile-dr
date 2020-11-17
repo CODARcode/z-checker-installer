@@ -1,0 +1,22 @@
+LIBPRESSIOPATH = $(abspath ../../compressor-install)
+DRPATH = $(abspath ../../compressor-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,--disable-new-dtags,-rpath,$(LIBPRESSIOPATH)/lib
+DRFLAG = -fPIC -I$(DRPATH)/include/dr -L$(DRPATH)/lib -ldround -Wl,-rpath=$(DRPATH)/lib
+ZLIBFLAG = -I$(DRPATH)/include -L$(DRPATH)/lib -lZLIB -Wl,-rpath=$(DRPATH)/lib
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,--disable-new-dtags,-rpath,$(ZCPATH)/lib
+
+
+CC=g++
+DR_FLOAT = drfloat_CompDecomp
+DR_DOUBLE = drdouble_CompDecomp
+
+all: $(DR_FLOAT) $(DR_DOUBLE)
+
+$(DR_FLOAT): drfloat_CompDecomp.cpp
+	$(CC) -g drfloat_CompDecomp.cpp $(LIBPRESSIOFLAG) $(DRFLAG) $(ZLIBFLAG) $(ZCFLAG) -lm -o $(DR_FLOAT)
+
+$(DR_DOUBLE): drdouble_CompDecomp.cpp
+	$(CC) -g drdouble_CompDecomp.cpp $(LIBPRESSIOFLAG) $(DRFLAG) $(ZLIBFLAG) $(ZCFLAG) -lm -o $(DR_DOUBLE)

@@ -158,7 +158,7 @@ export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
-gcc -g -O3 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
+gcc -g -O0 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
@@ -228,11 +228,53 @@ cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 #---------- download MGARD and set the configuration ------------
-#cd $rootDir/mgard-patches
-#./compile-mgard-zchecker.sh
-#cp ../libpressio/test/mgardfloat_CompDecomp ../MGARD/build/bin
-#cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
-#cd ..
+cd $rootDir/mgard-patches
+./compile-mgard-zchecker.sh
+cp ../libpressio/test/mgardfloat_CompDecomp ../MGARD/build/bin
+cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
+cd ..
+
+#---------- download bit_grooming and set the configuration -----------
+cd $rootDir
+cd BitGroomingZ/examples
+cp ../../bg-patches/Makefile-bg .
+cp ../../bg-patches/bgfloat_CompDecomp.cpp .
+cp ../../bg-patches/bgdouble_CompDecomp.cpp .
+cp ../../bg-patches/bg_CompDecomp.sh .
+make -f Makefile-bg
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a bg -c manageCompressor-bg.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg bitgrooming_ERR_BOUNDS "\"1 2 3 4 5\""
+
+#---------- download digit_rounding and set the configuration -----------
+cd $rootDir
+cd digitroundingZ/examples
+cp ../../dr-patches/Makefile-dr .
+cp ../../dr-patches/drfloat_CompDecomp.cpp .
+cp ../../dr-patches/drdouble_CompDecomp.cpp .
+cp ../../dr-patches/dr_CompDecomp.sh .
+make -f Makefile-dr
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a digitrounding -c manageCompressor-dr.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg digitrounding_ERR_BOUNDS "\"3 4 5 6 7\""
+
+#---------- download FPZIP and set the configuration -----------
+cd $rootDir
+cd fpzip/tests
+cp ../../fpzip-patches/Makefile-zc .
+cp ../../fpzip-patches/fpzipfloat_CompDecomp.c .
+cp ../../fpzip-patches/fpzipdouble_CompDecomp.c .
+cp ../../fpzip-patches/fpzip_CompDecomp.sh .
+make -f Makefile-zc
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
 #----------- download latexmk --------------------------------
 cd $rootDir

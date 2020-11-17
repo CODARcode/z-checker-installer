@@ -1,6 +1,7 @@
 #include <libpressio.h>
 #include <libpressio_ext/io/posix.h>
-#include <mgard.hpp>
+#include <libdround.h>
+#include <iostream>
 
 #include "zc.h"
 
@@ -42,51 +43,38 @@ size_t computeDataLength(size_t r5, size_t r4, size_t r3, size_t r2, size_t r1, 
 int main(int argc, char *argv[])
 {
   struct pressio* library = pressio_instance();
-  struct pressio_compressor* compressor = pressio_get_compressor(library, "mgard");
-  struct pressio_options* mgard_options = pressio_compressor_get_options(compressor);
+  struct pressio_compressor* compressor = pressio_get_compressor(library, "digit_rounding");
+  struct pressio_options* digit_rounding_options = pressio_compressor_get_options(compressor);
 
   size_t r5=0,r4=0,r3=0,r2=0,r1=0, i = 0;
   char outDir[640], oriFilePath[640], outputFilePath[640];
-  char *zcFile, *solName, *varName, *errBoundMode;
-  double errBound;
-  int errboundmode;
-  if(argc < 9)
+  char *zcFile, *solName, *varName;
+  int prec;
+  if(argc < 7)
   {
-        printf("Test case: mgarddouble_CompDecomp [config_file] [zc.config] [solName] [varName] [errBoundMode] [ErrBound] [srcFilePath] [dimension sizes...]\n");
-        printf("Example: mgarddouble_CompDecomp zc.config mgard(1E-2) var ABS 1E-2 testdata/x86/testdouble_8_8_128.dat 8 8 128\n");
+        printf("Test case: drdouble_CompDecomp [config_file] [solName] [varName] [nsd] [srcFilePath] [dimension sizes...]\n");
+        printf("Example: drdouble_CompDecomp zc.config sol var 5 testdata/x86/testdouble_8_8_128.dat 8 8 128\n");
         exit(0);
   }
 
   zcFile=argv[1];
   solName=argv[2];
   varName=argv[3];
-  errBoundMode=argv[4];
-  if(strcmp(errBoundMode, "ABS")==0)
-  {
-        errboundmode = 0;
-  }
-  else if(strcmp(errBoundMode, "REL")==0)
-  {
-        errboundmode = 1;
-  }
-  else
-  {
-        printf("Error: Z-checker checking doesn't support this error bound mode: %s, but only ABS, REL for MGARD.\n", errBoundMode);
-        exit(0);
-  }
+  prec = atoi(argv[4]);
+  
 
-  errBound=atof(argv[5]);
-  sprintf(oriFilePath, "%s", argv[6]);
+ 
+  sprintf(oriFilePath, "%s", argv[5]);
+  if(argc>=7)
+	r1 = atoi(argv[6]); //8
   if(argc>=8)
-	r1 = atoi(argv[7]); //8
+	r2 = atoi(argv[7]); //8
   if(argc>=9)
-	r2 = atoi(argv[8]); //8
+	r3 = atoi(argv[8]); //128
   if(argc>=10)
-	r3 = atoi(argv[9]); //128
+  	r4 = atoi(argv[9]);
   if(argc>=11)
-        r4 = atoi(argv[10]);
-  if(argc>=12)
-        r5 = atoi(argv[11]);
+  	r5 = atoi(argv[10]);
 
   size_t dims[5];
   dims[0] = r1;
@@ -96,61 +84,25 @@ int main(int argc, char *argv[])
   dims[4] = r5;
   int dim = (dims[0] != 0) +(dims[1] != 0)+(dims[2] != 0)+(dims[3] != 0)+(dims[4] != 0);
   
-  if(dim==2)
-  {
-        dims[0] = 1;
-        dims[1] = r2;
-        dims[2] = r1;
-  }
-  else if(dim==3)
-  {
-        dims[0] = r3;
-        dims[1] = r2;
-        dims[2] = r1;
-  }
-  else if(dim==4)
-  {
-        dims[0] = r3*r4;
-        dims[1] = r2;
-        dims[2] = r1;
-        dims[3] = 0;
-  }
-
   struct pressio_data* input_buffer = pressio_data_new_owning(pressio_double_dtype, dim, dims);
   struct pressio_data* input_data = pressio_io_data_path_read(input_buffer, oriFilePath);
   double* data = (double*)pressio_data_ptr(input_data, NULL);
 
-  //compute the L-inf value of data
-  double L_inf_value = 0, value, max, min;
-  min = data[0];
-  max = min;
-  for(i=0;i<pressio_data_num_elements(input_data);i++)
-  {
-	value = data[i];
-	if(min > value) min = value;
-	if(max < value) max = value;
-  }
-  L_inf_value = fabs(min) > fabs(max)? fabs(min) : fabs(max);
-  double valueRange = max - min;  
 
-  //compute the error bound that can be recognized by mgard
-  double linfErrBound = 0, absErrBound = 0;
-  if(errboundmode==0)
-	absErrBound = errBound;
-  else if(errboundmode==1)
-	absErrBound = errBound*valueRange;
-  linfErrBound = absErrBound/L_inf_value;
- 
-  pressio_options_set_double(mgard_options, "mgard:tolerance", linfErrBound);
-
-  if(pressio_compressor_check_options(compressor, mgard_options)) {
+  
+  // configure the compressor
+    
+   pressio_options_set_integer(digit_rounding_options, "digit_rounding:prec", prec);
+   
+   if(pressio_compressor_check_options(compressor, digit_rounding_options)) {
     printf("%s\n", pressio_compressor_error_msg(compressor));
     exit(pressio_compressor_error_code(compressor));
   }
-  if(pressio_compressor_set_options(compressor, mgard_options)) {
+  if(pressio_compressor_set_options(compressor, digit_rounding_options)) {
     printf("%s\n", pressio_compressor_error_msg(compressor));
     exit(pressio_compressor_error_code(compressor));
   }
+
    
 
   //creates an output dataset pointer
@@ -170,7 +122,8 @@ int main(int argc, char *argv[])
   }
   size_t outSize = pressio_data_get_bytes(compressed_data);
   ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, outSize);
-  
+
+
   //decompress the data
   ZC_startDec();
   if(pressio_compressor_decompress(compressor, compressed_data, decompressed_data)) {
@@ -180,13 +133,12 @@ int main(int argc, char *argv[])
   void* dec_data= pressio_data_ptr(decompressed_data, NULL);
   ZC_endDec(compareResult, dec_data);
 
-  //free the input, decompressed, and compressed data
+  // //free the input, decompressed, and compressed data
   pressio_data_free(decompressed_data);
   pressio_data_free(compressed_data);
   pressio_data_free(input_data);
 
   //free options and the library
-  pressio_options_free(mgard_options);
   pressio_compressor_release(compressor);
   pressio_release(library);
   return 0;

@@ -29,6 +29,10 @@ if [[ $errBoundMode == "ABS" ]]; then
 	then
 		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 4 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 	fi
 elif [[ $errBoundMode == "REL" ]]; then
 	if [[ $dim == 1 ]]
@@ -43,6 +47,10 @@ elif [[ $errBoundMode == "REL" ]]; then
 	then
 		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}" -l
 		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}" -l
+	elif [[ $dim == 4 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}" -l
+		${cmdDir}/zfp-zc -s $datatype -a ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}" -l
 	fi
 elif [[ $errBoundMode == "PW_REL" ]]; then
 	if [[ $dim == 1 ]]
@@ -57,5 +65,9 @@ elif [[ $errBoundMode == "PW_REL" ]]; then
 	then
 		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 		${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+	elif [[ $dim == 4 ]]
+	then
+		echo ${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
+		${cmdDir}/zfp-zc -s $datatype -p ${errBound} -${dim} $6 $7 $8 $9 -i ${dataFilePath} -k "zfp(${errBound})" -v "${varName}"
 	fi
 fi
