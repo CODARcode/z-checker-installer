@@ -18,6 +18,7 @@ git clone https://github.com/CODARcode/MGARD
 git clone https://github.com/facebook/zstd
 git clone https://github.com/szcompressor/SZ
 git clone https://github.com/LLNL/zfp
+git clone https://github.com/robertu94/std_compat
 git clone https://github.com/CODARcode/libpressio
 
 mkdir -p zstd/builddir
@@ -50,6 +51,13 @@ make -j
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/MGARD/MGARD-install
+
+mkdir -p std_compat/build
+pushd std_compat/build
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_TESTING=OFF
+make -j
+make install
+popd
 
 LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib"
 mkdir -p libpressio/build

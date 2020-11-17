@@ -22,7 +22,24 @@ if [[ ! -d zstd ]]; then
   pushd zstd/builddir
   cmake ../build/cmake/ -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
   popd
+elif
+  pushd zstd/builddir
+  make
+  popd
 fi
+
+if [[ ! -d std_compat ]]; then
+  git clone https://github.com/robertu94/std_compat
+  mkdir -p std_compat/build
+  pushd std_compat/build
+  cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+  popd
+elif
+  pushd std_compat/build
+  make
+  popd
+fi
+
 
 pushd SZ/builddir
 git pull
