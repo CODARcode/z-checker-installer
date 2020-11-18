@@ -2,7 +2,6 @@
 #include <libpressio_ext/io/posix.h>
 #include <mgard.hpp>
 
-#include "make_input_data.h"
 #include "zc.h"
 
 size_t computeDataLength(size_t r5, size_t r4, size_t r3, size_t r2, size_t r1, int* dim)
