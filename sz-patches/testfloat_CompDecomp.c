@@ -85,6 +85,8 @@ int main(int argc, char * argv[])
     ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, outSize);
     //writeByteData(bytes, outSize, outputFilePath, &status);
    
+    compareResult->compressionMode = errboundmode==ABS?ZC_ABS:ZC_REL;
+
     ZC_startDec();
     float *decData = SZ_decompress(SZ_FLOAT, bytes, outSize, r5, r4, r3, r2, r1);
     ZC_endDec(compareResult, decData);

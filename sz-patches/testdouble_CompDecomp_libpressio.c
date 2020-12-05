@@ -127,6 +127,8 @@ int main(int argc, char * argv[])
     unsigned char* compressed_bytes = pressio_data_ptr(compressed_data, &outSize);
     ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, outSize);
     //writeByteData(bytes, outSize, outputFilePath, &status);
+
+    compareResult->compressionMode = errboundmode==ABS?ZC_ABS:ZC_REL;
    
     ZC_startDec();
     if(pressio_compressor_decompress(compressor, compressed_data, decompressed_data)) {
