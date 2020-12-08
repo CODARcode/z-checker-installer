@@ -2,7 +2,7 @@
 
 rootDir=`pwd`
 
-if [ $0 = "-h" ]
+if [ $1 = "-h" ]
 then
 	echo "Usage: ./z-checker-installer [libpressio_opt_prefix_installation_path]"
 	echo "Hint: To use libpressio_opt, you need to install it using spack first; after installation, the libpressio_opt_prefix_installation_path contains include and lib64."
@@ -16,9 +16,11 @@ then
 	LibpressioOptPrefixDir=$1
 	#check if the libpressio_opt has been installed successfully
 	if [ ! -d $LibpressioOptPrefixDir ]
+	then
 		echo "Error: $LibpressioOptPrefixDir does not exsit."
 		exit
 	elif [ ! -f $LibpressioOptPrefixDir/include/libpressio_opt/pressio_search.h ]
+	then
 		echo "Error: missing libpressio_opt/pressio_search.h."
 		echo "Please make sure Libpressio_Opt has been installed correctly."
 		exit
