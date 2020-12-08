@@ -16,9 +16,11 @@ then
 	LibpressioOptPrefixDir=$1
 	#check if the libpressio_opt has been installed successfully
 	if [ ! -d $LibpressioOptPrefixDir ]
+	then
 		echo "Error: $LibpressioOptPrefixDir does not exsit."
 		exit
 	elif [ ! -f $LibpressioOptPrefixDir/libpressio_opt/pressio_search.h ]
+	then
 		echo "Error: missing libpressio_opt/pressio_search.h."
 		echo "Please make sure Libpressio_Opt has been installed correctly."
 		exit
