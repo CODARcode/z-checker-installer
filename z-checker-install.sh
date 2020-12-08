@@ -18,7 +18,7 @@ then
 	if [ ! -d $LibpressioOptPrefixDir ]
 		echo "Error: $LibpressioOptPrefixDir does not exsit."
 		exit
-	elif [ ! -f $LibpressioOptPrefixDir/libpressio_opt/pressio_search.h ]
+	elif [ ! -f $LibpressioOptPrefixDir/include/libpressio_opt/pressio_search.h ]
 		echo "Error: missing libpressio_opt/pressio_search.h."
 		echo "Please make sure Libpressio_Opt has been installed correctly."
 		exit
