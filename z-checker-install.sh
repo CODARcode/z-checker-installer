@@ -2,6 +2,29 @@
 
 rootDir=`pwd`
 
+if [ $0 = "-h" ]
+then
+	echo "Usage: ./z-checker-installer [libpressio_opt_prefix_installation_path]"
+	echo "Hint: To use libpressio_opt, you need to install it using spack first; after installation, the libpressio_opt_prefix_installation_path contains include and lib64."
+	echo "Example without libpressio-opt: ./z-checker-installer"
+	echo "Example with libpressio-opt: ./z-checker-installer /lcrc/project/ECP-EZ/shdi/LibpressioOpt/libpressio_opt_example/.spack-env/view"
+	exit
+fi
+
+if [ $# -gt 0 ]
+then
+	LibpressioOptPrefixDir=$1
+	#check if the libpressio_opt has been installed successfully
+	if [ ! -d $LibpressioOptPrefixDir ]
+		echo "Error: $LibpressioOptPrefixDir does not exsit."
+		exit
+	elif [ ! -f $LibpressioOptPrefixDir/libpressio_opt/pressio_search.h ]
+		echo "Error: missing libpressio_opt/pressio_search.h."
+		echo "Please make sure Libpressio_Opt has been installed correctly."
+		exit
+	fi
+fi
+
 #----------check gcc version----------------
 cd zc-patches
 g++ -std=c++17 foo.cc
@@ -151,7 +174,12 @@ gcc -O3 -o queryVarList queryVarList.c
 cd $rootDir
 git clone https://github.com/CODARcode/Z-checker.git
 cd Z-checker
-./configure --prefix=$rootDir/Z-checker/zc-install
+if [ -n $LibpressioOptPrefixDir ]
+then
+	./configure --enable-libpressioopt --with-libpressioopt-prefix=$LibpressioOptPrefixDir --prefix=$rootDir/Z-checker/zc-install
+else
+	./configure --prefix=$rootDir/Z-checker/zc-install
+fi
 make
 make install
 export PATH=$rootDir/Z-checker/zc-install/bin:$PATH

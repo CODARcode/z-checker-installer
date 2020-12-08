@@ -2,9 +2,11 @@ include ../Config
 
 ZFPPATH = $(abspath ../zfp-install)
 ZCPATH = $(abspath ../../Z-checker/zc-install)
+LIBPRESSIOPATH = $(abspath ../../compressor-install)
 
 ZFPFLAG = -fPIC -I$(ZFPPATH)/include -L$(ZFPPATH)/lib -lzfp -lm -Wl,-rpath,"$(ZFPPATH)/lib"
 ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,-rpath,"$(ZCPATH)/lib"
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
 
 TARGET = ../bin/zfp
 TARGET2 = ../bin/zfp-zc
@@ -18,11 +20,11 @@ $(TARGET): zfp.c
 
 $(TARGET2): zfp-zc.c
 	mkdir -p ../bin
-	$(CC) $(CFLAGS) zfp-zc.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET2)
+	$(CC) $(CFLAGS) zfp-zc.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET2) $(LIBPRESSIOFLAG)
 
 $(TARGET3): zfp-zc-vis.c
 	mkdir -p ../bin
-	$(CC) $(CFLAGS) zfp-zc-vis.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET3)
+	$(CC) $(CFLAGS) zfp-zc-vis.c $(ZFPFLAG) $(ZCFLAG) -lm -o $(TARGET3) $(LIBPRESSIOFLAG)
 
 clean:
 	rm -f $(TARGET) $(TARGET2) $(TARGET3) fields.o
