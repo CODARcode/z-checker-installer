@@ -6,8 +6,8 @@ if [ $1 = "-h" ]
 then
 	echo "Usage: ./z-checker-installer [libpressio_opt_prefix_installation_path]"
 	echo "Hint: To use libpressio_opt, you need to install it using spack first; after installation, the libpressio_opt_prefix_installation_path contains include and lib64."
-	echo "Example without libpressio-opt: ./z-checker-installer"
-	echo "Example with libpressio-opt: ./z-checker-installer /lcrc/project/ECP-EZ/shdi/LibpressioOpt/libpressio_opt_example/.spack-env/view"
+	echo "Example without libpressio-opt: ./z-checker-install.sh"
+	echo "Example with libpressio-opt: ./z-checker-install.sh /lcrc/project/ECP-EZ/shdi/LibpressioOpt/libpressio_opt_example/.spack-env/view"
 	exit
 fi
 
