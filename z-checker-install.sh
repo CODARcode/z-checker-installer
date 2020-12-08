@@ -85,8 +85,7 @@ fi
 if [ -f $LibpressioOptPrefixDir/include/png.h ]
 then
 	LIBPNG_INSTALL_PATH=$LibpressioOptPrefixDir
-elif
-then
+else
 	LIBPNG_SRC_DIR=$rootDir/libpng
 	if [ ! -d "$LIBPNG_SRC_DIR" ]; then
 		# download libpng source
