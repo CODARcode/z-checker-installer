@@ -188,7 +188,7 @@ export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
-gcc -g -O0 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
+gcc -g -O3 -o manageCompressor manageCompressor.c -fPIC -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib -I$(LibpressioOptPrefixDir)/include/libpressio -L$(LibpressioOptPrefixDir)/lib64 -llibpressio -Wl,-rpath,"$(LibpressioOptPrefixDir)/lib64"
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
