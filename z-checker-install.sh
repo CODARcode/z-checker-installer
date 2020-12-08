@@ -2,6 +2,31 @@
 
 rootDir=`pwd`
 
+if [ $1 = "-h" ]
+then
+	echo "Usage: ./z-checker-installer [libpressio_opt_prefix_installation_path]"
+	echo "Hint: To use libpressio_opt, you need to install it using spack first; after installation, the libpressio_opt_prefix_installation_path contains include and lib64."
+	echo "Example without libpressio-opt: ./z-checker-install.sh"
+	echo "Example with libpressio-opt: ./z-checker-install.sh /lcrc/project/ECP-EZ/shdi/LibpressioOpt/libpressio_opt_example/.spack-env/view"
+	exit
+fi
+
+if [ $# -gt 0 ]
+then
+	LibpressioOptPrefixDir=$1
+	#check if the libpressio_opt has been installed successfully
+	if [ ! -d $LibpressioOptPrefixDir ]
+	then
+		echo "Error: $LibpressioOptPrefixDir does not exsit."
+		exit
+	elif [ ! -f $LibpressioOptPrefixDir/include/libpressio_opt/pressio_search.h ]
+	then
+		echo "Error: missing libpressio_opt/pressio_search.h."
+		echo "Please make sure Libpressio_Opt has been installed correctly."
+		exit
+	fi
+fi
+
 #----------check gcc version----------------
 cd zc-patches
 g++ -std=c++17 foo.cc
@@ -56,32 +81,35 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 
 fi
 
-#---------- download libpng if missing ------
-LIBPNG_URL=http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz
-LIBPNG_SRC_DIR=$rootDir/libpng
-LIBPNG_EXE_PATH=`which libpng-config`
-
-if [ ! -x "$LIBPNG_EXE_PATH" ]; then
-        if [ ! -d "$LIBPNG_SRC_DIR" ]; then
-                # download libpng source
+#---------- download and install libpng forcefully ------
+if [ -f $LibpressioOptPrefixDir/include/png.h ]
+then
+	LIBPNG_INSTALL_PATH=$LibpressioOptPrefixDir
+else
+	LIBPNG_SRC_DIR=$rootDir/libpng
+	if [ ! -d "$LIBPNG_SRC_DIR" ]; then
+		# download libpng source
+		LIBPNG_INSTALL_PATH=$LIBPNG_SRC_DIR/libpng-1.6.37-install
+		LIBPNG_URL=http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz
 		mkdir -p $LIBPNG_SRC_DIR
 		cd $LIBPNG_SRC_DIR
 		curl -L $LIBPNG_URL | tar zxf -
                 
-                if [ ! -d "$LIBPNG_SRC_DIR" ] ; then
-                        echo "FATAL: cannot download and extract libpng source."
-                        exit
-                fi
+		if [ ! -d "$LIBPNG_SRC_DIR" ] ; then
+			echo "FATAL: cannot download and extract libpng source."
+				exit
+			fi
 
-                # compile libpng
-                cd $LIBPNG_SRC_DIR/libpng-1.6.37
-                ./configure --prefix=$LIBPNG_SRC_DIR/libpng-1.6.37-install
-                make -j 4
+		# compile libpng
+		cd $LIBPNG_SRC_DIR/libpng-1.6.37
+		./configure --prefix=$LIBPNG_INSTALL_PATH
+		make -j 4
 		make install
-        fi
+	fi
+
 fi
 
-#---------- download tif22pnm ---------------
+#---------- download tif22pnm if missing ---------------
 cd $rootDir
 TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
 TIF22PNM_SRC_DIR=$rootDir/tif22pnm
@@ -95,16 +123,11 @@ if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
 			echo "FATAL: cannot download and extract tif22pnm source."
 			exit
 		fi
-
 		# compile tif22pnm
 		cd $TIF22PNM_SRC_DIR
 		./configure
 		cp $rootDir/zc-patches/do.sh .
-		if [ -d $LIBPNG_SRC_DIR/libpng-1.6.37-install ];then
-			./do.sh fast $LIBPNG_SRC_DIR/libpng-1.6.37-install
-		else
-			./do.sh fast
-		fi
+		./do.sh fast $LIBPNG_INSTALL_PATH
 		cd $rootDir
 		echo "export PNG22PNM_HOME=$TIF22PNM_SRC_DIR" >> $rootDir/env_config.sh
 		echo "export PATH=\$PATH:\$PNG22PNM_HOME" >> $rootDir/env_config.sh
@@ -151,14 +174,19 @@ gcc -O3 -o queryVarList queryVarList.c
 cd $rootDir
 git clone https://github.com/CODARcode/Z-checker.git
 cd Z-checker
-./configure --prefix=$rootDir/Z-checker/zc-install
+if [ -n $LibpressioOptPrefixDir ]
+then
+	./configure --enable-libpressioopt --with-libpressioopt-prefix=$LibpressioOptPrefixDir --prefix=$rootDir/Z-checker/zc-install
+else
+	./configure --prefix=$rootDir/Z-checker/zc-install
+fi
 make
 make install
 export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd $rootDir/zc-patches
-gcc -g -O0 -o manageCompressor manageCompressor.c -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib
+gcc -g -O3 -o manageCompressor manageCompressor.c -fPIC -I../Z-checker/zc-install/include -L../Z-checker/zc-install/lib -lzc -lm -Wl,-rpath $rootDir/Z-checker/zc-install/lib -I$(LibpressioOptPrefixDir)/include/libpressio -L$(LibpressioOptPrefixDir)/lib64 -llibpressio -Wl,-rpath,"$(LibpressioOptPrefixDir)/lib64"
 mv manageCompressor ..
 
 #---------- download ZFP and set the configuration -----------
