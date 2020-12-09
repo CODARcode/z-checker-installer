@@ -174,11 +174,11 @@ gcc -O3 -o queryVarList queryVarList.c
 cd $rootDir
 git clone https://github.com/CODARcode/Z-checker.git
 cd Z-checker
-if [ -n $LibpressioOptPrefixDir ]
+if [ -z "$LibpressioOptPrefixDir" ]
 then
-	./configure --enable-libpressioopt --with-libpressioopt-prefix=$LibpressioOptPrefixDir --prefix=$rootDir/Z-checker/zc-install
-else
 	./configure --prefix=$rootDir/Z-checker/zc-install
+else
+	./configure --enable-libpressioopt --with-libpressioopt-prefix=$LibpressioOptPrefixDir --prefix=$rootDir/Z-checker/zc-install
 fi
 make
 make install
