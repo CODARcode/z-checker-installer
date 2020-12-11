@@ -29,6 +29,8 @@ z-checker-install.sh will download latexmk, gnuplot, Z-checker, ZFP, and SZ and 
 
 After installation, please download the two testing data sets, CESM-ATM and MD-simulation (exaalt). The two data sets are available only for the purpose of research of compression. Please ask for the data by contacting [sdi1@anl.gov]() if interested.
 
+LibpressioOPT is a library that is able to search for the appropriate error bound setting based on user-sepcified metric values such as compression ratio and PSNR. Z-checker itself has some simple built-in algorithms to do this work, which may not be as accurate as LibpressioOPT. To this end, you also need to install spack and use spack to install some preliminary libraries. For more details, please read the z-checker-installer-instruction.pdf in the ./doc/ directory. If you don't need LibpressioOPT, you just need to run './z-checker-installer.sh' to install everything.
+
 ### Quick Start
 
 Then, you are ready to conduct the compression checking.
