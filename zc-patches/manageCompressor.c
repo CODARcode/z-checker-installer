@@ -32,6 +32,7 @@ void usage()
 	printf("	-z <compressor>: modify zc-ratedistortion.sh and exe_CompDecomp.sh\n");	
 	printf("	-p : print the information\n");	
 	printf("	-k : check validity of errBounds.cfg\n");
+	printf("	-i : limits on the dimensions that the compressor supports\n");
 	printf("* Mode:\n");
 	printf("	-m : the execution mode of the compressor (e.g., fast or deft)\n");
 	printf("* Input:\n");
@@ -340,7 +341,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 	return MANAGE_SUC;			
 }
 
-int processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir)
+int processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir, int dimLimit)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -384,49 +385,133 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 		StringLine* insertLines = createStringLineHeader();
 		StringLine* insertLinesTail = insertLines;
 
-		char* buf2 = (char*)malloc(1024);
-		sprintf(buf2, "##begin: Compressor %s\n", compressor);
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+		if(dimLimit == -1)
+		{
+			char* buf2 = (char*)malloc(1024);
+			sprintf(buf2, "##begin: Compressor %s\n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "cd $rootDir\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
-		
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "cd %s/${testcase}_%s\n", workspaceDir, mode);
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "cd $rootDir\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "cd %s/${testcase}_%s\n", workspaceDir, mode);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "if [[ $option == 1 ]]; then\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "if [[ $option == 1 ]]; then\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "else\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
-		
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "else\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);		
-		sprintf(buf2, "fi\n");
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);		
+			sprintf(buf2, "fi\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-		buf2 = (char*)malloc(1024);
-		sprintf(buf2, "##end: Compressor %s\n", compressor);
-		insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "##end: Compressor %s\n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+		}
+		else
+		{
+			char* buf2 = (char*)malloc(1024);
+			sprintf(buf2, "##begin: Compressor %s\n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "cd $rootDir\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "cd %s/${testcase}_%s\n", workspaceDir, mode);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			if(dimLimit == 1)
+			{
+				sprintf(buf2, "if [ ! -z $dim1 ] && [ -z $dim2 ] && [ -z $dim3 ] && [ -z $dim4 ]; then\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+			if(dimLimit == 2)
+			{
+				sprintf(buf2, "if [ ! -z $dim1 ] && [ ! -z $dim2 ] && [ -z $dim3 ] && [ -z $dim4 ]; then\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+			if(dimLimit == 3)
+			{
+				sprintf(buf2, "if [ ! -z $dim1 ] && [ ! -z $dim2 ] && [ ! -z $dim3 ] && [ -z $dim4 ]; then\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+			if(dimLimit == 4)
+			{
+				sprintf(buf2, "if [ ! -z $dim1 ] && [ ! -z $dim2 ] && [ ! -z $dim3 ] && [ ! -z $dim4 ]; then\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\tif [[ $option == 1 ]]; then\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\telse\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t\techo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\t\t./zc-ratedistortion.sh $datatype $errBoundMode $varListFile\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);		
+			sprintf(buf2, "\tfi\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "else\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\techo The compressor %s does not support the dimensions size \n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);		
+			sprintf(buf2, "fi\n");
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "##end: Compressor %s\n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+		}
+
 
 		newHeader->next = insertLines->next;
 		insertLinesTail->next = newTailer;
@@ -906,6 +991,7 @@ int main(int argc, char* argv[])
 	char* mode = NULL;
 	char* compressor = NULL;
 	char* workspaceDir = NULL;
+	int dimLimit = -1; //-1 means no dims limit
 
 	char* conFile = NULL;
 	int varID = -1;
@@ -961,6 +1047,11 @@ int main(int argc, char* argv[])
 		case 'k':
 			operation = CHECK_ERRBOUNDS;
 			break;
+		case 'i':
+			if (++i == argc)
+				usage();
+			dimLimit = atoi(argv[i]);
+			break;
 		default: 
 			usage();
 			break;
@@ -982,6 +1073,13 @@ int main(int argc, char* argv[])
 	if(operation>=10 && (compressorName == NULL || exeCommand == NULL || exeDir == NULL))
 	{
 		printf("Error: you need to specify compressor and exeDir and exeCommand.\n");
+		usage();
+		exit(0);
+	}
+
+	if(dimLimit > 4 || dimLimit < -1)
+	{
+		printf("Error: The dimension limit ranges from 1 to 4.\n");
 		usage();
 		exit(0);
 	}
@@ -1022,7 +1120,7 @@ int main(int argc, char* argv[])
 		int a = processCreateZCCase(operation,compressorName, mode, compressor, workspaceDir, exeDir, preCommand, exeCommand, confFilePath);
 
 		//modify runZCCase.sh
-		int b = processRunZCCase(operation, mode, compressor, workspaceDir);
+		int b = processRunZCCase(operation, mode, compressor, workspaceDir, dimLimit);
 
 		//modify removeZCCase.sh
 		int c = processRemoveZCCase(operation, mode, compressor, workspaceDir);

@@ -276,6 +276,22 @@ cd $rootDir
 ./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
+#---------- download meta_compressor and set the configuration -----------
+cd $rootDir
+cd meta_compressor/test
+cp ../../meta_compressor-patches/Makefile-mc .
+cp ../../meta_compressor-patches/mcfloat_CompDecomp.cpp .
+cp .../../meta_compressor-patches/mcdouble_CompDecomp.cpp .
+cp ../../meta_compressor-patches/mc_CompDecomp.sh .
+chmod +x mc_CompDecomp.sh
+make -f Makefile-mc
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a mc -i 3 -c manageCompressor-mc.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"0.5 0.1 0.01 0.001\""
+
+
 #----------- download latexmk --------------------------------
 cd $rootDir
 latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip
