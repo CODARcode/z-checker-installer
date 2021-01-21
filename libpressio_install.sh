@@ -16,6 +16,7 @@ git clone https://github.com/CODARcode/MGARD
 #cd -
 
 git clone http://github.com/disheng222/SZ
+git clone https://github.com/lxAltria/meta_compressor.git
 git clone http://github.com/LLNL/zfp
 git clone https://github.com/CODARcode/libpressio
 git clone https://github.com/LLNL/fpzip.git
@@ -82,3 +83,15 @@ cmake .. $LIBPRESSIO_CMAKE_ARGS -DSZ_DIR:PATH=$rootDir/compressor-install/share/
 make -j
 make install
 popd
+
+#install meta_compressor
+mkdir -p meta_compressor/build
+pushd meta_compressor/build
+cmake ..
+make -j
+make install
+cp lib/libsz_cpp.so $rootDir/compressor-install/lib
+mkdir -p $rootDir/compressor-install/include/mc
+cp include/* $rootDir/compressor-install/include/mc
+popd
+
