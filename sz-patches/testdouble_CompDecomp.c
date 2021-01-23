@@ -83,7 +83,9 @@ int main(int argc, char * argv[])
     //unsigned char *bytes = SZ_compress(SZ_DOUBLE, data, &outSize, r5, r4, r3, r2, r1);
     ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, outSize);
     //writeByteData(bytes, outSize, outputFilePath, &status);
-   
+
+    compareResult->compressionMode = errboundmode==ABS?ZC_ABS:ZC_REL; 
+  
     ZC_startDec();
     double *decData = SZ_decompress(SZ_DOUBLE, bytes, outSize, r5, r4, r3, r2, r1);
     ZC_endDec(compareResult, decData);

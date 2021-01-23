@@ -62,8 +62,8 @@ cd ..
 if [ ! -f report/z-checker-report.pdf ]; then
 	zip -r report.zip report
 	echo "Notice: Your local latexmk cannot generate the report successfully, probably because of missing dependencies such as texlive. "
-	echo "To solve this issue, you probably need to install texlive using root previlege."
-	echo "Alternatively, you can also upload the source code (`pwd`/report.zip) of the report we generated to some online latex2pdf website such as Overleaf (https://www.overleaf.com)."
+	echo "To solve this issue, you probably need to install texlive using root previlege."i
+	echo "The source code of the report is here: `pwd`/report.zip"
 	exit
 else
 	echo "The report is generated successfully."

@@ -494,6 +494,7 @@ int main(int argc, char* argv[])
 	  /* compress data */
 	  zfpsize = zfp_compress(zfp, field);
 	  compareResult = ZC_endCmpr(dataProperty, cmpCaseKey, zfpsize);
+	  compareResult->compressionMode = relErrMode==0?ZC_ABS:ZC_REL;
 	  if (zfpsize == 0) {
 		  fprintf(stderr, "compression failed\n");
 		  return EXIT_FAILURE;
@@ -559,9 +560,6 @@ int main(int argc, char* argv[])
 		ZC_endDec(compareResult, (float*)fo);
 	  else
 		ZC_endDec(compareResult, (double*)fo);
-
-	  compareResult->compressionMode = relErrMode==0?0:1;
-
 
 	  /* optionally write reconstructed data */
 	  if (outpath) {
