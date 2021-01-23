@@ -86,12 +86,10 @@ popd
 
 #install meta_compressor
 mkdir -p meta_compressor/build
+cp meta_compressor-patches/CMakeLists.txt meta_compressor
 pushd meta_compressor/build
-cmake ..
+cmake .. -DCMAKE_INSTALL_PREFIX=../../compressor-install
 make -j
 make install
-cp lib/libsz_cpp.so $rootDir/compressor-install/lib
-mkdir -p $rootDir/compressor-install/include/mc
-cp include/* $rootDir/compressor-install/include/mc
 popd
 
