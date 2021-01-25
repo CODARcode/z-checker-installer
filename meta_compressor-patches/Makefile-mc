@@ -12,7 +12,7 @@ CC=g++
 MC_FLOAT = mcfloat_CompDecomp
 MC_DOUBLE = mcdouble_CompDecomp
 
-all: $(MC_FLOAT)
+all: $(MC_FLOAT) $(MC_DOUBLE)
 
 $(MC_FLOAT): mcfloat_CompDecomp.cpp
 	$(CC) -g mcfloat_CompDecomp.cpp $(LIBPRESSIOFLAG) $(ZSTDFLAG) $(MCFLAG) $(ZCFLAG) -lm -o $(MC_FLOAT)
