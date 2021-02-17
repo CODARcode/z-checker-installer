@@ -103,6 +103,9 @@ make install
 popd
 
 #install meta_compressor
+cd meta_compressor
+git checkout autotuning
+cd ..
 mkdir -p meta_compressor/build
 cp meta_compressor-patches/CMakeLists.txt meta_compressor
 pushd meta_compressor/build
