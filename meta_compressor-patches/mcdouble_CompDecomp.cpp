@@ -1,6 +1,5 @@
-#include "sz_compress_3d.hpp"
-#include "sz_decompress_3d.hpp"
-#include "sz_lossless.hpp"
+#include "sz_autotuning_3d.hpp"
+#include "sz_utils.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -32,7 +31,7 @@ int main(int argc, char *argv[])
   char oriFilePath[640];
   char *zcFile, *solName, *varName;
   double eb;
-  if(argc != 7)
+  if(argc != 9)
   {
         printf("incorrect number of arguments. meta_compressor only supports 3 dimensional data compression \n");
         printf("Test case: mcdouble_CompDecomp [config_file] [solName] [varName] [eb] [srcFilePath] [dimension sizes 1] [dimension sizes 2] [dimension sizes 3]\n");
@@ -56,33 +55,19 @@ int main(int argc, char *argv[])
 	 r3 = atoi(argv[8]); //128
 
   double* data = readfile<double>(oriFilePath, numElements);
-  double max = data[0];
-  double min = data[0];
-
-  for(int i=1; i<numElements; i++)
-  {
-      if(max < data[i]) max = data[i];
-      if(min > data[i]) min = data[i];
-  }
 
   //start compress
   ZC_Init(zcFile);
 
-  ZC_DataProperty* dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, data, 0, 0, r3, r2, r1);
-  unsigned char * result =  sz_compress_3d(data, r1, r2, r3, eb*(max - min), result_size);
-  unsigned char * result_after_lossless = NULL;
-  size_t lossless_outsize = sz_lossless_compress(ZSTD_COMPRESSOR, 3, result, result_size, &result_after_lossless);
-  ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, lossless_outsize);
-
-  free(result);
+  ZC_DataProperty* dataProperty = ZC_startCmpr(varName, ZC_DOUBLE, data, 0, 0, r1, r2, r3);
+  unsigned char * result =  sz_compress_autotuning_3d(data, r3, r2, r1, eb, result_size);
+  ZC_CompareData* compareResult = ZC_endCmpr(dataProperty, solName, result_size);
 
   //decompress the data
   ZC_startDec();
-
-  size_t lossless_output = sz_lossless_decompress(ZSTD_COMPRESSOR, result_after_lossless, lossless_outsize, &result, result_size);
-  double* dec_data = sz_decompress_3d<double>(result, r1, r2, r3);
+  double* dec_data = sz_decompress_autotuning_3d<double>(result, result_size, r3, r2, r1);
   
-  free(result_after_lossless);
+  free(result);
 
   ZC_endDec(compareResult, dec_data);
 
