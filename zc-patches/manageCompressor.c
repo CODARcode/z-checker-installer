@@ -5,6 +5,8 @@
 #include "ZC_rw.h"
 #include "ZC_util.h"
 #include "iniparser.h"
+#include <stdbool.h>
+
 
 
 #define ADD_CMPR 11
@@ -33,6 +35,7 @@ void usage()
 	printf("	-p : print the information\n");	
 	printf("	-k : check validity of errBounds.cfg\n");
 	printf("	-i : limits on the dimensions that the compressor supports\n");
+	printf("	-r : reverse the dimensions of the input data(does not support varlist)\n");
 	printf("* Mode:\n");
 	printf("	-m : the execution mode of the compressor (e.g., fast or deft)\n");
 	printf("* Input:\n");
@@ -341,7 +344,7 @@ int processCreateZCCase(int operation, char* compressorName, char* mode, char* c
 	return MANAGE_SUC;			
 }
 
-int processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir, int dimLimit)
+int processRunZCCase(int operation, char* mode, char* compressor, char* workspaceDir, int dimLimit, bool dimReverse)
 {
 	int i = 0, lineCount = 0, tag = 0;
 	StringLine* header = NULL, *preLine = NULL;
@@ -402,15 +405,26 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 			buf2 = (char*)malloc(1024);
 			sprintf(buf2, "if [[ $option == 1 ]]; then\n");
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			if(!dimReverse)
+			{
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-			buf2 = (char*)malloc(1024);
-			sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+			else
+			{
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim4 $dim3 $dim2 $dim1\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-			buf2 = (char*)malloc(1024);
-			sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-			insertLinesTail = appendOneLine(insertLinesTail, buf2);
-
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim4 $dim3 $dim2 $dim1\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
 			buf2 = (char*)malloc(1024);
 			sprintf(buf2, "else\n");
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
@@ -471,13 +485,26 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 			sprintf(buf2, "\tif [[ $option == 1 ]]; then\n");
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-			buf2 = (char*)malloc(1024);
-			sprintf(buf2, "\t\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			if(!dimReverse)
+			{
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
-			buf2 = (char*)malloc(1024);
-			sprintf(buf2, "\t\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
-			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
+			else
+			{
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\techo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim4 $dim3 $dim2 $dim1\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+
+				buf2 = (char*)malloc(1024);
+				sprintf(buf2, "\t./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim4 $dim3 $dim2 $dim1\n");
+				insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			}
 
 			buf2 = (char*)malloc(1024);
 			sprintf(buf2, "\telse\n");
@@ -992,6 +1019,7 @@ int main(int argc, char* argv[])
 	char* compressor = NULL;
 	char* workspaceDir = NULL;
 	int dimLimit = -1; //-1 means no dims limit
+	bool dimReverse = false;
 
 	char* conFile = NULL;
 	int varID = -1;
@@ -1051,6 +1079,9 @@ int main(int argc, char* argv[])
 			if (++i == argc)
 				usage();
 			dimLimit = atoi(argv[i]);
+			break;
+		case 'r':
+			dimReverse = true;
 			break;
 		default: 
 			usage();
@@ -1120,7 +1151,7 @@ int main(int argc, char* argv[])
 		int a = processCreateZCCase(operation,compressorName, mode, compressor, workspaceDir, exeDir, preCommand, exeCommand, confFilePath);
 
 		//modify runZCCase.sh
-		int b = processRunZCCase(operation, mode, compressor, workspaceDir, dimLimit);
+		int b = processRunZCCase(operation, mode, compressor, workspaceDir, dimLimit, dimReverse);
 
 		//modify removeZCCase.sh
 		int c = processRemoveZCCase(operation, mode, compressor, workspaceDir);
