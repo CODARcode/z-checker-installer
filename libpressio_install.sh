@@ -107,7 +107,7 @@ cd meta_compressor
 git checkout autotuning
 cd ..
 mkdir -p meta_compressor/build
-cp meta_compressor-patches/CMakeLists.txt meta_compressor
+cp sz-auto-patches/CMakeLists.txt meta_compressor
 pushd meta_compressor/build
 cmake .. -DCMAKE_INSTALL_PREFIX=../../compressor-install
 make -j

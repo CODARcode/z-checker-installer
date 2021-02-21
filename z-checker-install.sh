@@ -315,12 +315,12 @@ Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 1
 #---------- download szauto(meta_compressor) and set the configuration -----------
 cd $rootDir
 cd meta_compressor/test
-cp ../../meta_compressor-patches/Makefile-mc .
-cp ../../meta_compressor-patches/mcfloat_CompDecomp.cpp .
-cp ../../meta_compressor-patches/mcdouble_CompDecomp.cpp .
-cp ../../meta_compressor-patches/mc_CompDecomp.sh .
-chmod +x mc_CompDecomp.sh
-make -f Makefile-mc
+cp ../../sz-auto-patches/Makefile-sz-auto .
+cp ../../sz-auto-patches/sz-autofloat_CompDecomp.cpp .
+cp ../../sz-auto-patches/sz-autodouble_CompDecomp.cpp .
+cp ../../sz-auto-patches/sz-auto_CompDecomp.sh .
+chmod +x sz-auto_CompDecomp.sh
+make -f Makefile-sz-auto
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cd $rootDir

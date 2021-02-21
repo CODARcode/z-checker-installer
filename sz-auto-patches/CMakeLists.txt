@@ -18,7 +18,7 @@ add_subdirectory (src)
 add_subdirectory (test)
 
 file(GLOB header_files ${PROJECT_SOURCE_DIR}/include/*.hpp)
-install(FILES ${header_files} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/mc)
+install(FILES ${header_files} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/sz-auto)
 install (TARGETS sz_cpp
   LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
   )
