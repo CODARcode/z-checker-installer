@@ -312,7 +312,7 @@ cd $rootDir
 ./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
-#---------- download meta_compressor and set the configuration -----------
+#---------- download szauto(meta_compressor) and set the configuration -----------
 cd $rootDir
 cd meta_compressor/test
 cp ../../meta_compressor-patches/Makefile-mc .
@@ -324,7 +324,7 @@ make -f Makefile-mc
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cd $rootDir
-./manageCompressor -a mc -i 3 -c manageCompressor-mc.cfg
+./manageCompressor -a sz-auto -i 3 -c manageCompressor-sz-auto.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg meta_compressor_ERR_BOUNDS "\"0.5 0.1 0.01 0.001\""
 
 
