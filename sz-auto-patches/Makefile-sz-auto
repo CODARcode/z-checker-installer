@@ -9,13 +9,13 @@ ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,--disable-new-dtags,-
 
 
 CC=g++
-SZAUTO_FLOAT = mcfloat_CompDecomp
-SZAUTO_DOUBLE = mcdouble_CompDecomp
+SZAUTO_FLOAT = sz-autofloat_CompDecomp
+SZAUTO_DOUBLE = sz-autodouble_CompDecomp
 
 all: $(SZAUTO_FLOAT) $(SZAUTO_DOUBLE)
 
 $(SZAUTO_FLOAT): sz-autofloat_CompDecomp.cpp
 	$(CC) -g sz-autofloat_CompDecomp.cpp $(LIBPRESSIOFLAG) $(ZSTDFLAG) $(SZAUTOFLAG) $(ZCFLAG) -lm -o $(SZAUTO_FLOAT)
 
-$(SZAUTO_DOUBLE): sz-autpdouble_CompDecomp.cpp
+$(SZAUTO_DOUBLE): sz-autodouble_CompDecomp.cpp
 	$(CC) -g sz-autodouble_CompDecomp.cpp $(LIBPRESSIOFLAG) $(ZSTDFLAG) $(SZAUTOFLAG) $(ZCFLAG) -lm -o $(SZAUTO_DOUBLE)
