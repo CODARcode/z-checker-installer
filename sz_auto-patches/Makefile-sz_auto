@@ -1,0 +1,21 @@
+SZAUTOPATH = $(abspath ../../compressor-install)
+ZSTDPATH = $(abspath ../../compressor-install)
+ZCPATH = $(abspath ../../Z-checker/zc-install)
+
+
+SZAUTOFLAG = -fPIC -I$(SZAUTOPATH)/include/sz_auto -L$(SZAUTOPATH)/lib -lsz_cpp -Wl,-rpath=$(SZAUTOPATH)/lib
+ZSTDFLAG  = -I$(ZSTDPATH)/include -L$(ZSTDPATH)/lib -lzstd -lm -Wl,--disable-new-dtags,-rpath,$(ZSTDPATH)/lib
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -lm -Wl,--disable-new-dtags,-rpath,$(ZCPATH)/lib
+
+
+CC=g++
+SZAUTO_FLOAT = sz_autofloat_CompDecomp
+SZAUTO_DOUBLE = sz_autodouble_CompDecomp
+
+all: $(SZAUTO_FLOAT) $(SZAUTO_DOUBLE)
+
+$(SZAUTO_FLOAT): sz_autofloat_CompDecomp.cpp
+	$(CC) -g sz_autofloat_CompDecomp.cpp $(LIBPRESSIOFLAG) $(ZSTDFLAG) $(SZAUTOFLAG) $(ZCFLAG) -lm -o $(SZAUTO_FLOAT)
+
+$(SZAUTO_DOUBLE): sz_autodouble_CompDecomp.cpp
+	$(CC) -g sz_autodouble_CompDecomp.cpp $(LIBPRESSIOFLAG) $(ZSTDFLAG) $(SZAUTOFLAG) $(ZCFLAG) -lm -o $(SZAUTO_DOUBLE)
