@@ -5,7 +5,8 @@
 See COPYRIGHT in top-level directory.
 
 
-Authors: Sheng Di, Dingwen Tao, Hanqi Guo
+Major authors: Sheng Di, Dingwen Tao, Hanqi Guo
+Other contributors: Robert Underwood, Hengzhi Chen
 
 ## 3rd party libraries/tools
 
