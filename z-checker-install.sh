@@ -312,6 +312,22 @@ cd $rootDir
 ./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
+#---------- download SZauto and set the configuration -----------
+cd $rootDir
+cd SZauto/test
+cp ../../SZauto-patches/Makefile-SZauto .
+cp ../../SZauto-patches/SZautofloat_CompDecomp.cpp .
+cp ../../SZauto-patches/SZautodouble_CompDecomp.cpp .
+cp ../../SZauto-patches/SZauto_CompDecomp.sh .
+chmod +x SZauto_CompDecomp.sh
+make -f Makefile-SZauto
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a SZauto -i 3 -c manageCompressor-SZauto.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg sz_auto_ERR_BOUNDS "\"0.5 0.1 0.01 0.001\""
+
+
 #----------- download latexmk --------------------------------
 cd $rootDir
 latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip
