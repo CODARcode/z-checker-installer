@@ -13,10 +13,10 @@ dim4=${10}
 
 if [[ $datatype == "-f" ]];then
 	echo processing sz_autofloat_CompDecomp on "$filePath"
-	./sz_autofloat_CompDecomp $zc_cfgFile $cmpCase $varName $ErrBound "$filePath" $dim1 $dim2 $dim3
+	./SZautofloat_CompDecomp $zc_cfgFile $cmpCase $varName $ErrBound "$filePath" $dim1 $dim2 $dim3
 	echo done
 else
 	echo processing sz_autodouble_CompDecomp on "$filePath"
-	./sz_autodouble_CompDecomp $zc_cfgFile $cmpCase $varName $ErrBound "$filePath" $dim1 $dim2 $dim3
+	./SZautodouble_CompDecomp $zc_cfgFile $cmpCase $varName $ErrBound "$filePath" $dim1 $dim2 $dim3
 	echo done
 fi

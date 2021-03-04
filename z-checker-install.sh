@@ -312,19 +312,19 @@ cd $rootDir
 ./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
 
-#---------- download sz_auto(meta_compressor) and set the configuration -----------
+#---------- download SZauto and set the configuration -----------
 cd $rootDir
-cd meta_compressor/test
-cp ../../sz_auto-patches/Makefile-sz_auto .
-cp ../../sz_auto-patches/sz_autofloat_CompDecomp.cpp .
-cp ../../sz_auto-patches/sz_autodouble_CompDecomp.cpp .
-cp ../../sz_auto-patches/sz_auto_CompDecomp.sh .
-chmod +x sz_auto_CompDecomp.sh
-make -f Makefile-sz_auto
+cd SZauto/test
+cp ../../SZauto-patches/Makefile-SZauto .
+cp ../../SZauto-patches/SZautofloat_CompDecomp.cpp .
+cp ../../SZauto-patches/SZautodouble_CompDecomp.cpp .
+cp ../../SZauto-patches/SZauto_CompDecomp.sh .
+chmod +x SZauto_CompDecomp.sh
+make -f Makefile-SZauto
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 cd $rootDir
-./manageCompressor -a sz_auto -i 3 -c manageCompressor-sz_auto.cfg
+./manageCompressor -a SZauto -i 3 -c manageCompressor-SZauto.cfg
 Z-checker/examples/modifyZCConfig errBounds.cfg sz_auto_ERR_BOUNDS "\"0.5 0.1 0.01 0.001\""
 
 

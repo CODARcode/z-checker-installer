@@ -16,8 +16,8 @@ git clone https://github.com/CODARcode/MGARD
 #cd -
 
 git clone http://github.com/disheng222/SZ
-git clone https://github.com/lxAltria/meta_compressor.git
 git clone http://github.com/LLNL/zfp
+git clone https://github.com/szcompressor/SZauto.git
 git clone https://github.com/facebook/zstd
 git clone https://github.com/szcompressor/SZ
 git clone https://github.com/LLNL/zfp
@@ -93,24 +93,21 @@ make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-install
 
+#install SZauto
+mkdir -p SZauto/build
+pushd SZauto/build
+cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+make -j
+make install
+popd
+ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-install
+
+
 LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib"
 mkdir -p libpressio/build
 pushd libpressio/build
 #cmake .. $LIBPRESSIO_CMAKE_ARGS -DLIBPRESSIO_HAS_MGARD=ON -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_ZFP=ON
-cmake .. $LIBPRESSIO_CMAKE_ARGS -DSZ_DIR:PATH=$rootDir/compressor-install/share/SZ/cmake -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_FPZIP=ON -DLIBPRESSIO_HAS_ZFP=ON -DLIBPRESSIO_HAS_MGARD=OFF -DLIBPRESSIO_HAS_BIT_GROOMING=ON -DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON
+cmake .. $LIBPRESSIO_CMAKE_ARGS -DSZ_DIR:PATH=$rootDir/compressor-install/share/SZ/cmake -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_FPZIP=ON -DLIBPRESSIO_HAS_ZFP=ON -DLIBPRESSIO_HAS_MGARD=OFF -DLIBPRESSIO_HAS_BIT_GROOMING=ON -DLIBPRESSIO_HAS_SZ_AUTO=ON -DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON
 make -j
 make install
 popd
-
-#install meta_compressor
-cd meta_compressor
-git checkout autotuning
-cd ..
-mkdir -p meta_compressor/build
-cp sz_auto-patches/CMakeLists.txt meta_compressor
-pushd meta_compressor/build
-cmake .. -DCMAKE_INSTALL_PREFIX=../../compressor-install
-make -j
-make install
-popd
-
