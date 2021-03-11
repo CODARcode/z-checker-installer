@@ -8,12 +8,10 @@ fi
 
 rootDir=`pwd`
 
-#curl -L https://github.com/CODARcode/MGARD/archive/0.0.0.2.tar.gz | tar zxf -
-#mv MGARD-0.0.0.2 MGARD
-git clone https://github.com/CODARcode/MGARD
+#git clone https://github.com/CODARcode/MGARD
 #cd MGARD
-#git checkout 8a1e16949d8ceee881d16e245ea262bd2d924609
-#cd -
+#git checkout b67a0ac963587f190e106cc3c0b30773a9455f7a
+#cd ..
 
 git clone http://github.com/disheng222/SZ
 git clone http://github.com/LLNL/zfp
@@ -26,6 +24,8 @@ git clone https://github.com/CODARcode/libpressio
 git clone https://github.com/LLNL/fpzip.git
 git clone https://github.com/disheng222/BitGroomingZ.git
 git clone https://github.com/disheng222/digitroundingZ.git
+
+export PKG_CONFIG_PATH=$rootDir/compressor-install/lib/pkgconfig/:$PKG_CONFIG_PATH
 
 mkdir -p zstd/builddir
 pushd zstd/builddir
@@ -50,13 +50,13 @@ make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/zfp/zfp-install
 
-mkdir -p MGARD/build
-pushd MGARD/build
-cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
-make install
-popd
-ln -s $rootDir/compressor-install/ $rootDir/MGARD/MGARD-install
+# mkdir -p MGARD/build
+# pushd MGARD/build
+# cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
+# make -j
+# make install
+# popd
+# ln -s $rootDir/compressor-install/ $rootDir/MGARD/MGARD-install
 
 mkdir -p std_compat/build
 pushd std_compat/build
@@ -106,7 +106,6 @@ ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-instal
 LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib"
 mkdir -p libpressio/build
 pushd libpressio/build
-#cmake .. $LIBPRESSIO_CMAKE_ARGS -DLIBPRESSIO_HAS_MGARD=ON -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_ZFP=ON
 cmake .. $LIBPRESSIO_CMAKE_ARGS -DSZ_DIR:PATH=$rootDir/compressor-install/share/SZ/cmake -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_FPZIP=ON -DLIBPRESSIO_HAS_ZFP=ON -DLIBPRESSIO_HAS_MGARD=OFF -DLIBPRESSIO_HAS_BIT_GROOMING=ON -DLIBPRESSIO_HAS_SZ_AUTO=ON -DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON
 make -j
 make install
