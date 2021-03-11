@@ -2,7 +2,7 @@
 
 rootDir=`pwd`
 
-if [ $1 = "-h" ]
+if [[ $1 = "-h" ]]
 then
 	echo "Usage: ./z-checker-installer [libpressio_opt_prefix_installation_path]"
 	echo "Hint: To use libpressio_opt, you need to install it using spack first; after installation, the libpressio_opt_prefix_installation_path contains include and lib64."
