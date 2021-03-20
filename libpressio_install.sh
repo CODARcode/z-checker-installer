@@ -64,6 +64,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBD
 make -j
 make install
 popd
+ln -s $rootDir/compressor-install/ $rootDir/std_compat/
 
 #install fpzip 
 #add fpzip through manageCompressor
@@ -100,7 +101,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBD
 make -j
 make install
 popd
-ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-install
+ln -s $rootDir/compressor-install/ $rootDir/SZauto/SZauto-install
 
 
 LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_LIBDIR=lib"
