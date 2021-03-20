@@ -26,7 +26,6 @@ The following libraries - libpng, tif22pnm and sam2p are used to convert slice i
 
 For simplicity, 
 the Fedora users need to run the following command for installation: 
-
 ```bash
 sudo dnf install -y gcc gcc-c++ git cmake zlib-devel libzstd-devel gfortran which xorg-x11-server-Xorg gnuplot libpng-devel findutils unzip latexmk
 git clone http://github.com/CODARcode/z-checker-installer
@@ -34,6 +33,13 @@ cd z-checker-installer
 ./z-checker-install.sh
 ```
 
+the Ubuntu users need to run the following command for installation: 
+```bash
+sudo sudo apt-get install -y gcc g++ git cmake zlib-devel gfortran gnuplot libpng-devel xorg openbox findutils unzip latexmk
+git clone http://github.com/CODARcode/z-checker-installer
+cd z-checker-installer
+./z-checker-install.sh
+```
 
 ## Testing/Installation method
 
