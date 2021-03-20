@@ -12,6 +12,7 @@ Other contributors: Robert Underwood, Hengzhi Chen
 
 - cmake (version: 3.13+)
 - gcc (version: 7.3+)
+- g++
 - git
 - texlive (e.g., execute 'sudo yum install texlive-*' on linux)
 - ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
@@ -27,7 +28,8 @@ The following libraries - libpng, tif22pnm and sam2p are used to convert slice i
 For simplicity, 
 the Fedora users need to run the following command for installation: 
 ```bash
-sudo dnf install -y gcc gcc-c++ git cmake zlib-devel libzstd-devel gfortran which xorg-x11-server-Xorg gnuplot libpng-devel findutils unzip latexmk
+sudo dnf install -y gcc gcc-c++ git cmake zlib-devel libzstd-devel gfortran which xorg-x11-server-Xorg gnuplot libpng-devel findutils unzip latexmk texlive
+<!-- required texlive package: "tex(${comment.sty})" "tex(${pifont.sty})" "tex(${natbib.sty})" "tex(${amsmath.sty})" "tex(${morefloats.sty})" "tex(${geometry.sty})" "tex(${nopageno.sty})" "tex(${subfigure.sty})" "tex(${enumitem.sty})"-->
 git clone http://github.com/CODARcode/z-checker-installer
 cd z-checker-installer
 ./z-checker-install.sh
@@ -35,7 +37,7 @@ cd z-checker-installer
 
 the Ubuntu users need to run the following command for installation: 
 ```bash
-sudo sudo apt-get install -y gcc g++ git cmake zlib-devel gfortran gnuplot libpng-devel xorg openbox findutils unzip latexmk
+sudo sudo apt-get install -y gcc g++ git cmake zlib-devel gfortran gnuplot libpng-devel xorg openbox findutils unzip latexmk texlive-full texlive-fonts-recommends --no-install-recommends
 git clone http://github.com/CODARcode/z-checker-installer
 cd z-checker-installer
 ./z-checker-install.sh
