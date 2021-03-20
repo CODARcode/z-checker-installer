@@ -102,7 +102,15 @@ else
 
 		# compile libpng
 		cd $LIBPNG_SRC_DIR/libpng-1.6.37
-		./configure --prefix=$LIBPNG_INSTALL_PATH
+		#install zlib which is required by libpng
+		curl -L https://zlib.net/zlib-1.2.11.tar.gz | tar zxf -
+		cd zlib-1.2.11
+		ZLIB_PREFIX=$LIBPNG_SRC_DIR/libpng-1.6.37/zlib-1.2.11/install
+		./configure --prefix=$ZLIB_PREFIX
+		make -j
+		make install
+		cd ..
+		CPPFLAGS="-I$ZLIB_PREFIX/include" LDFLAGS="-L$ZLIB_PREFIX/lib" ./configure --prefix=$LIBPNG_INSTALL_PATH
 		make -j 4
 		make install
 	fi
