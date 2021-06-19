@@ -30,14 +30,14 @@ export PKG_CONFIG_PATH=$rootDir/compressor-install/lib/pkgconfig/:$PKG_CONFIG_PA
 mkdir -p zstd/builddir
 pushd zstd/builddir
 cmake ../build/cmake/ -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 
 mkdir -p SZ/build
 pushd SZ/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/SZ/sz-install
@@ -45,7 +45,7 @@ ln -s $rootDir/compressor-install/ $rootDir/SZ/sz-install
 mkdir -p zfp/build
 pushd zfp/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_TESTING=OFF
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/zfp/zfp-install
@@ -53,7 +53,7 @@ ln -s $rootDir/compressor-install/ $rootDir/zfp/zfp-install
 # mkdir -p MGARD/build
 # pushd MGARD/build
 # cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-# make -j
+# make -j 4
 # make install
 # popd
 # ln -s $rootDir/compressor-install/ $rootDir/MGARD/MGARD-install
@@ -61,7 +61,7 @@ ln -s $rootDir/compressor-install/ $rootDir/zfp/zfp-install
 mkdir -p std_compat/build
 pushd std_compat/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_TESTING=OFF
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/std_compat/
@@ -71,7 +71,7 @@ ln -s $rootDir/compressor-install/ $rootDir/std_compat/
 mkdir -p fpzip/build
 pushd fpzip/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/fpzip/fpzip-install
@@ -80,7 +80,7 @@ ln -s $rootDir/compressor-install/ $rootDir/fpzip/fpzip-install
 mkdir -p BitGroomingZ/build
 pushd BitGroomingZ/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/BitGroomingZ/BitGroomingZ-install
@@ -89,7 +89,7 @@ ln -s $rootDir/compressor-install/ $rootDir/BitGroomingZ/BitGroomingZ-install
 mkdir -p digitroundingZ/build
 pushd digitroundingZ/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-install
@@ -98,7 +98,7 @@ ln -s $rootDir/compressor-install/ $rootDir/digitroundingZ/digitroundingZ-instal
 mkdir -p SZauto/build
 pushd SZauto/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DCMAKE_INSTALL_LIBDIR=lib
-make -j
+make -j 4
 make install
 popd
 ln -s $rootDir/compressor-install/ $rootDir/SZauto/SZauto-install
@@ -108,6 +108,6 @@ LIBPRESSIO_CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$rootDir/compressor-install -DBUIL
 mkdir -p libpressio/build
 pushd libpressio/build
 cmake .. $LIBPRESSIO_CMAKE_ARGS -DSZ_DIR:PATH=$rootDir/compressor-install/share/SZ/cmake -DLIBPRESSIO_HAS_SZ=ON -DLIBPRESSIO_HAS_FPZIP=ON -DLIBPRESSIO_HAS_ZFP=ON -DLIBPRESSIO_HAS_MGARD=OFF -DLIBPRESSIO_HAS_BIT_GROOMING=ON -DLIBPRESSIO_HAS_SZ_AUTO=ON -DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON
-make -j
+make -j 4
 make install
 popd
