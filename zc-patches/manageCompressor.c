@@ -531,7 +531,7 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 			
 			buf2 = (char*)malloc(1024);
-			sprintf(buf2, "\tcd $rootDir/Z-checker/${testcase};./delCompressorZCConfig %s;cd -\n", compressor);
+			sprintf(buf2, "\tcd $rootDir/Z-checker/${testcase};./delCompressorZCConfig zc.config %s;cd -\n", compressor);
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 			buf2 = (char*)malloc(1024);		
