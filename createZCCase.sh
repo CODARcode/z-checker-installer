@@ -27,6 +27,7 @@ cd Z-checker
 cp ../zc-patches/zc.config ./examples
 ./createNewCase.sh $caseName
 cp ../zc-patches/queryVarList $caseName
+cp ./examples/delCompressorZCConfig $caseName
 cd ..
 
 cp ./zc-patches/zc.config zc.config.tmp
