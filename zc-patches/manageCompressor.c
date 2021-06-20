@@ -529,6 +529,10 @@ int processRunZCCase(int operation, char* mode, char* compressor, char* workspac
 			buf2 = (char*)malloc(1024);
 			sprintf(buf2, "\techo The compressor %s does not support the dimensions size \n", compressor);
 			insertLinesTail = appendOneLine(insertLinesTail, buf2);
+			
+			buf2 = (char*)malloc(1024);
+			sprintf(buf2, "\tcd $rootDir/Z-checker/${testcase};./delCompressorZCConfig %s;cd -\n", compressor);
+			insertLinesTail = appendOneLine(insertLinesTail, buf2);
 
 			buf2 = (char*)malloc(1024);		
 			sprintf(buf2, "fi\n");
