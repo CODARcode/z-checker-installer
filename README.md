@@ -14,6 +14,7 @@ Other contributors: Robert Underwood, Hengzhi Chen
 - gcc (version: 7.3+)
 - g++
 - git
+- curl
 - texlive (e.g., execute 'sudo yum install texlive-*' on linux)
 - ghostscript(gsview) (z-checker-install.sh can install it automatically if missing)
 - latexmk (z-checker-install.sh will install latexmk automatically if missing)
