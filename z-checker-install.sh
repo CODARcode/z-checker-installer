@@ -46,6 +46,52 @@ if ! [ -x "${CMAKE_PATH}" ]; then
         exit
 fi
 
+vercomp () {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+    done
+    return 0
+}
+
+CMAKE_VERSION=$(cmake --version | head -n 1 | cut -d' ' -f3)
+CMAKE_MINIMUM="3.13"
+
+vercomp $CMAKE_VERSION $CMAKE_MINIMUM
+case $? in
+	0) op='=';;
+	1) op='>';;
+	2) op='<';;
+esac
+if [[ $op == '<' ]]
+then
+        echo "Error: CMAKE Version should be no lower than 3.13. Your current Cmake version is $CMAKE_VERSION"
+	exit
+fi
+
 #----------check X11------------------------
 X_PATH=$(command -v X)
 if [ ! -x "${X_PATH}" ];then
