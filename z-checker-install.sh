@@ -39,18 +39,24 @@ fi
  
 cd $rootDir
 
+#----------check CMAKE----------------------
+CMAKE_PATH=$(command -v cmake)
+if ! [ -x "${CMAKE_PATH}" ]; then
+        echo "Error: cmake is missing; cmake must be installed beforehand."
+        exit
+fi
 
 #----------check X11------------------------
-X_PATH=`which X`
-if [ ! -x ${X_PATH} ];then
+X_PATH=$(command -v X)
+if [ ! -x "${X_PATH}" ];then
 	echo "Error: missing X11!"
 	echo "Please install X11 first (requiring root previlege)."
 	exit
 fi
 
 #----------check git and perl---------------
-PERL_PATH=`which perl`
-if [ ! -x ${PERL_PATH} ]; then
+PERL_PATH=$(command -v perl)
+if [ ! -x "${PERL_PATH}" ]; then
 	echo "Error: missing perl command; Please install perl."
 	exit
 fi
@@ -60,7 +66,7 @@ GNUPLOT_URL="https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.0.6/gnu
 GNUPLOT_SRC_DIR=$rootDir/gnuplot-5.0.6
 GNUPLOT_DIR=$rootDir/gnuplot-5.0.6-install
 
-GNUPLOT_EXE_PATH=`which gnuplot`
+GNUPLOT_EXE_PATH=$(command -v gnuplot)
 if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 	if [ ! -d "$GNUPLOT_DIR" ]; then
 		# download gnuplot source
@@ -122,7 +128,7 @@ cd $rootDir
 TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
 TIF22PNM_SRC_DIR=$rootDir/tif22pnm
 
-TIF22PNM_EXE_PATH=`which png22pnm`
+TIF22PNM_EXE_PATH=$(command -v png22pnm)
 if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
 	if [ ! -d "$TIF22PNG_SRC_DIR" ]; then
 		# download tif22pnm source
@@ -146,7 +152,7 @@ fi
 SAM2P_URL="https://github.com/pts/sam2p.git"
 SAM2P_SRC_DIR=$rootDir/sam2p
 
-SAM2P_EXE_PATH=`which sam2p`
+SAM2P_EXE_PATH=$(command -v sam2p)
 if [ ! -x "$SAM2P_EXE_PATH" ]; then
 	if [ ! -d "$SAM2P_SRC_DIR" ]; then
 		# download sam2p source
@@ -340,7 +346,7 @@ Z-checker/examples/modifyZCConfig errBounds.cfg sz_auto_ERR_BOUNDS "\"0.5 0.1 0.
 cd $rootDir
 latexmk_url=http://ctan.math.utah.edu/ctan/tex-archive/support/latexmk.zip
 latexmk_dir=latexmk
-latexmk_exe_path=`which latexmk`
+latexmk_exe_path=$(command -v latexmk)
 if [ ! -x "$latexmk_exe_path" ]; then
 	if [ ! -d "$latexmk_dir" ]; then
 		curl -O $latexmk_url
@@ -359,7 +365,7 @@ cd $rootDir
 ghost_url="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostpdl-9.21.tar.gz"
 ghost_src_dir=$rootDir/ghostpdl-9.21
 ghost_dir=$rootDir/ghostpdl-9.21-install
-PS2PDF_EXE_PATH=`which ps2pdf`
+PS2PDF_EXE_PATH=$(command -v ps2pdf)
 if [ ! -x "$PS2PDF_EXE_PATH" ]; then
         if [ ! -d "$ghost_dir" ]; then
                 # download ghost source
