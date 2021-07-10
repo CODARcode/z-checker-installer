@@ -1,6 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include <limits.h>
+#include <ctype.h>
 #include <string.h>
 #include "ZC_rw.h"
 #include "ZC_util.h"
@@ -8,7 +9,7 @@
 #include <stdbool.h>
 
 
-
+#define LIST_CMPR 12
 #define ADD_CMPR 11
 #define DELETE_CMPR 10
 #define MODIFY_RATE_DISTORTION_SH 1
@@ -29,6 +30,7 @@ void usage()
 	printf("Usage: manageCompressor <options>\n");
 	printf("Options:\n");
 	printf("* Operation:\n");
+	printf("	-l: list the compressors loaded in Z-checker\n");
 	printf("	-a <compressor>: add a compressor\n");
 	printf("	-d <compressor>: delete a compressor\n");
 	printf("	-z <compressor>: modify zc-ratedistortion.sh and exe_CompDecomp.sh\n");	
@@ -1014,6 +1016,78 @@ int check_errBounds_cfg(char* errBoundsFile)
 	
 }
 
+char *trimString(char *str)
+{
+    char *end;
+
+    while(isspace((unsigned char)*str)) str++;
+
+    if(*str == 0)
+        return str;
+
+    end = str + strlen(str) - 1;
+    while(end > str && isspace((unsigned char)*end)) end--;
+
+    end[1] = '\0';
+
+    return str;
+}
+
+int listComprssor(char*** compressorList)
+{
+	int i = 0, j = 0, tag = 0;
+	*compressorList = (char**)malloc(30*sizeof(char*));
+	memset(*compressorList, 0, 30*sizeof(char*)); //suppose: at most 30 compressors
+	StringLine* header = NULL, *preLine = NULL;
+	int lineCount = 0;	
+	header = ZC_readLines("runZCCase.sh", &lineCount);
+	preLine = header;
+	StringLine* curLine = NULL;
+	for(i=0;preLine->next!=NULL;i++)
+	{
+		curLine = preLine->next;
+		tag = ZC_startsWithLines(curLine, "##begin: Compressor");
+		if(tag)
+		{
+			char* compressorStr = (char*)malloc(100);
+			strcpy(compressorStr, trimString(&(curLine->str[20])));
+			(*compressorList)[j++] = compressorStr;
+		}
+		preLine = preLine->next;
+	}	
+	return j;
+}
+
+void freeCompressorList(char** list)
+{
+	int i = 0;
+	for(i=0;i<30;i++)
+	{
+		char* a = list[i];
+		if(a!=NULL)
+			free(a);
+	}
+	free(list);
+}
+
+int isCompressorAdded(char* compressorName)
+{
+	int i = 0;
+	char** compressorList = NULL;
+	int count = listComprssor(&compressorList);
+	int result = 0;
+	for(i = 0;i<count;i++)
+	{
+		if(strcmp(compressorList[i], compressorName) == 0)
+		{
+			result = 1;
+			break;
+		}	
+	}
+	freeCompressorList(compressorList);
+	return result;
+}
+
 int main(int argc, char* argv[])
 {
 	int operation = -1;
@@ -1050,6 +1124,9 @@ int main(int argc, char* argv[])
 				usage();
 			operation = ADD_CMPR;
 			compressorName = argv[i];
+			break;
+		case 'l':
+			operation = LIST_CMPR;
 			break;
 		case 'd':
 			if (++i == argc)
@@ -1093,6 +1170,17 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	if(operation == LIST_CMPR)
+	{
+		char** compressorList = NULL;
+		int count = listComprssor(&compressorList);
+		printf("There are %d compressors loaded:\n", count);
+		for(i=0;i<count;i++)
+			printf("%s\n", compressorList[i]);
+		freeCompressorList(compressorList);
+		exit(0);
+	}
+
 	char* compressorName_ = NULL, *mode_ = NULL, *compressor_ = NULL, *workspaceDir_ = NULL, *exeDir = NULL, *preCommand = NULL, *exeCommand = NULL;
 	
 	if(conFile!=NULL)
@@ -1103,6 +1191,11 @@ int main(int argc, char* argv[])
 			printf("Error: wrong configuration file\n");
 			exit(0);
 		}
+	}
+	else
+	{
+		printf("Error: configuration file cannot be null.\n");
+		exit(0);
 	}
 	
 	if(operation>=10 && (compressorName == NULL || exeCommand == NULL || exeDir == NULL))
@@ -1130,6 +1223,16 @@ int main(int argc, char* argv[])
 	
 	if(compressor == NULL)
 		compressor = compressor_;
+	
+	if(operation == ADD_CMPR)
+	{
+		int state = isCompressorAdded(compressor_);
+		if(state)
+		{
+			printf("This compressor - %s (fullname: %s) was added already.\n", compressorName, compressor_);
+			exit(0);
+		}
+	}		
 	
 	if(operation == CHECK_ERRBOUNDS)
 	{

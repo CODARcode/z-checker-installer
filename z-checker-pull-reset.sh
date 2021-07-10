@@ -6,7 +6,7 @@ export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 #---------- download libpng if missing ------
 LIBPNG_URL=http://www.mcs.anl.gov/~shdi/download/libpng-1.6.37.tar.gz
 LIBPNG_SRC_DIR=$rootDir/libpng
-LIBPNG_EXE_PATH=`which libpng-config`
+LIBPNG_EXE_PATH=$(command -v libpng-config)
 
 if [ ! -x "$LIBPNG_EXE_PATH" ]; then
         if [ ! -d "$LIBPNG_SRC_DIR" ]; then
@@ -33,7 +33,7 @@ fi
 TIF22PNM_URL="https://github.com/pts/tif22pnm.git"
 TIF22PNM_SRC_DIR=$rootDir/tif22pnm
 
-TIF22PNM_EXE_PATH=`which png22pnm`
+TIF22PNM_EXE_PATH=$(command -v png22pnm)
 if [ ! -x "$TIF22PNG_EXE_PATH" ]; then
         if [ ! -d "$TIF22PNG_SRC_DIR" ]; then
                 # download tif22pnm source
@@ -66,7 +66,7 @@ fi
 SAM2P_URL="https://github.com/pts/sam2p.git"
 SAM2P_SRC_DIR=$rootDir/sam2p
 
-SAM2P_EXE_PATH=`which sam2p`
+SAM2P_EXE_PATH=$(command -v sam2p)
 if [ ! -x "$SAM2P_EXE_PATH" ]; then
         if [ ! -d "$SAM2P_SRC_DIR" ]; then
                 # download sam2p source
@@ -131,8 +131,9 @@ cd ..
 
 ./configure --prefix=$rootDir/Z-checker/zc-install
 make clean
-make
+make -j 4
 make install
+export PATH=$rootDir/Z-checker/zc-install/bin:$PATH
 cp ../zc-patches/generateReport.sh ./examples/
 
 cd examples
@@ -155,8 +156,8 @@ cp zfp-patches/Makefile-zc zfp/utils/Makefile
 
 cd zfp/utils
 
-cp ../../zc-patches/zc.config .
-modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+#cp ../../zc-patches/zc.config .
+#modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
 make clean
 make
@@ -179,6 +180,72 @@ make -f Makefile.bk
 cp ../../zc-patches/zc.config .
 modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
 
+#---------- download MGARD and set the configuration ------------
+cd $rootDir/mgard-patches
+./compile-mgard-zchecker.sh
+if [ -f ../libpressio/test/mgardfloat_CompDecomp ]
+then
+	cp ../libpressio/test/mgardfloat_CompDecomp ../MGARD/build/bin
+	cp ../libpressio/test/mgarddouble_CompDecomp ../MGARD/build/bin
+fi
+cd ..
+
+#---------- download bit_grooming and set the configuration -----------
+cd $rootDir
+cd BitGroomingZ/examples
+cp ../../bg-patches/Makefile-bg .
+cp ../../bg-patches/bgfloat_CompDecomp.cpp .
+cp ../../bg-patches/bgdouble_CompDecomp.cpp .
+cp ../../bg-patches/bg_CompDecomp.sh .
+make -f Makefile-bg
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a bg -c manageCompressor-bg.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg bitgrooming_ERR_BOUNDS "\"1 2 3 4 5\""
+
+#---------- download digit_rounding and set the configuration -----------
+cd $rootDir
+cd digitroundingZ/examples
+cp ../../dr-patches/Makefile-dr .
+cp ../../dr-patches/drfloat_CompDecomp.cpp .
+cp ../../dr-patches/drdouble_CompDecomp.cpp .
+cp ../../dr-patches/dr_CompDecomp.sh .
+make -f Makefile-dr
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a digitrounding -c manageCompressor-dr.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg digitrounding_ERR_BOUNDS "\"3 4 5 6 7\""
+
+#---------- download FPZIP and set the configuration -----------
+cd $rootDir
+cd fpzip/tests
+cp ../../fpzip-patches/Makefile-zc .
+cp ../../fpzip-patches/fpzipfloat_CompDecomp.c .
+cp ../../fpzip-patches/fpzipdouble_CompDecomp.c .
+cp ../../fpzip-patches/fpzip_CompDecomp.sh .
+make -f Makefile-zc
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a fpzip -c manageCompressor-fpzip-fd.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg fpzip_ERR_BOUNDS "\"8 10 12 14 18 22\""
+
+#---------- download SZauto and set the configuration -----------
+cd $rootDir
+cd SZauto/test
+cp ../../SZauto-patches/Makefile-SZauto .
+cp ../../SZauto-patches/SZautofloat_CompDecomp.cpp .
+cp ../../SZauto-patches/SZautodouble_CompDecomp.cpp .
+cp ../../SZauto-patches/SZauto_CompDecomp.sh .
+chmod +x SZauto_CompDecomp.sh
+make -f Makefile-SZauto
+cp ../../zc-patches/zc.config .
+modifyZCConfig ./zc.config checkingStatus PROBE_COMPRESSOR
+cd $rootDir
+./manageCompressor -a SZauto -i 3 -c manageCompressor-SZauto.cfg
+Z-checker/examples/modifyZCConfig errBounds.cfg sz_auto_ERR_BOUNDS "\"0.5 0.1 0.01 0.001\""
 
 cd $rootDir
 #cp zc.config.bk Z-checker/examples/zc.config
