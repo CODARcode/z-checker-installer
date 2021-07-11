@@ -31,8 +31,8 @@ The following libraries - libpng, tif22pnm and sam2p are used to convert slice i
 For simplicity, 
 the Fedora users need to run the following command for installation: 
 ```bash
-sudo dnf install -y gcc gcc-c++ git cmake zlib-devel libzstd-devel gfortran which xorg-x11-server-Xorg gnuplot libpng-devel findutils unzip latexmk texlive
-<!-- required texlive package: "tex(${comment.sty})" "tex(${pifont.sty})" "tex(${natbib.sty})" "tex(${amsmath.sty})" "tex(${morefloats.sty})" "tex(${geometry.sty})" "tex(${nopageno.sty})" "tex(${subfigure.sty})" "tex(${enumitem.sty})"-->
+sudo dnf install -y gcc gcc-c++ git cmake zlib-devel libzstd-devel gfortran which xorg-x11-server-Xorg gnuplot libpng-devel findutils unzip latexmk texlive-*
+<!-- required texlive package: "tex(comment.sty)" "tex(pifont.sty)" "tex(natbib.sty)" "tex(amsmath.sty)" "tex(morefloats.sty)" "tex(geometry.sty)" "tex(nopageno.sty)" "tex(subfigure.sty)" "tex(enumitem.sty)" "tex(morefloats.sty)"-->
 git clone http://github.com/CODARcode/z-checker-installer
 cd z-checker-installer
 ./z-checker-install.sh
