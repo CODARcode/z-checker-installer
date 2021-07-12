@@ -119,11 +119,11 @@ cd $rootDir
 cd zfp/${testcase}
 
 if [[ $option == 1 ]]; then
-        echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
-        ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+        echo ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
+        ./zc-ratedistortion.sh $datatype $errBoundMode $dataDir $extension $dim1 $dim2 $dim3 $dim4
 else
-        echo ./zfp-zc-ratedistortion.sh $datatype $errBoundMode $varListFile
-        ./zfp-zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
+        echo ./zc-ratedistortion.sh $datatype $errBoundMode $varListFile
+        ./zc-ratedistortion.sh $datatype $errBoundMode "$varListFile"
 fi
 ##end: Compressor zfp
 

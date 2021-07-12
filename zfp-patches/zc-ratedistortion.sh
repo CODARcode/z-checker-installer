@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [[ $# < 3 ]]; then
+if [ $# -lt 3 ]
+then
 	echo "Usage - option 1: $0 [datatype (-f or -d)] [errorBoundMode] [data directory] [extension] [dimension sizes....]"
 	echo "      - option 2: $0 [datatype (-f or -d)] [errorBoundMode] [varListFile]"
 	echo Example: $0 -f ABS /home/shdi/CESM-testdata/1800x3600 3600 1800
@@ -43,11 +44,11 @@ fi
 for errBound in $ZFP_Err_Bounds
 do
 	if [[ $option == 1 ]]; then
-		echo ./zfp-zc-dir.sh $datatype $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
-		./zfp-zc-dir.sh $datatype $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
+		echo ./exe_CompDecomp.sh $datatype $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
+		./exe_CompDecomp.sh $datatype $errBoundMode $errBound "$dataDir" $extension $dim1 $dim2 $dim3 $dim4
 	else
-		echo ./zfp-zc-dir.sh $datatype $errBoundMode $errBound $varListFile
-		./zfp-zc-dir.sh $datatype $errBoundMode $errBound $varListFile
+		echo ./exe_CompDecomp.sh $datatype $errBoundMode $errBound $varListFile
+		./exe_CompDecomp.sh $datatype $errBoundMode $errBound $varListFile
 	fi	
 done
 
