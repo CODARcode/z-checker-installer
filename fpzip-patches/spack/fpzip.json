@@ -1,0 +1,4 @@
+{
+  "zcheckerapi:compressor": "fpzip",
+  "zcheckerapi:abs_error_bound_name": "fpzip:prec"
+}

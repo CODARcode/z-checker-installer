@@ -1,0 +1,5 @@
+{
+  "zcheckerapi:compressor": "sz",
+  "zcheckerapi:abs_error_bound_name": "sz:abs_err_bound",
+  "sz:error_bound_mode_str": "abs"
+}

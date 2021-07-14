@@ -1,0 +1,4 @@
+{
+  "zcheckerapi:compressor": "bit_grooming",
+  "zcheckerapi:abs_error_bound_name": "bit_grooming:n_sig_decimals"
+}

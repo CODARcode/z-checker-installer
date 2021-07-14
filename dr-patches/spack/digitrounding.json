@@ -1,0 +1,4 @@
+{
+  "zcheckerapi:compressor": "digit_rounding",
+  "zcheckerapi:abs_error_bound_name": "digit_rounding:prec"
+}

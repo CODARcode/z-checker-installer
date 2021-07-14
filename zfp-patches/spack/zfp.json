@@ -1,0 +1,4 @@
+{
+  "zcheckerapi:compressor": "zfp",
+  "zcheckerapi:abs_error_bound_name": "zfp:accuracy"
+}
