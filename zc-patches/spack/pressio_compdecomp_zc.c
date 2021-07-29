@@ -240,6 +240,8 @@ int main(int argc, char *argv[])
 		json_str = read_json_from_file(PRESSIO_JSON_DIGITROUNDING_FILE);
 	else if(compressorID == MGARD)
 		json_str = read_json_from_file(PRESSIO_JSON_MGARD_FILE);
+	else if(compressorID == SZAUTO)
+		json_str = read_json_from_file(PRESSIO_JSON_SZAUTO_FILE);
 
 	printf("compressor json file: %s\n", json_str);
 
