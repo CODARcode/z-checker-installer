@@ -93,12 +93,12 @@ then
 fi
 
 #----------check X11------------------------
-X_PATH=$(command -v X)
-if [ ! -x "${X_PATH}" ];then
-	echo "Error: missing X11!"
-	echo "Please install X11 first (requiring root previlege)."
-	exit
-fi
+#X_PATH=$(command -v X)
+#if [ ! -x "${X_PATH}" ];then
+#	echo "Error: missing X11!"
+#	echo "Please install X11 first (requiring root previlege)."
+#	exit
+#fi
 
 #----------check git and perl---------------
 PERL_PATH=$(command -v perl)
