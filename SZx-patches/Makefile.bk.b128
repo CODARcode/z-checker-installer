@@ -1,0 +1,73 @@
+## * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+##   Makefile to test SZ library.
+
+##   PLEASE SET THIS VARIABLE BEFORE COMPILING
+SZPATH		= $(abspath ../../SZx-block128/sz-install)
+ZCPATH		= $(abspath ../../Z-checker/zc-install)
+LIBPRESSIOPATH	= $(abspath ../../compressor-install)
+
+##   COMPILERS
+CC		= gcc
+FT		= gfortran
+MPICC 		= mpicc
+MPIRUN 		= mpirun
+HDF5CC		= h5cc
+
+##   FLAGS
+# Compiling using shared library
+#SZFLAG 	= -I$(SZPATH)/include -L$(SZPATH)/lib -lSZ
+# Compiling using static library
+SZFLAG 	= -fPIC -I$(SZPATH)/include -I$(SZPATH)/include/sz -L$(SZPATH)/lib -lSZ -L$(SZPATH)/lib $(shell pkg-config --libs zlib) -L$(SZPATH)/lib -lzstd -lm -Wl,-rpath,"$(SZPATH)/lib"
+ZCFLAG  = -I$(ZCPATH)/include -L$(ZCPATH)/lib -lzc -Wl,-rpath,"$(ZCPATH)/lib"
+LIBPRESSIOFLAG = -fPIC -I$(LIBPRESSIOPATH)/include/libpressio -L$(LIBPRESSIOPATH)/lib -llibpressio -Wl,-rpath,"$(LIBPRESSIOPATH)/lib"
+
+##   TARGETS
+all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress testfloat_CompDecomp testdouble_CompDecomp sz-zc-vis testfloat_CompDecomp_libpressio testdouble_CompDecomp_libpressio
+#all:		sz testint_compress testint_decompress testfloat_compress testfloat_decompress testdouble_compress testdouble_decompress
+#all: 		testdouble_compress_f testdouble_decompress_f testdouble_batch_compress_f
+
+testint_compress:	testint_compress.c
+	$(CC)  -g -O3 -o testint_compress testint_compress.c $(SZFLAG)
+
+testint_decompress:	testint_decompress.c
+	$(CC)  -g -O3 -o testint_decompress testint_decompress.c $(SZFLAG)
+
+testfloat_compress:	testfloat_compress.c
+	$(CC)  -g -O3 -o testfloat_compress testfloat_compress.c $(SZFLAG)
+
+testfloat_decompress:	testfloat_decompress.c
+	$(CC)  -g -O3 -o testfloat_decompress testfloat_decompress.c $(SZFLAG)
+
+testdouble_compress:	testdouble_compress.c
+	$(CC)  -g -O3 -o testdouble_compress testdouble_compress.c $(SZFLAG)
+
+testdouble_decompress:	testdouble_decompress.c
+	$(CC)  -g -O3 -o testdouble_decompress testdouble_decompress.c $(SZFLAG)
+
+testdouble_compress_f:      testdouble_compress_f.f90
+	$(FT)  -g -O3 -o testdouble_compress_f testdouble_compress_f.f90 $(SZFLAG)
+
+testdouble_decompress_f:      testdouble_decompress_f.f90
+	$(FT)  -g -O3 -o testdouble_decompress_f testdouble_decompress_f.f90 $(SZFLAG)
+
+sz:		sz.c
+	$(CC)  -g -O3 -o sz	sz.c $(SZFLAG)
+
+testfloat_CompDecomp:  testfloat_CompDecomp.c
+	$(CC)  -g -O3 -o testfloat_CompDecomp testfloat_CompDecomp.c $(ZCFLAG) $(SZFLAG) $(LIBPRESSIOFLAG)
+
+testfloat_CompDecomp_libpressio:  testfloat_CompDecomp_libpressio.c
+	$(CC)  -g -O3 -o testfloat_CompDecomp_libpressio testfloat_CompDecomp_libpressio.c $(ZCFLAG) $(SZFLAG) $(LIBPRESSIOFLAG)
+
+testdouble_CompDecomp_libpressio:  testdouble_CompDecomp_libpressio.c
+	$(CC)  -g -O3 -o testdouble_CompDecomp_libpressio testdouble_CompDecomp_libpressio.c $(ZCFLAG) $(SZFLAG) $(LIBPRESSIOFLAG)
+
+testdouble_CompDecomp: testdouble_CompDecomp.c
+	$(CC)  -g -O3 -o testdouble_CompDecomp testdouble_CompDecomp.c $(ZCFLAG) $(SZFLAG) $(LIBPRESSIOFLAG)
+
+sz-zc-vis:  sz-zc-vis.c
+	$(CC) -g -O3 -o sz-zc-vis sz-zc-vis.c $(ZCFLAG) $(SZFLAG) $(LIBPRESSIOFLAG)
+
+clean:
+	rm -f test*_compress test*_decompress test*_compress_f test*_decompress_f sz testfloat_CompDecomp testdouble_CompDecomp sz-zc-vis testfloat_CompDecomp_libpressio testdouble_CompDecomp_libpressio
+
