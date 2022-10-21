@@ -136,7 +136,7 @@ fi
 #---------- download zlib and install it ---------------]
 curl -L https://www.mcs.anl.gov/~shdi/download/zlib-1.2.13.tar.gz | tar zxf -
 cd zlib-1.2.13
-ZLIB_PREFIX=$LIBPNG_SRC_DIR/libpng-1.6.37/zlib-1.2.13/install
+ZLIB_PREFIX=$rootDir/zlib-1.2.13/install
 ./configure --prefix=$ZLIB_PREFIX
 make -j
 make install
