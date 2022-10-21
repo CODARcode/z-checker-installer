@@ -133,6 +133,14 @@ if [ ! -x "$GNUPLOT_EXE_PATH" ]; then
 
 fi
 
+#---------- download zlib and install it ---------------]
+curl -L https://www.mcs.anl.gov/~shdi/download/zlib-1.2.13.tar.gz | tar zxf -
+cd zlib-1.2.13
+ZLIB_PREFIX=$LIBPNG_SRC_DIR/libpng-1.6.37/zlib-1.2.13/install
+./configure --prefix=$ZLIB_PREFIX
+make -j
+make install
+
 #---------- download and install libpng forcefully ------
 if [ -f $LibpressioOptPrefixDir/include/png.h ]
 then
@@ -154,13 +162,6 @@ else
 
 		# compile libpng
 		cd $LIBPNG_SRC_DIR/libpng-1.6.37
-		#install zlib which is required by libpng
-		curl -L https://www.mcs.anl.gov/~shdi/download/zlib-1.2.13.tar.gz | tar zxf -
-		cd zlib-1.2.13
-		ZLIB_PREFIX=$LIBPNG_SRC_DIR/libpng-1.6.37/zlib-1.2.13/install
-		./configure --prefix=$ZLIB_PREFIX
-		make -j
-		make install
 		cd ..
 		CPPFLAGS="-I$ZLIB_PREFIX/include" LDFLAGS="-L$ZLIB_PREFIX/lib" ./configure --prefix=$LIBPNG_INSTALL_PATH
 		make -j 4
@@ -225,6 +226,7 @@ fi
 #----------- download MGARD and libpressio and install -------
 cd $rootDir
 ./libpressio_install.sh
+cp $ZLIB_PREFIX/lib/libz.so compressor-install/lib/libZLIB.so 
 
 #--------- compile the codes in zc-patch ------------
 cd $rootDir/zc-patches
