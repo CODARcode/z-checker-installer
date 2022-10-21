@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "zfp.h"
-#include "zfp/macros.h"
+#include "zfp/internal/zfp/macros.h"
 #include "zc.h"
 
 /*
